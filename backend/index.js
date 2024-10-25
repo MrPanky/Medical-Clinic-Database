@@ -5,10 +5,11 @@ import cors from "cors";
 const app = express();
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Abcd1234",
-    database: "medical_clinic_database"
+host:"medical-clinic-database.mysql.database.azure.com", 
+user:"group8", 
+password:"Abcd1234", 
+database:"medical_clinic_database", 
+port:3306, 
 });
 
 app.use(express.json());
