@@ -6,16 +6,20 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: List files in the repository
         run: |
-          ls -la # For Unix-like systems
+          dir # For Windows
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
@@ -24,29 +28,43 @@ jobs:
 
       - name: Install and start backend
         run: |
-          cd backend
-          npm install
-          npm start & # Start the backend in the background
-          sleep 10 # Give it a moment to start
-
+            cd backend
+            npm install
+            Start-Process -NoNewWindow -File npm -ArgumentList "start"
+            Start-Sleep -Seconds 10
+        
       - name: Install and start client
         run: |
-          cd client
-          npm install
-          CI=false npm start & # This will allow the start command to proceed without linting errors
-          sleep 10
-
+            cd client
+            npm install
+            Start-Process -NoNewWindow -File npm -ArgumentList "start"
+            Start-Sleep -Seconds 10
+        
+      - name: Build the client app
+        run: |
+              cd client
+              $env:CI = "false"
+              npm run build
+    
+      - name: List contents of client directory
+        run: |
+              cd client
+              dir  # List files to check if 'build' folder exists
+    
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
+        run: |
+                Compress-Archive -Path 'client\build\*' -DestinationPath 'release.zip' -Force # Use -Force to overwrite
+      
+    
+        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip # This includes all files in the current directory
+          path: release.zip # This includes the newly created release.zip
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
@@ -57,12 +75,21 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: . # Download to the current directory
+
+      - name: List contents of release.zip
+        run: unzip -l release.zip # Check the contents of the zip file
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5E61CBBB84984AC8AE77CAB0A5E056B4 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C8243877AA3F4B2FBA247A05BAB356E2 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_95F5D162C8F9408B9F7E7676D7888468 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'group8md'
-          package: ./release # Use the release directory
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_5c87a45dc3ee42a3b7b624bb1b2ea763 }}
+          package: ./release.zip 

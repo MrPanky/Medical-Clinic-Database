@@ -15,6 +15,7 @@ port:3306,
 app.use(express.json());
 app.use(cors());
 
+
 app.get('/', (req, res) => {
     res.json("Hello this is mr.backend! 乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ");
 });
