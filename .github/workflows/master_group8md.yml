@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - Group8md
 
 on:
@@ -39,11 +36,14 @@ jobs:
           CI=false npm start & # This will allow the start command to proceed without linting errors
           sleep 10
 
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: release.zip # This includes all files in the current directory
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,26 +51,18 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write # This is required for requesting the JWT
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_19BF2531EFB04174AEEF8C87C7B2A643 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E2948767421D4067961894AF9CB6C7EF }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8735E78D546B4907B52EBF527E03036C }}
+          path: release.zip
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Group8md'
-          slot-name: 'Production'
-          package: .
+          app-name: 'group8md'
+          package: ./release # Use the release directory
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_5c87a45dc3ee42a3b7b624bb1b2ea763 }}
