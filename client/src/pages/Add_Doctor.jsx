@@ -38,7 +38,7 @@ const Add_Doctor = () => {
     e.preventDefault(); // Prevent the page from refreshing
 
     try {
-      await axios.post("http://localhost:3000/doctors", doctor); // Send doctor data to the backend
+      await axios.post("https://group8backend.azurewebsites.net/doctors", doctor); // Send doctor data to the backend
       navigate("/"); // Navigate back to the Doctors page ("/")
     } catch (err) {
       console.log(err); // Log any errors

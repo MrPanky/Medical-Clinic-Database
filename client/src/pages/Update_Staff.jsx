@@ -23,7 +23,7 @@ const Update_Staff = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/staff/${employee_ID}`); // Adjust the endpoint as needed
+                const res = await axios.get(`https://group8backend.azurewebsites.net/staff/${employee_ID}`); // Adjust the endpoint as needed
                 setStaff(res.data);
             } catch (err) {
                 console.log(err);
@@ -44,9 +44,9 @@ const Update_Staff = () => {
             let endpoint;
             // Determine the correct endpoint based on the role
             if (staff.role === "OfficeStaff") {
-                endpoint = `http://localhost:3000/staff/officestaff/${employee_ID}`; // Office staff endpoint
+                endpoint = `https://group8backend.azurewebsites.net/staff/officestaff/${employee_ID}`; // Office staff endpoint
             } else if (staff.role === "BillingStaff") {
-                endpoint = `http://localhost:3000/staff/billingstaff/${employee_ID}`; // Billing staff endpoint
+                endpoint = `https://group8backend.azurewebsites.net/staff/billingstaff/${employee_ID}`; // Billing staff endpoint
             }
 
             if (endpoint) {

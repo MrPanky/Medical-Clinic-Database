@@ -32,7 +32,7 @@ const Update_Doctor = () => {
     e.preventDefault(); // Prevent the page from refreshing
 
     try {
-      await axios.put("http://localhost:3000/doctors/" + employee_ID, doctor); // Send doctor data to the backend
+      await axios.put("https://group8backend.azurewebsites.net/doctors/" + employee_ID, doctor); // Send doctor data to the backend
       navigate("/"); // Navigate back to the Doctors page ("/")
     } catch (err) {
       console.log(err); // Log any errors
