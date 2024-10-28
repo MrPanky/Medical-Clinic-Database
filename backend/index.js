@@ -473,6 +473,383 @@ app.get('/patient/:id', (req, res) => {
 });
 
 
+app.get('/api/patient/:id', (req, res) => {
+    const medicalId = req.params.id;
+    console.log(medicalId)
+  
+    // Query to get the most recent upcoming appointment
+    const upcomingAppointmentQuery = `
+      SELECT a.dateTime, a.reason, a.doctor, o.name, o.address
+      FROM appointment as a
+      LEFT JOIN office as o ON a.officeId = o.location_ID
+      WHERE a.patientmedicalID = ? AND a.dateTime > NOW()
+      ORDER BY a.dateTime ASC
+      LIMIT 1;
+    `;
+  
+    // Query to get the most recent 3 test results
+    const recentTestsQuery = `
+      SELECT test_name, test_date, result
+      FROM test_history
+      WHERE medical_ID = ?
+      ORDER BY test_date DESC
+      LIMIT 3;
+    `;
+
+    const top3RecentReferrals = `
+        SELECT r1.status, r1.date_reviewed, r1.reason, 
+    doc_origin.first_name as origin_first_name, doc_origin.last_name as origin_last_name, 
+    doc_receive.first_name as receive_first_name, doc_receive.last_name as receive_last_name
+    FROM (
+    SELECT patient_ID, originating_doctor_ID, receiving_doctor_ID, status, date_reviewed, reason
+    FROM referral 
+    WHERE patient_ID = ?
+    ORDER BY date_reviewed DESC  
+    LIMIT 3  
+    ) AS r1
+    LEFT JOIN doctors AS doc_origin 
+    ON r1.originating_doctor_ID = doc_origin.employee_ID
+    LEFT JOIN doctors AS doc_receive
+    ON r1.receiving_doctor_ID = doc_receive.employee_ID;
+    `
+
+    
+
+  
+    db.query(upcomingAppointmentQuery, [medicalId], (err1, appointmentResult) => {
+      if (err1) {
+        return res.status(500).json({ error: 'Failed to fetch upcoming appointment', details: err1 });
+      }
+  
+      db.query(recentTestsQuery, [medicalId], (err2, testResults) => {
+        if (err2) {
+          return res.status(500).json({ error: 'Failed to fetch recent test results', details: err2 });
+        }
+
+        db.query(top3RecentReferrals, [medicalId], (err3, referralResults) => {
+            if (err3) {
+              return res.status(500).json({ error: 'Failed to fetch recent referrals', details: err3 });
+            }
+  
+        // Handling upcoming appointment and recent test results
+        const upcomingAppointment = appointmentResult.length > 0 ? appointmentResult[0] : null;
+        const recentTests = testResults.length > 0 ? testResults : null;  // Set to null if no test results
+        const recentReferrals = referralResults.length > 0 ? referralResults : null;  // Set to null if no referrals
+        // Send response
+          res.json({
+               upcomingAppointment: upcomingAppointment,
+               recentTests: recentTests,
+               recentReferrals: recentReferrals
+
+              });
+        });
+
+      });
+    });
+  });
+
+app.get('/patient/:id/my_account/personal_information', (req, res) => {
+    const medicalId = req.params.id;
+ 
+    const personInformationQuery = `
+       SELECT p.first_name, p.last_name, p.age, p.birthdate, p.address_line_1, p.address_line_2,
+              p.city, p.state, p.zip, p.personal_email, p.home_phone, p.work_phone, p.cell_phone
+       FROM patient p 
+       WHERE p.medical_ID = ?;
+    `;
+ 
+    db.query(personInformationQuery, [medicalId], (err, personalData) => {
+       if (err) {
+          return res.status(500).json({ error: 'Failed to retrieve personal information', details: err });
+       }
+ 
+       if (personalData.length === 0) {
+          return res.status(404).json({ error: 'No personal information found for the given medical ID' });
+       }
+ 
+       // Format the birthdate to just YYYY-MM-DD
+       const formattedBirthdate = new Date(personalData[0].birthdate).toLocaleDateString('en-CA');  // Returns YYYY-MM-DD
+ 
+       res.json({
+          first_name: personalData[0].first_name,
+          last_name: personalData[0].last_name,
+          age: personalData[0].age,
+          birthdate: formattedBirthdate,  // Send the formatted birthdate
+          address: {
+             line_1: personalData[0].address_line_1,
+             line_2: personalData[0].address_line_2,
+             city: personalData[0].city,
+             state: personalData[0].state,
+             zip: personalData[0].zip
+          },
+          contact: {
+             personal_email: personalData[0].personal_email,
+             home_phone: personalData[0].home_phone,
+             work_phone: personalData[0].work_phone,
+             cell_phone: personalData[0].cell_phone
+          }
+       });
+    });
+ });
+
+
+ app.get('/patient/appointment/availability', (req, res) => {
+    const { doctorID, officeID } = req.query;
+
+    if (!doctorID || !officeID) {
+        return res.status(400).json({ error: "Please provide both doctorID and officeID" });
+    }
+
+    // First query: Get fully booked dates
+    const fullyBookedDatesQuery = `
+        SELECT 
+            DATE(dateTime) AS unavailable_date
+        FROM 
+            appointment
+        WHERE 
+            doctorID = ?
+        GROUP BY 
+            DATE(dateTime)
+        HAVING 
+            COUNT(*) >= 8
+    `;
+
+    // Second query: Get unavailable days based on the doctor's schedule
+    const unavailableDaysQuery = `
+        SELECT 
+            schedule_ID,
+            CASE WHEN mon_avail != ? THEN 'Monday' END AS Monday,
+            CASE WHEN tues_avail != ? THEN 'Tuesday' END AS Tuesday,
+            CASE WHEN wed_avail != ? THEN 'Wednesday' END AS Wednesday,
+            CASE WHEN thurs_avail != ? THEN 'Thursday' END AS Thursday,
+            CASE WHEN fri_avail != ? THEN 'Friday' END AS Friday
+        FROM 
+            employee_schedule_location
+        WHERE 
+            schedule_ID = ?
+    `;
+
+    // Execute both queries
+    db.query(fullyBookedDatesQuery, [doctorID], (err, fullyBookedResults) => {
+        if (err) {
+            console.error('Error fetching fully booked dates:', err);
+            return res.status(500).json({ error: 'Failed to retrieve fully booked dates' });
+        }
+
+        db.query(unavailableDaysQuery, [officeID, officeID, officeID, officeID, officeID, doctorID], (err, unavailableDaysResults) => {
+            if (err) {
+                console.error('Error fetching unavailable days:', err);
+                return res.status(500).json({ error: 'Failed to retrieve unavailable days' });
+            }
+
+            // Process unavailable days results to filter out null values
+            const unavailableDays = [];
+            unavailableDaysResults.forEach(row => {
+                if (row.Monday) unavailableDays.push(row.Monday);
+                if (row.Tuesday) unavailableDays.push(row.Tuesday);
+                if (row.Wednesday) unavailableDays.push(row.Wednesday);
+                if (row.Thursday) unavailableDays.push(row.Thursday);
+                if (row.Friday) unavailableDays.push(row.Friday);
+            });
+
+            // Combine results and send response
+            res.json({
+                fullyBookedDates: fullyBookedResults.map(row => row.unavailable_date),
+                unavailableDays: unavailableDays
+            });
+        });
+    });
+});
+
+
+
+ app.get('/patient/appointments/time_slots', (req, res) => {
+    const { doctorID, date, facility } = req.query;
+    console.log(doctorID)
+    console.log(date)
+    console.log(facility)
+
+    if (!doctorID || !date || !facility) {
+        return res.status(400).json({ error: "Please provide  doctorID , date and facility" });
+    }
+    console.log(typeof doctorID,typeof date)
+    // SQL query to retrieve time slots
+    const query = `
+    SELECT 
+    DATE(dateTime) AS appointment_date,
+    HOUR(dateTime) AS appointment_hour,
+    DATE_FORMAT(dateTime, '%h:%i %p') AS time_slot
+    FROM 
+    appointment
+    WHERE 
+    doctorID =  ? and date(datetime) = ? and officeID = ?
+    ORDER BY
+    appointment_hour 
+    `;
+
+    db.query(query, [doctorID, date, facility], (err, results) => {
+        if (err) {
+            
+            console.error('Error fetching time slots:', err);
+            return res.status(500).json({ error: 'Failed to retrieve time slots' });
+        }
+        console.log(results)
+        // Respond with the time slots
+        res.json({ timeSlots: results.map(row => row.time_slot) });
+    });
+});
+
+
+app.get('/patient/:id/appointments/upcoming_appointments', (req, res) => {
+    const medicalId = req.params.id;
+    console.log('asdfasdfasdfasdfasdfasdf')
+    // Query to retrieve all upcoming appointments
+    const upcomingAppointmentQuery = `
+        SELECT a.dateTime, a.reason, a.doctor, o.name, o.address
+        FROM appointment as a 
+        LEFT JOIN office as o ON a.officeId = o.location_ID
+        WHERE a.patientmedicalID = ? AND a.dateTime > NOW()
+        ORDER BY a.dateTime;
+    `;
+
+    // Execute the query
+    db.query(upcomingAppointmentQuery, [medicalId], (err, upcomingAppointments) => {
+        if (err) {
+            // Handle error, send a 500 response
+            return res.status(500).json({ error: 'Failed to retrieve upcoming appointments', details: err });
+        }
+
+        // If there are no upcoming appointments, return an appropriate message
+        if (upcomingAppointments.length === 0) {
+            return res.status(404).json({ message: 'No upcoming appointments found for this patient' });
+        }
+
+        // Send the list of upcoming appointments in the response
+        res.json({
+            appointments: upcomingAppointments
+        });
+    });
+});
+
+app.post('/patient/:id/appointments/create_appointment',(req,res)=>{
+    const medicaId = req.params.id;
+})
+
+
+app.get('/patient/:id/appointments/doctors', (req, res) => {
+    const medicalId = req.params.id;
+    console.log('asdfadfad', medicalId)
+    // SQL query to retrieve all doctors of a patient, including specialists
+    const getDoctorsQuery = `
+        select d.specialty, d.first_name, d.last_name, d.employee_ID
+    from (select * from doctors_patient 
+    where doctors_patient.patient_ID = ?) as dp 
+    left join doctors d 
+    on dp.doctor_ID = d.employee_ID;
+
+    `;
+    // Execute the query
+    db.query(getDoctorsQuery, [medicalId], (err, results) => {
+        if (err) {
+            // Handle error and return 500 status code with error message
+            return res.status(500).json({
+                error: 'Failed to retrieve doctors for the patient',
+                details: err
+            });
+        }
+        console.log(results)
+        // If successful, return the results as a JSON response
+        return res.json({
+            doctors: results
+        });
+    });
+
+    
+});
+
+
+app.get('/patient/:id/medical_records/medical_history',(req,res)=>{
+    const medicalId = req.params.id;
+    
+    //this query retrieves all medical records based on medicalId
+    const medicalHistoryQuery = `
+    select conditions, treatment, diagnosis_date, resolved 
+    from medical_history
+    where medical_id = ?;
+    `
+    db.query(medicalHistoryQuery, [medicalId], (err,medicalHistoryData)=>{
+        if (err) {
+            console.error('Error fetching medical history:', err);
+            return res.status(500).json({ error: 'Failed to retrieve medical history' });
+        }
+        
+        // Check if medical history is found
+        if (medicalHistoryData.length === 0) {
+            return res.status(404).json({ message: 'No medical history found for the provided ID' });
+        }
+
+        // Send the medical history data as a response
+        res.json({ medicalHistory: medicalHistoryData });
+    })
+})
+
+
+app.get('/patient/:id/medical_records/referral_history',(req,res)=>{
+    const medicalID = req.params.id
+    //retrieves all referrals based on medicalId
+    const allReferralQuery = `SELECT r1.status, r1.date_created, r1.reason, 
+    doc_origin.first_name as origin_first_name, doc_origin.last_name as origin_last_name, 
+    doc_receive.first_name as receive_first_name, doc_receive.last_name as receive_last_name
+    FROM (
+    SELECT patient_ID, originating_doctor_ID, receiving_doctor_ID ,status, date_created,reason
+    FROM referral 
+    WHERE patient_ID = ?
+    ) AS r1
+    LEFT JOIN doctors AS doc_origin 
+    ON r1.originating_doctor_ID = doc_origin.employee_ID
+    LEFT JOIN doctors AS doc_receive
+    ON r1.receiving_doctor_ID = doc_receive.employee_ID;`
+    db.query(allReferralQuery, [medicalID], (err, referralData) => {
+        if (err) {
+            console.error('Error fetching referral summary:', err);
+            return res.status(500).json({ error: 'Failed to retrieve referral summary' });
+        }
+
+        // If no referrals found, return a 404
+        if (referralData.length === 0) {
+            return res.status(404).json({ message: 'No referrals found for the provided patient ID' });
+        }
+
+        // Return the retrieved referral data
+        res.status(200).json({ referrals: referralData });
+    });
+})
+
+
+app.get('/patient/:id/medical_records/test_history',(req,res)=>{
+    const medicalId = req.params.id
+    const recentTestsQuery = `
+      SELECT test_name, test_date, result
+      FROM test_history
+      WHERE medical_ID = ?
+      ORDER BY test_date DESC
+      LIMIT 3;
+    `;
+    db.query(recentTestsQuery, [medicalId], (err, testHistoryData) => {
+        if (err) {
+            console.error('Error fetching test history:', err);
+            return res.status(500).json({ error: 'Failed to retrieve test history' });
+        }
+
+        // If no tests found, return a 404
+        if (testHistoryData.length === 0) {
+            return res.status(404).json({ message: 'No test history found for the provided medical ID' });
+        }
+
+        // Return the retrieved test history data
+        res.json({ tests: testHistoryData });
+    });
+})
 
 
 
