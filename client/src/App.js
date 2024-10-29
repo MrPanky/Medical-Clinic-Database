@@ -24,6 +24,12 @@ import Doc_Avail_Summary from "./pages/Doc_Avail_Summary";
 import Doc_Edit_Availability from "./pages/Doc_Edit_Availability";
 import Create_Referral from "./pages/Create_Referral";
 import View_Edit_Referrals from "./pages/View_Edit_Referrals";
+import Created_invoice from "./pages/Created_invoice";
+import SearchPatient from "./pages/SearchPatient";
+import See_Patient_Balance from "./pages/See_Patient_Balance";
+import See_Previous_Invoices from "./pages/See_Previous_Invoices";
+import Past_Due_Patients from "./pages/Past_Due_Patients";
+
 
 
 
@@ -49,10 +55,16 @@ function App() {
           <Route path="/add_staff" element={<Add_Staff />} />
           <Route path="/update_officestaff/:employee_ID" element={<Update_OfficeStaff />} />
           <Route path="/update_billingstaff/:employee_ID" element={<Update_BillingStaff />} />  
+          <Route path="/billing_staff_view/SearchPatient" element={<SearchPatient />} />
+          <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance" element={<See_Patient_Balance />} />
+          <Route path="/billing_staff_view/SearchPatient/See_Previous_Invoices" element={<See_Previous_Invoices />} />
+          <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance/Created_invoice" element={<Created_invoice />} />
+          <Route path="/billing_staff_view/Past_Due_Patients" element={<Past_Due_Patients />} />
           <Route path="/Doc_Avail_Summary/:employeeId" element={<Doc_Avail_Summary />} />
           <Route path="/Doc_Edit_Availability/:employeeId" element={<Doc_Edit_Availability />} />
           <Route path="/Create_Referral/:employeeId" element={<Create_Referral />} />
           <Route path="/View_Edit_Referrals/:employeeId" element={<View_Edit_Referrals />} />
+          
         </Routes>
       </BrowserRouter>
     </div>  
