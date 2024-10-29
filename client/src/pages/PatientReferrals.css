@@ -1,0 +1,22 @@
+.referral-container {
+    margin: 20px;
+}
+
+.referral-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.referral-table th, .referral-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.referral-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.referral-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

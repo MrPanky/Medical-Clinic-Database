@@ -1,0 +1,74 @@
+/* Main navbar styling */
+.patient-navbar {
+    background-color: #333;
+    padding: 10px;
+    display: flex;
+    width:100%;  /*makes the navbar cover the whole row*/
+    justify-content: center;
+    position: relative; /* Ensure navbar is relatively positioned */
+  }
+  
+  /* Button styles for each tab */
+ .patient-navbar button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect */
+  .patient-navbar button:hover {
+    background-color: #555;
+  }
+  
+  /* Active tab style */
+  .patient-navbar button.active {
+    background-color: #007bff;
+    border-radius: 5px;
+    color: white;
+    outline: 1.5px solid white; /* Simulate the focus effect with white outline */
+    outline-offset: 2px; /* Optional: Space between the button and the outline */
+  }
+  
+  /* Dropdown container */
+  .dropdown {
+    position: relative;
+  }
+  
+  /* Dropdown submenu */
+  .dropdown-menu {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    position: absolute; /* Position the dropdown absolutely */
+    background-color: #333;
+    top: 60px; /* Adjust this to make the dropdown appear lower */
+    left: 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Submenu buttons */
+  .dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 8px 15px;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease;
+    margin-bottom: 5px; /* Add spacing between the submenu items */
+  }
+  
+  .dropdown-menu button:hover {
+    background-color: #555;
+  }
+  
+  /* Active submenu item */
+  .dropdown-menu button.active {
+    background-color: #007bff;
+    color: white;
+  }
