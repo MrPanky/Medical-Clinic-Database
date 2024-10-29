@@ -1,0 +1,30 @@
+/* Main App Container */
+.App {
+    height: 100vh;
+    padding: 0; /*changed*/
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-start; /* Align items from the top */
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease-in-out;
+    overflow-y: auto; /* Allow scrolling if content exceeds viewport height */
+}
+
+
+
+/* Content Section */
+.content {
+    margin-top: 10px; /* Add some spacing below the navbar */
+    width: 100%; /* Ensure content takes full width */
+    max-width: 1250px; /* Set a max-width for the content area */
+    display: flex;
+    flex-direction: column; /* Stack content items */
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #e0e0e0;
+    border-radius: 8px;
+}

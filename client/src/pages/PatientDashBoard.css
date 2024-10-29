@@ -1,0 +1,22 @@
+.dashboard {
+    padding: 20px;
+  }
+  
+  .cards-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 19px;
+    font-weight: bold;
+}
