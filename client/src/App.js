@@ -20,6 +20,10 @@ import Update_OfficeStaff from "./pages/Update_OfficeStaff";
 import Update_BillingStaff from "./pages/Update_BillingStaff";
 import Appointment_Info from "./pages/Appointment_Info";
 import Patient_Info from "./pages/Patient_Info";
+import Doc_Avail_Summary from "./pages/Doc_Avail_Summary";
+import Doc_Edit_Availability from "./pages/Doc_Edit_Availability";
+import Create_Referral from "./pages/Create_Referral";
+import View_Edit_Referrals from "./pages/View_Edit_Referrals";
 
 
 
@@ -45,6 +49,10 @@ function App() {
           <Route path="/add_staff" element={<Add_Staff />} />
           <Route path="/update_officestaff/:employee_ID" element={<Update_OfficeStaff />} />
           <Route path="/update_billingstaff/:employee_ID" element={<Update_BillingStaff />} />  
+          <Route path="/Doc_Avail_Summary/:employeeId" element={<Doc_Avail_Summary />} />
+          <Route path="/Doc_Edit_Availability/:employeeId" element={<Doc_Edit_Availability />} />
+          <Route path="/Create_Referral/:employeeId" element={<Create_Referral />} />
+          <Route path="/View_Edit_Referrals/:employeeId" element={<View_Edit_Referrals />} />
         </Routes>
       </BrowserRouter>
     </div>  
