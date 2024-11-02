@@ -49,9 +49,9 @@ const Billing_Staff_View = () => {
             <p>ID: {employee.employee_ID}</p>
             <p>Name: {employee.first_name} {employee.last_name}</p>
             <p>Role: {employee.role}</p>
-            <button className = "option" onClick={() => handleonClick(false)}>Pay Due Bills of a Patient</button>
-            <button className = "option"onClick={() => handleonClick(true)}>View Previous Invoices of a Patient</button>
-            <button className = "option"onClick={getPastDueBills}>View Patients with Past Due Bills</button>
+            <button className = "update" onClick={() => handleonClick(false)}>Pay Due Bills of a Patient</button>
+            <button className = "update"onClick={() => handleonClick(true)}>View Previous Invoices of a Patient</button>
+            <button className = "update"onClick={getPastDueBills}>View Patients with Past Due Bills</button>
             <button className = "logout" onClick={handleLogout}>Logout</button>
         </div>
     );
