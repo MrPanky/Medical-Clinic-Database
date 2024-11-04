@@ -17,6 +17,7 @@ app.use(cors());
 
 
 app.get('/', (req, res) => {
+    res.status(200);
     res.json("Hello this is mr.backend! 乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ");
 });
 
