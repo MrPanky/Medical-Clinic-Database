@@ -13,7 +13,6 @@ const Update_Staff = () => {
         phone_number: "",
         work_address: "",
         last_edited: currentDate,
-        
     });
 
     const navigate = useNavigate();
@@ -23,15 +22,16 @@ const Update_Staff = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             try {
-                const res = await axios.get(`https://group8backend.azurewebsites.net/staff/${employee_ID}`); // Adjust the endpoint as needed
+                // Adjust the endpoint to fetch the correct staff type
+                const res = await axios.get(`https://group8backend.azurewebsites.net/${staff.role.toLowerCase()}/${employee_ID}`);
                 setStaff(res.data);
             } catch (err) {
-                console.log(err);
+                console.error("Error fetching staff data:", err);
             }
         };
 
         fetchStaff();
-    }, [employee_ID]);
+    }, [employee_ID, staff.role]);
 
     const handleChange = (e) => {
         setStaff((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -42,11 +42,11 @@ const Update_Staff = () => {
 
         try {
             let endpoint;
-            // Determine the correct endpoint based on the role
+            // Determine the correct endpoint based on the selected role
             if (staff.role === "OfficeStaff") {
-                endpoint = `https://group8backend.azurewebsites.net/staff/officestaff/${employee_ID}`; // Office staff endpoint
+                endpoint = `https://group8backend.azurewebsites.net/officestaff/${employee_ID}`;
             } else if (staff.role === "BillingStaff") {
-                endpoint = `https://group8backend.azurewebsites.net/staff/billingstaff/${employee_ID}`; // Billing staff endpoint
+                endpoint = `https://group8backend.azurewebsites.net/billingstaff/${employee_ID}`;
             }
 
             if (endpoint) {
@@ -56,17 +56,41 @@ const Update_Staff = () => {
                 console.error("Please select a staff role."); // Handle case where role is not selected
             }
         } catch (err) {
-            console.log(err); // Log any errors
+            console.error("Error updating staff data:", err); // Log any errors
         }
     };
 
     return (
         <div className='form'>
             <h1>Update Staff</h1>
-            <input type="text" placeholder="First Name" onChange={handleChange} name="first_name" value={staff.first_name} />
-            <input type="text" placeholder="Last Name" onChange={handleChange} name="last_name" value={staff.last_name} />
-            <input type="text" placeholder="Phone Number" onChange={handleChange} name="phone_number" value={staff.phone_number} />
-            <input type="text" placeholder="Work Address" onChange={handleChange} name="work_address" value={staff.work_address} />
+            <input
+                type="text"
+                placeholder="First Name"
+                onChange={handleChange}
+                name="first_name"
+                value={staff.first_name}
+            />
+            <input
+                type="text"
+                placeholder="Last Name"
+                onChange={handleChange}
+                name="last_name"
+                value={staff.last_name}
+            />
+            <input
+                type="text"
+                placeholder="Phone Number"
+                onChange={handleChange}
+                name="phone_number"
+                value={staff.phone_number}
+            />
+            <input
+                type="text"
+                placeholder="Work Address"
+                onChange={handleChange}
+                name="work_address"
+                value={staff.work_address}
+            />
             <select onChange={handleChange} name="role" value={staff.role}>
                 <option value="" disabled>Select Role</option>
                 <option value="OfficeStaff">Office Staff</option>

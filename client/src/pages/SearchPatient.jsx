@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './billing_staff_invoice.css';
 
 
 const SearchPatient = () => {
@@ -124,7 +124,7 @@ const SearchPatient = () => {
             <br />{error && <div style={{ color: 'red' }}>{error}</div>}
             {status && <div style={{ color: 'black' }}>{status}</div>}
             <br />
-            <button className = 'option' onClick={searchpatientID}>Search Patient</button>
+            <button className = 'invoiceoption' onClick={searchpatientID}>Search Patient</button>
             <br />
             <br />
                 <button className = "logout" onClick={handleLogout}>Logout</button>

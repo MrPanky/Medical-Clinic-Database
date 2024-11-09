@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './PatientCreateAppointment.css';
 
-export default function PatientCreateAppointment( {medicalId} ) {
+export default function PatientCreateAppointment( {medicalId, first_name, last_name, patientBillingId} ) {
   const [doctors, setDoctors] = useState([]); //stores a list of patient's associated doctors
   const [selectedDoctor, setSelectedDoctor] = useState(''); // stores doctorsId
   const [selectedFacility, setSelectedFacility] = useState(''); //stores the current office selected
@@ -33,9 +33,9 @@ export default function PatientCreateAppointment( {medicalId} ) {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        console.log('first_medical_Id', medicalId)
+        
         const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/doctors`);
-        console.log('reponse.data.doctors',response.data.doctors)
+        
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error('Error fetching doctors:', error);
@@ -127,7 +127,11 @@ export default function PatientCreateAppointment( {medicalId} ) {
     console.log('nurse',nurse)
     try {
       const formattedDate = date.toISOString().split('T')[0];
+      
+      const fullName = `${first_name} ${last_name}`;
+      console.log('fullname',fullName)
       const appointmentData = {
+        patientName : fullName,
         doctorId: selectedDoctor,
         nurseId: nurse.NurseId,
         nurseName: nurse.Name,
@@ -136,7 +140,8 @@ export default function PatientCreateAppointment( {medicalId} ) {
         appointmentType,
         reason,
         date: formattedDate,
-        timeSlot: selectedTimeSlot
+        timeSlot: selectedTimeSlot,
+        patientBillingId: patientBillingId
       };
       console.log('appointmentDate',appointmentData)
       // You can post this data to the backend API

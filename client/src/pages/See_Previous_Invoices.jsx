@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './billing_staff_invoice.css';
 
 
-const See_Patient_Balance = () => {
+const See_Previous_Invoices = () => {
     const [patient, setPatient] = useState('');
     const navigate = useNavigate();
+    const choice = (localStorage.getItem('choice') === 'true');
 
     
     useEffect(() => {
@@ -19,58 +20,30 @@ const See_Patient_Balance = () => {
         }
     }, []);
 
-    const setTotal = () =>{
-        var sum = 0;
-            for(var i =0; i < patient.length; i++){
-                sum += patient[i].cost;
-            }
-            return sum;
-    }
-
-    
-
     const handleLogout = () => {
         localStorage.removeItem('patient'); // Clear employee info
         navigate('/Billing_Staff_View/SearchPatient'); // Navigate to the main page
     };
 
-
-    const handleButtonClick = () => {
-        const userConfirmed = window.confirm('Are you sure you want to proceed?');
-    
-        if (userConfirmed) {
-          // The user clicked "OK"
-          return true;
-        } else {
-          // The user clicked "Cancel"
-          return false;
-
-        }
-    };
-   
     if (!patient) {
         return <div>No patient information found.</div>;
     }
 
     const handleonClick = async (index) =>{
-       if(!handleButtonClick()){
-            return;
-       }
         localStorage.setItem('single_appointment', JSON.stringify(patient[index]));
         const ID = patient[index].appointment_ID;
 
         console.log("app index: ", ID);
-        try{
-            await axios.put(`https://group8backend.azurewebsites.net/See_Patient_Balance`, {ID});
-            await axios.post(`https://group8backend.azurewebsites.net/See_Patient_Balance`, {ID});
-            console.log("office ID: ",patient[index].officeID);
 
+        try{
+            console.log(patient[index].officeID);
             const offID = patient[index].officeID;
-            const res = await axios.post(`https://group8backend.azurewebsites.net/Created_invoice`, {offID});
+            const res = await axios.post(`https://group8backend.azurewebsites.net/Created_invoice`, {offID, choice});
             localStorage.setItem('office_loc', JSON.stringify(res.data));
             console.log("office retrieved: ",res.data);
+
+
         }catch(e){
-            console.log("catched");
             console.log(e);
             return;
         }
@@ -82,18 +55,18 @@ const See_Patient_Balance = () => {
 try{
     return (
         <div>
-            <h1>Unpaid Bills</h1>
-            <p>ID: {patient[0].medical_ID}</p>
-            <p>Name: {patient[0].first_name} {patient[0].last_name}</p>
+            <h1>Paid Invoices</h1>
+            <p>ID: {patient[0].patientmedicalID}</p>
+            <p>Name: {patient[0].patientName}</p>
 
-            <div className='list'>
-                <table>
+            <div className='invoiceList'>
+                <table className='invoicetable'>
                     <thead>
                         <tr>
                             <th>Appointment ID</th>
                             <th>Date and Time</th>
                             <th>Doctor</th>
-                            <th>Cost</th>
+                            <th>Paid On</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -101,12 +74,12 @@ try{
                         {patient.map((patient, index) => (
                                 <tr key ={patient.appointment_ID}>
                                 <td>{patient.appointment_ID}</td>
-                                <td>{patient.dateTime}</td>
+                                <td>{patient.appointmentDateTime}</td>
                                 <td>{patient.doctor}</td>
-                                <td>$ {patient.cost}</td>
+                                <td>{patient.created}</td>
                                 <td>
                                     <button onClick={() => handleonClick(index)}>
-                                        Pay
+                                        See Invoice
                                     </button>
                                 </td>
                             </tr>
@@ -115,10 +88,7 @@ try{
                     </tbody>
                 </table>
             </div>
-
-                <h4>Total Due: $ {setTotal()}</h4>
-
-
+            <br />
             <button className = "logout" onClick={handleLogout}>Return</button>
 
         </div>
@@ -142,4 +112,4 @@ try{
 
 
 
-export default See_Patient_Balance;
+export default See_Previous_Invoices;

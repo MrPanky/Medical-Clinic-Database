@@ -1,0 +1,194 @@
+/* Main dashboard layout */
+.os_dashboard {
+    display: flex;
+    flex-direction: column;
+    padding: 40px; /* Increase padding to give more space around the content */
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif; /* Better font for readability */
+}
+
+.os_header {
+    text-align: center;
+    font-size: 32px;
+    color: #007bff;
+    font-weight: 600; /* Make the header bold */
+    margin-bottom: 30px;
+}
+
+/* Filter section (Card) */
+.os_filter-card {
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside card */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
+    margin-bottom: 30px; /* Space below the card */
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+}
+
+.os_filter-card:hover {
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Filter inputs */
+.os_filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.os_label {
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.os_select, .os_input-date {
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.os_button {
+    padding: 20px 20px;
+    font-size: 18px;
+    background-color: rgb(86, 149, 237);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.os_button:hover {
+    background-color: rgb(46, 115, 211);
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Charts section */
+.os_charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-left: 70px;
+    margin-right: 0px;
+}
+
+.os_chart-container {
+    flex: 1 1 45%;
+    min-width: 450px;
+    margin: 15px;
+    height: 325px;
+}
+
+/* Aggregate information section */
+.os_card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+/* Info card styles with hover effect */
+.os_card {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+    flex: 1 1 200px;
+    max-width: 300px;
+    box-sizing: border-box;
+    cursor: pointer; /* Pointer cursor to indicate interactivity */
+}
+
+.os_card:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.os_card h4 {
+    margin: 0 0 8px; /* Space between title and paragraph */
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.os_card p {
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Wrapper container for the entire page */
+.os_page-container {
+    width: 100%;
+    max-width: 1200px; /* Optional: Control the max width for responsiveness */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+
+    background-color: #e6eaec;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 10px 0;
+    cursor: pointer; /* Pointer cursor to indicate interactivity */
+}
+
+.os_page-container2 {
+    width: 100%;
+    max-width: 1200px; /* Optional: Control the max width for responsiveness */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+
+    background-color: #e3e9ec;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 10px 0;
+    cursor: pointer; /* Pointer cursor to indicate interactivity */
+}
+.os_page-container:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+
+/* Header Container with hover effect */
+.os_header-container {
+    display: inline-block;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: rgb(86, 149, 237);
+    transition: background-color 0.3s, transform 0.3s ease-in-out;
+    margin-bottom: 5px; /* Creates a gap between the header and filter sections */
+}
+
+.os_header-container:hover {
+    transform: translateY(-3px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.os_header-text {
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
