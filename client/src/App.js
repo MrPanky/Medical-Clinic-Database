@@ -27,11 +27,17 @@ import Update_OfficeStaff from "./pages/Update_OfficeStaff";
 import Update_BillingStaff from "./pages/Update_BillingStaff";
 import Appointment_Info from "./pages/Appointment_Info";
 import Patient_Info from "./pages/Patient_Info";
+import Office_Statistics from "./pages/Office_Statistics";
+//billing staff routes
 import Created_invoice from "./pages/Created_invoice";
 import SearchPatient from "./pages/SearchPatient";
 import See_Patient_Balance from "./pages/See_Patient_Balance";
 import See_Previous_Invoices from "./pages/See_Previous_Invoices";
 import Past_Due_Patients from "./pages/Past_Due_Patients";
+import Search_Patient_ID from "./pages/Search_Patient_ID";
+import Results_Patient_ID from "./pages/Results_Patient_ID";
+//end of billing staff routes
+import Front_Page from "./pages/Front_Page";
 
 
 
@@ -41,7 +47,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Front_Page />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/employee_info" element={<Employee_Info />} />
           <Route path="/doctor_view" element={<Doctor_View />} />
           <Route path="/Doc_Avail_Summary/:employeeId" element={<Doc_Avail_Summary />} />
@@ -56,6 +63,8 @@ function App() {
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
           <Route path="/patient_view" element={<Patient_View />} />
+          <Route path="/director_view/office_statistics" element={<Office_Statistics />} />
+          <Route path="/patient_view" element={<Patient_View />} /> 
           <Route path="/appointment_info/:appointmentId" element={<Appointment_Info />} />
           <Route path="/patient_info/:id" element={<Patient_Info />} />
           <Route path="/doctors" element={<Doctors />} />
@@ -70,7 +79,8 @@ function App() {
           <Route path="/billing_staff_view/SearchPatient/See_Previous_Invoices" element={<See_Previous_Invoices />} />
           <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance/Created_invoice" element={<Created_invoice />} />
           <Route path="/billing_staff_view/Past_Due_Patients" element={<Past_Due_Patients />} />
-
+          <Route path="/billing_staff_view/Search_Patient_ID" element={<Search_Patient_ID />} />
+          <Route path="/billing_staff_view/Search_Patient_ID/Results_Patient_ID" element={<Results_Patient_ID />} />
         </Routes>
       </BrowserRouter>
     </div>

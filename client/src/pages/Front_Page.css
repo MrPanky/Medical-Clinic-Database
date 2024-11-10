@@ -1,0 +1,185 @@
+/* Main App Container */
+.group8-app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Header Section */
+.group8-header {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.group8-header:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+.group8-header h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.group8-header h1:hover {
+    color: #4CAF50; /* Change text color on hover */
+}
+
+.group8-header p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.group8-header p:hover {
+    color: #f1f1f1; /* Light color change on hover */
+}
+
+/* Login Button */
+.group8-login-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: inline-block;
+}
+
+.group8-login-button:hover {
+    background-color: #45a049; /* Darker green */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Info Section */
+.group8-info-section {
+    margin-top: 60px;
+    text-align: center;
+    max-width: 1000px;
+    padding: 0 20px;
+}
+
+/* Info Cards */
+.group8-info-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.group8-info-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    min-width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.group8-info-card:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+}
+
+.group8-info-card h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.group8-info-section h4 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.group8-info-card p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Footer Section */
+.group8-footer {
+    margin-top: 60px;
+    padding: 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.group8-footer:hover {
+    transform: translateY(-5px); /* Slight lift */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.group8-footer p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.group8-footer p:hover {
+    color: #f1f1f1; /* Light text color on hover */
+}
+
+/* Contact Info Links */
+.group8-contact-info {
+    display: flex; /* Using flexbox to align items horizontally */
+    justify-content: center; /* Center the content */
+    gap: 20px; /* Add space between phone and fax */
+    margin-top: 10px;
+}
+
+.group8-contact-info a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.group8-contact-info a:hover {
+    color: #f1f1f1;
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .group8-info-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .group8-info-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}

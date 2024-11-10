@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './style.css';
-
 
 const Doctor_View = () => {
     const [employee, setEmployee] = useState(null);
@@ -45,7 +43,6 @@ const Doctor_View = () => {
             fetchAllInfo();
 
         }
-
     }, []);
 
     useEffect(() => {

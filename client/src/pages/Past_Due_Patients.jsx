@@ -36,8 +36,8 @@ try{
         <div>
             <h1>Past Due Patients</h1>
 
-            <div className='list'>
-                <table>
+            <div className='invoiceList'>
+                <table className='invoicetable'>
                     <thead>
                         <tr>
                             <th>Patient ID</th>
@@ -51,11 +51,12 @@ try{
                     <tbody>
                         {patients.map(patient => (
                                 <tr key ={patient.medical_ID}>
+                                <td>{patient.medical_ID}</td>
                                 <td>{patient.first_name} {patient.last_name}</td>
                                 <td className='table-cell'>{patient.personal_email}</td>
-                                <td>{patient.home_phone}</td>
-                                <td>{patient.work_phone}</td>
-                                <td>{patient.cell_phone}</td>
+                                <td>{patient.home_phone} </td>
+                                <td>{patient.work_phone} </td>
+                                <td>{patient.cell_phone} </td>
                             </tr>
                         ))}
 
