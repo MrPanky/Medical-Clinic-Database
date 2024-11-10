@@ -1,0 +1,310 @@
+/*.App {
+    height: 100vh;
+    padding: 0 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #b90404;
+    transition: background-color 0.3s ease-in-out;
+    overflow-y: auto;
+    /* Allow scrolling if content exceeds viewport height 
+}*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #78beb9;
+}
+
+.doc_grid_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columns of equal width */
+    grid-gap: 20px;
+    /* Gap between elements */
+}
+
+/* Form Container */
+.doc_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    outline: 4px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Add transition */
+}
+
+/* .doc_form:hover { */
+/* transform: translateY(-5px); */
+/* Lift effect on hover */
+/* box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); */
+/* Enhanced shadow */
+/* } */
+
+/* Logout Button */
+.doc_logout {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: red;
+    /* Red background */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* , transform 0.2s ease; */
+}
+
+.doc_logout:hover {
+    background-color: rgb(230, 230, 139);
+    color: rgb(0, 0, 0)
+        /* transform: translateY(-3px); */
+}
+
+
+.doc_container {
+    background-color: #2ebbf3;
+    /* Light background for neomorphism */
+    padding: 20px;
+    border-radius: 12px;
+    outline: 4px solid rgb(223, 100, 100);
+    /*box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2),
+        -8px -8px 15px rgba(255, 255, 255, 0.7);*/
+    transition: background-color 0.2s;
+    /* transition: transform 0.3s, box-shadow 0.3s; */
+    /* Transition for hover effect */
+    max-height: 300px;
+    /* Set a maximum height for scrolling */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
+
+/* Specific styles for larger containers */
+.doc_large {
+    grid-column: span 2;
+    /* Span across two columns */
+}
+
+.doc_container:hover {
+    background-color: rgb(230, 230, 139);
+    /*transform: translateY(-5px);
+    /* Lift effect */
+    /*box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
+        -4px -4px 10px rgba(255, 255, 255, 0.9); */
+}
+
+.doc_patients {
+    background-color: #2ebbf3;
+    /* Light blue for patients overview */
+}
+
+.doc_referral {
+    background-color: rgb(243, 242, 242);
+}
+
+.doc_appointments {
+    background-color: #2ebbf3;
+    /* Light red for appointments */
+}
+
+.doc_info_container {
+    background-color: #2ed4fd;
+    padding: 20px;
+    border-radius: 12px;
+    outline: 4px solid rgb(0, 0, 0);
+    /* box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2),
+        -8px -8px 15px rgba(255, 255, 255, 0.7); */
+    transition: transform 0.3s, box-shadow 0.3s;
+    /* Transition for hover effect */
+}
+
+.doc_info_container button {
+    background-color: rgb(112, 95, 95)
+}
+
+
+
+/* Styles for info cards */
+.doc_info_card {
+    background-color: #ffffff;
+    /* White background for info cards */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px 0;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    /* transition: transform 0.2s, box-shadow 0.2s; */
+    /* Transition for hover effect */
+}
+
+.doc_info_card:hover {
+    transform: translateY(-3px);
+    /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Enhanced shadow on hover */
+}
+
+.doc_info_card h3 {
+    margin: 0 0 8px;
+}
+
+.doc_info_card p {
+    margin: 4px 0;
+}
+
+.doc_updateAvail {
+    padding: 12px 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    /* Red background */
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.doc_updateAvail:hover {
+    background-color: rgb(202, 188, 188);
+    /*transform: translateY(-3px);*/
+}
+
+.doc_updateAvail:active {
+    background-color: rgb(129, 117, 117);
+}
+
+.doc_avail {
+    background-color: #d8f4ff;
+    /* Light background for neomorphism */
+    padding: 20px;
+    border-radius: 12px;
+    outline: 4px solid rgb(145, 145, 145);
+    /*box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2),
+        -8px -8px 15px rgba(255, 255, 255, 0.7);*/
+    transition: background-color 0.2s;
+    /* transition: transform 0.3s, box-shadow 0.3s; */
+    /* Transition for hover effect */
+    max-height: 300px;
+    /* Set a maximum height for scrolling */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
+
+.doc_appointment-form {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #333;
+}
+
+.doc_form-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.doc_form-group #reason {
+    border-radius: 5px;
+    width: 240px;
+}
+
+.doc_form-group #doctor {
+    border-radius: 5px;
+    width: 220px;
+    height: 25px;
+}
+
+/* .doc_PatientView .form-group #facility {
+    border-radius: 5px;
+    width: 220px;
+    height: 25px;
+} */
+
+.doc_appointment-form #timeSlot {
+    border-radius: 5px;
+    width: 220px;
+    height: 25px;
+
+}
+
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #444;
+}
+
+.form-control {
+    width: calc(100% - 22px);
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+textarea.form-control {
+    height: 40px;
+    /* Match the height of other inputs */
+    resize: vertical;
+    min-height: 40px;
+    /* Set a minimum height */
+    max-height: 120px;
+    /* Set a maximum height */
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.date-picker-wrapper {
+    width: 100%;
+}

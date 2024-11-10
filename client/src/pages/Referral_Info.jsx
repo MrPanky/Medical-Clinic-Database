@@ -58,9 +58,9 @@ const Referral_Info = () => {
 
     }
     return (
-        <div className="di_patients info_container">
+        <div className="doc_referral doc_info_container">
             <h2>Referral Summary</h2>
-            <div className="info_card">
+            <div className="doc_info_card">
                 <p><strong>Patient Name:</strong> {referral.patient_contact_info} {referral.patient_ID}</p>
                 <p><strong>Referring Doctor:</strong> {referral.originating_doctor_contact_info} {referral.originating_doctor_ID}</p>
                 <p><strong>Reason:</strong> {referral.reason}</p>

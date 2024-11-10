@@ -79,7 +79,7 @@ const OfficeStaffView = () => {
           <div className="ofs-inner-card">
             <h4>Create New Patient</h4>
             <p>Register a new patient in the system.</p>
-            <button onClick={() => navigate('/add_patient')}>Create New Patient</button>
+            <button onClick={() => navigate('/add_patient')} className="ofs-btn">Create New Patient</button>
           </div>
           <div className="ofs-inner-card">
             <h4>Create Appointment</h4>
@@ -104,12 +104,12 @@ const OfficeStaffView = () => {
           <div className="ofs-inner-card">
             <h4>Update Employee Password</h4>
             <p>Update an employee's password for their account.</p>
-            <button onClick={() => navigate('/update_employee_password')}>Update Employee Password</button>
+            <button onClick={() => navigate('/update_employee_password')} className="ofs-btn">Update Employee Password</button>
           </div>
           <div className="ofs-inner-card">
             <h4>Update Patient Password</h4>
             <p>Update a patient's password for their account.</p>
-            <button onClick={() => navigate('/update_patient_password')}>Update Patient Password</button>
+            <button onClick={() => navigate('/update_patient_password')} className="ofs-btn">Update Patient Password</button>
           </div>
         </div>
 
@@ -128,8 +128,8 @@ const OfficeStaffView = () => {
 
                   {/* Buttons for Update and Delete */}
                   <div className="patient-buttons">
-                  <button className="ofs-update" onClick={() => handlePatientClick(patient.medical_ID)}>Update</button>
-                  <button className="ofs-delete" onClick={() => handleDeletePatient(patient.medical_ID)}>Delete</button>
+                    <button className="ofs-update" onClick={() => handlePatientClick(patient.medical_ID)}>Update</button>
+                    <button className="ofs-delete" onClick={() => handleDeletePatient(patient.medical_ID)}>Delete</button>
                   </div>
                 </div>
               ))
@@ -142,7 +142,7 @@ const OfficeStaffView = () => {
         {/* User Info Card */}
         <div className="ofs-card">
           <h3>User Info</h3>
-          <div className="di_info-card">
+          <div className="ofs-inner-card">
             <p><strong>Name:</strong> {employee.first_name} {employee.last_name}</p>
             <p><strong>Employee ID:</strong> {employee.employee_ID}</p>
             <p><strong>Role:</strong> Office Staff</p>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './medical_staff_style.css';
 
 const Doctor_View = () => {
     const [employee, setEmployee] = useState(null);
@@ -103,20 +103,15 @@ const Doctor_View = () => {
         }
     }
 
-    // const handleViewAvailability = async (doctorId) => { //doctorId passed as argument
-    //     try {
-    //         const res = await axios.get(`https://group8backend.azurewebsites.net/doc_availability/${doctorId}`); //request doctors_patient entries with doctor_ids
-    //         setAvailability(res.data); //update patients state with res
-    //     } catch (err) {
-    //         console.log('Error fetching availability:', err);
-    //     }
-    // };
+    // const handleReviewClick = (medId) => {
+    //     if (medId) {
+    //         try {
+    //             const res = await axios.get(`https://group8backend.azurewebsites.net/patient_check/${doctorId}`);
+    //         }
 
-    // const handleViewAvailability = async (doctorId) => {
-    //     try {
-    //         const res = await axios.get()
     //     }
     // }
+
     const handleChange = (e) => {
         setPatientWeight(prev => ({ ...prev, medicalId: e.target.value }));
 
@@ -132,21 +127,21 @@ const Doctor_View = () => {
     }
 
     return ( //for displaying stuff I guess
-        <div className="grid-container">
-            <div className="form">
+        <div className="doc_grid_container">
+            <div className="doc_form">
                 <h1>Employee Information</h1>
                 <p>ID: {employee.employee_ID}</p>
                 <p>Name: {employee.first_name} {employee.last_name}</p>
                 <p>Role: {employee.role}</p>
-                <button className="logout" onClick={handleLogout}>Logout</button>
+                <button className="doc_logout" onClick={handleLogout}>Logout</button>
             </div>
 
-            <div className="di_container di_appointments">
+            <div className="doc_container doc_appointments">
                 <h2>Upcoming Appointments</h2>
                 {appointments.length > 0 ? (
                     appointments.map(appointment => (
                         <div
-                            className="di_info-card"
+                            className="doc_info_card"
                             key={appointment.appointment_ID}
                             onClick={() => navigate(`/appointment_info/${appointment.appointment_ID}`)}
                         >
@@ -163,12 +158,12 @@ const Doctor_View = () => {
                     onClick={() => navigate(`/Avail_summary/${employee.employee_ID}`)}
                 ></button> */}
             </div>
-            <div className="di_container di_patients">
+            <div className="doc_container doc_patients">
                 <h2>Patients Overview</h2>
                 {patients.length > 0 ? (
                     patients.map(patient => (
                         <div
-                            className="di_info-card"
+                            className="doc_info_card"
                             key={patient.medical_ID}
                             onClick={() => navigate(`/patient_info/${patient.medical_ID}`)}
                         >
@@ -181,12 +176,12 @@ const Doctor_View = () => {
                     <p>No patients found for this doctor.</p>
                 )}
             </div>
-            <div className="di_container di_patients">
+            <div className="doc_container doc_patients">
                 <h2>Pending Referrals</h2>
                 {referrals.length > 0 ? (
                     referrals.map(referral => (
                         <div
-                            className="di_info-card"
+                            className="doc_info_card"
                             key={referral.referral_ID}
                             onClick={() => navigate(`/Referral_Info/${referral.referral_ID}`)}
 
@@ -201,33 +196,25 @@ const Doctor_View = () => {
                     <p>No pending referrals</p>
                 )}
             </div>
-            <div className="di_container"
+            <div className="doc_container"
                 onClick={() => navigate(`/Create_Referral/${employee.employee_ID}`)}
             >
                 <h2> Generate Referral </h2>
 
             </div>
-            <div className="di_container"
+            <div className="doc_container"
                 onClick={() => navigate(`/Doc_Avail_Summary/${employee.employee_ID}`)}
             >
                 <h2> Edit available hours</h2>
                 {/* <div onClick={() => navigate(`/Avail_summary/${employee.employee_ID}`)}>
                     <h3>See Current Availability</h3> */}
             </div>
-            <div className="di_container"
-                onClick={() => navigate(`/Patient_Weight_Review/${employee.employee_ID}`)}
-            >
-                <h2> Edit available hours</h2>
-                {/* <div onClick={() => navigate(`/Avail_summary/${employee.employee_ID}`)}>
-                    <h3>See Current Availability</h3> */}
-            </div>
-            <div className='d_container di_patients'>
-            <div className="di_info-card">
-                            <h1>Weight Report</h1>
+            <div className='doc_container doc_patients'>
+                <h1>Weight Report</h1>
                 <input type="text" placeholder='patient_ID MXXXXXXXX' onChange={handleChange} name='patient_ID' />
-                <button onClick={() => navigate(`/Patient_Weight_Review/${patientWeight.medicalId}`)}> Review Weight History</button>
-                        </div>
-                
+                {patientWeight.medicalId && (
+                    <button onClick={() => navigate(`/Patient_Weight_Review/${patientWeight.medicalId}`)}> Review Weight History</button>
+                )}
             </div>
             {/* {availability.length > 0 ? (
 

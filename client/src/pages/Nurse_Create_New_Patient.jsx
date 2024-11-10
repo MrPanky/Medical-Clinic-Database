@@ -10,11 +10,11 @@ const Nurse_Create_New_Patient = () => {
     const [patient, setPatient] = useState({
         medical_ID: "",
         billing_ID: "",
-        first_name: "",
+        first_name: "dude",
         last_name: "",
         age: null,
         birthdate: "",
-        address_line_1: "",
+        address_line_1: "Cuba",
         address_line_2: "",
         city: "",
         state: "",
@@ -119,7 +119,7 @@ const Nurse_Create_New_Patient = () => {
     }
 
     return (
-        <div className='form'>
+        <div className='doc_form'>
             <h1>Create New Patient</h1>
             <input type="text" placeholder='First Name' onChange={handleChange} name='first_name' />
             <input type="text" placeholder='Last Name' onChange={handleChange} name='last_name' />

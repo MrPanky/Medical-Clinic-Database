@@ -22,6 +22,7 @@ export default function Nurse_Create_Appointment() {
     const [selectedDoctorID, setSelectedDoctorID] = useState(''); // ignore this line
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [patientName, setPatientName] = useState('');
     useEffect(() => {
         if (selectedDoctor && date && selectedFacility && selectedTimeSlot) {
             setIsSubmitEnabled(true);
@@ -128,8 +129,16 @@ export default function Nurse_Create_Appointment() {
         const nurse = defaultNurses[selectedFacility]
         console.log('nurse', nurse)
         try {
+            const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_patient_name/${medicalId}`)
+            console.log("the patients name returned is...", res.data)
+            console.log("res data is..", res.data);
+            const name = res.data[0].first_name + " " + res.data[0].last_name;
+            console.log("first_name says...", name);
+            setPatientName(name);
+            console.log("patientName is...", patientName);
             const formattedDate = date.toISOString().split('T')[0];
             const appointmentData = {
+                patName: patientName,
                 doctorId: selectedDoctor,
                 nurseId: nurse.NurseId,
                 nurseName: nurse.Name,
@@ -142,7 +151,7 @@ export default function Nurse_Create_Appointment() {
             };
             console.log('appointmentDate', appointmentData)
             // You can post this data to the backend API
-            await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/create_appointment`, appointmentData);
+            await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/nurse_create_appointment`, appointmentData);
             alert('Appointment created successfully');
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -170,11 +179,11 @@ export default function Nurse_Create_Appointment() {
     };
 
     return (
-        <div className='appointment-form'>
+        <div className='doc_appointment-form'>
             <h2>Create Appointment</h2>
             <form onSubmit={handleSubmit}>
                 {/* Doctor Dropdown */}
-                <div className='form-group'>
+                <div className='doc_form-group'>
                     <label htmlFor="doctor">Provider (Doctor):</label>
                     <select
                         id="doctor"
@@ -191,7 +200,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Facility Dropdown */}
-                <div className='form-group'>
+                <div className='doc_form-group'>
                     <label htmlFor="facility">Facility:</label>
                     <select
                         id="facility"
@@ -207,7 +216,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Appointment Type */}
-                <div className='form-group'>
+                <div className='doc_form-group'>
                     <label htmlFor="appointmentType">Appointment Type:</label>
                     <input
                         type="text"
@@ -219,7 +228,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Reason for Visit */}
-                <div className="form-group">
+                <div className="doc_form-group">
                     <label htmlFor="reason">Reason for Visit:</label>
                     <textarea
                         id="reason"
@@ -230,7 +239,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Date Picker (enabled only if doctor and facility are selected) */}
-                <div className="form-group">
+                <div className="doc_form-group">
                     <label htmlFor="date">Date:</label>
                     {/*<input
             type="date"
@@ -270,9 +279,9 @@ export default function Nurse_Create_Appointment() {
                     </select>
                 </div>
 
-                <button type="submit" className='btn' disabled={!isSubmitEnabled}>Create Appointment</button>
+                <button type="submit" className='doc_btn' disabled={!isSubmitEnabled}>Create Appointment</button>
                 {errorMessage && (
-                    <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
+                    <div className="doc_error-message" style={{ color: 'red', marginTop: '10px' }}>
                         {errorMessage}
                     </div>
                 )}

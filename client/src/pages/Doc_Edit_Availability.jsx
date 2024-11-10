@@ -116,57 +116,57 @@ const Doc_Edit_Availability = () => {
         }
     }
     return (
-        <div className="container">
+        <div className="doc_avail">
             <h1>Monday</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setMonAvailability('morning')}> Morning </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setMonAvailability('afternoon')}> Afternoon </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setMonAvailability('all day')}> All day </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setMonAvailability('not available')}> Not Available </button>
             <h1>Tuesday</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setTuesAvailability('morning')}> Morning </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setTuesAvailability('afternoon')}> Afternoon </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setTuesAvailability('all day')}> All day </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setTuesAvailability('not available')}> Not Available </button>
             <h1>Wednesday</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setWedAvailability('morning')}> Morning </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setWedAvailability('afternoon')}> Afternoon </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setWedAvailability('all day')}> All day </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setWedAvailability('not available')}> Not Available </button>
             <h1>Thursday</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setThursAvailability('morning')}> Morning </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setThursAvailability('afternoon')}> Afternoon </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setThursAvailability('all day')}> All day </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setThursAvailability('not available')}> Not Available </button>
             <h1>Friday</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setFriAvailability('morning')}> Morning </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setFriAvailability('afternoon')}> Afternoon </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setFriAvailability('all day')}> All day </button>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => setFriAvailability('not available')}> Not Available </button>
             <h1>CONFIRM SELECTIONS</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => pushUpdatedAvailability()}> Confirm </button>
             <h1>Return home</h1>
-            <button className="updateAvail"
+            <button className="doc_updateAvail"
                 onClick={() => navigate('/')}>Home</button>
         </div>
 
