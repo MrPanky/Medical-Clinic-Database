@@ -18,7 +18,7 @@ const Doc_Edit_Availability = () => {
     useEffect(() => {
         const fetchAvailability = async () => {
             try {
-                const res = await axios.get(`https://group8backend.azurewebsites.net/doc_availability/${employeeId}`);
+                const res = await axios.get(`http://localhost:3000/doc_availability/${employeeId}`);
                 setWeeklyAvailability(res.data[0]); // Assuming you get an array
 
                 //await handleMonAvailability(weeklyAvailability.monAvailability)
@@ -38,7 +38,7 @@ const Doc_Edit_Availability = () => {
     // const handleMonAvailability = async (monAvailability) => {
     //     try {
     //         setMonAvailability(monAvailability);
-    //         // await axios.put(`https://group8backend.azurewebsites.net/update_doc_availability/${employeeId}`, {
+    //         // await axios.put(`http://localhost:3000/update_doc_availability/${employeeId}`, {
     //         //     monAvailability: monAvailability
     //         // });
     //         console.log("availability updated");
@@ -50,7 +50,7 @@ const Doc_Edit_Availability = () => {
     // const handleTuesAvailability = async (tuesAvailability) => {
     //     try {
     //         setTuesAvailability(tuesAvailability);
-    //         // await axios.put(`https://group8backend.azurewebsites.net/update_doc_availability/${employeeId}`, {
+    //         // await axios.put(`http://localhost:3000/update_doc_availability/${employeeId}`, {
     //         //     tuesAvailability: tuesAvailability
     //         // });
     //         console.log("availability updated");
@@ -62,7 +62,7 @@ const Doc_Edit_Availability = () => {
     // const handleWedAvailability = async (wedAvailability) => {
     //     try {
     //         setWedAvailability(wedAvailability);
-    //         // await axios.put(`https://group8backend.azurewebsites.net/update_doc_availability/${employeeId}`, {
+    //         // await axios.put(`http://localhost:3000/update_doc_availability/${employeeId}`, {
     //         //     tuesAvailability: tuesAvailability
     //         // });
     //         console.log("availability updated");
@@ -74,7 +74,7 @@ const Doc_Edit_Availability = () => {
     // const handleThursAvailability = async (thursAvailability) => {
     //     try {
     //         setThursAvailability(thursAvailability);
-    //         // await axios.put(`https://group8backend.azurewebsites.net/update_doc_availability/${employeeId}`, {
+    //         // await axios.put(`http://localhost:3000/update_doc_availability/${employeeId}`, {
     //         //     tuesAvailability: tuesAvailability
     //         // });
     //         console.log("availability updated");
@@ -86,7 +86,7 @@ const Doc_Edit_Availability = () => {
     // const handleFriAvailability = async (friAvailability) => {
     //     try {
     //         setFriAvailability(friAvailability);
-    //         // await axios.put(`https://group8backend.azurewebsites.net/update_doc_availability/${employeeId}`, {
+    //         // await axios.put(`http://localhost:3000/update_doc_availability/${employeeId}`, {
     //         //     tuesAvailability: tuesAvailability
     //         // });
     //         console.log("availability updated");
@@ -103,7 +103,7 @@ const Doc_Edit_Availability = () => {
             // thursAvailability = [thursAvailability]
             // friAvailability = [friAvailability]
 
-            await axios.put(`https://group8backend.azurewebsites.net/update_doc_availability/${employeeId}`, {
+            await axios.put(`http://localhost:3000/update_doc_availability/${employeeId}`, {
                 monAvailability: monAvailability,
                 tuesAvailability: tuesAvailability,
                 wedAvailability: wedAvailability,
