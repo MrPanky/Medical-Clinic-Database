@@ -233,3 +233,35 @@ select:focus {
 .show-password label {
     font-size: 10px; 
 }
+
+/*Lee Additions*/
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columns of equal width */
+    grid-gap: 20px;
+    /* Gap between elements */
+}
+
+/*container buttons for updating doctor availability*/
+.updateAvail {
+    padding: 12px 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    /* Red background */
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.updateAvail:hover {
+    background-color: rgb(202, 188, 188);
+    /*transform: translateY(-3px);*/
+}
+
+.updateAvail:active {
+    background-color: rgb(129, 117, 117);
+}
+

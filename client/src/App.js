@@ -31,6 +31,14 @@ import Search_Patient_ID from "./pages/Search_Patient_ID";
 import Results_Patient_ID from "./pages/Results_Patient_ID";
 //end of billing staff routes
 import Front_Page from "./pages/Front_Page";
+import Doc_Avail_Summary from "./pages/Doc_Avail_Summary";
+import Doc_Edit_Availability from "./pages/Doc_Edit_Availability";
+import Create_Referral from "./pages/Create_Referral";
+import Referral_Info from "./pages/Referral_Info";
+import Nurse_Create_Appointment from "./pages/Nurse_Create_Appointment";
+import Nurse_Create_New_Patient from "./pages/Nurse_Create_New_Patient";
+import Patient_Weight_Review from "./pages/Patient_Weight_Review";
+
 
 
 
@@ -66,6 +74,14 @@ function App() {
           <Route path="/billing_staff_view/Past_Due_Patients" element={<Past_Due_Patients />} />
           <Route path="/billing_staff_view/Search_Patient_ID" element={<Search_Patient_ID />} />
           <Route path="/billing_staff_view/Search_Patient_ID/Results_Patient_ID" element={<Results_Patient_ID />} />
+          <Route path="/Doc_Avail_Summary/:employeeId" element={<Doc_Avail_Summary />} />
+          <Route path="/Doc_Edit_Availability/:employeeId" element={<Doc_Edit_Availability />} />
+          <Route path="/Create_Referral/:employeeId" element={<Create_Referral />} />
+          <Route path="/Referral_Info/:referralId" element={<Referral_Info />} />
+          <Route path="/Nurse_Create_Appointment/:medicalId" element={<Nurse_Create_Appointment />} />
+          <Route path="/Nurse_Create_New_Patient/:employeeId" element={<Nurse_Create_New_Patient />} />
+          <Route path="/Patient_Weight_Review/:patientId" element={<Patient_Weight_Review />} />
+
         </Routes>
       </BrowserRouter>
     </div>  

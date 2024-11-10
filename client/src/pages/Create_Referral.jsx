@@ -31,17 +31,21 @@ const Create_Referral = () => {
             try {
                 console.log("fetch last name is being called");
                 const res = await axios.get(`https://group8backend.azurewebsites.net/doctor_Lname/${employeeId}`);
-
+                console.log("res.last name is...: ", res.data[0].last_name)
                 setReferral(prevReferral => ({
                     ...prevReferral, // Spread in previous values
-                    originating_doctor_contact_info: res.last_name // Update only this field
-                }));            } catch (err) {
+                    originating_doctor_contact_info: res.data[0].last_name // Update only this field
+                }));
+            } catch (err) {
                 console.log(err);
             }
         }
         fetchLastName();
     }, [employeeId]);
 
+    useEffect(() => {
+        console.log('Referral info:', referral);
+    }, [referral]);
 
     const navigate = useNavigate()
 
@@ -52,12 +56,12 @@ const Create_Referral = () => {
     function generateRandomId() {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let id = 'R';
-    
+
         // Generate 8 random characters
         for (let i = 0; i < 8; i++) {
             id += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-    
+
         return id;
     }
 
@@ -66,7 +70,7 @@ const Create_Referral = () => {
         try {
             const now = new Date();
             const isoString = now.toISOString();
-            const mysqlDateTime = isoString.slice(0, 19).replace('T', ' '); 
+            const mysqlDateTime = isoString.slice(0, 19).replace('T', ' ');
             const ID = generateRandomId();
             console.log("ON LINE 67 THE ORIGINATING DOCTORS ID IS", referral.originating_doctor_ID);
             const res = await axios.post(`https://group8backend.azurewebsites.net/create_referral/${employeeId}`, {
@@ -99,7 +103,7 @@ const Create_Referral = () => {
         <div className='form'>
             <h1>Create New Referral</h1>
             <input type="text" placeholder='patient_ID MXXXXXXXX' onChange={handleChange} name='patient_ID' />
-            <input type="text" placeholder='patient phone number ##########' onChange={handleChange} name='patient_contact_info' />
+            <input type="text" placeholder='patient name' onChange={handleChange} name='patient_contact_info' />
             <input type="text" placeholder='doctor_ID EXXXXXXXX' onChange={handleChange} name='receiving_doctor_ID' />
             <input type="text" placeholder='reason' onChange={handleChange} name='reason' />
             <button onClick={handleClick}>Submit</button>
