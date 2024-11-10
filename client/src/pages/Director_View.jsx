@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
 import './director_view_style.css';
 
 const Director_View = () => {
@@ -8,8 +8,8 @@ const Director_View = () => {
     const [info, setInfo] = useState([]); // Doctors
     const [patients, setPatients] = useState([]);
     const [staff, setStaff] = useState([]); // Office and Billing Staff
-    const [appointments, setAppointments] = useState([]); 
-    const [officeId, setOfficeId] = useState(null); 
+    const [appointments, setAppointments] = useState([]);
+    const [officeId, setOfficeId] = useState(null);
     const [profit, setProfit] = useState(0); // New state for profit
 
     const navigate = useNavigate();
@@ -25,10 +25,10 @@ const Director_View = () => {
                     const res = await axios.get(`https://group8backend.azurewebsites.net/director_view/${parsedEmployeeData.employee_ID}`);
                     setInfo(res.data);
                     const fetchedOfficeId = await fetchDirectorOfficeId(parsedEmployeeData.employee_ID);
-                    setOfficeId(fetchedOfficeId); 
+                    setOfficeId(fetchedOfficeId);
 
                     await handleViewAppointments(parsedEmployeeData.employee_ID);
-                    
+
                     if (res.data.length > 0) {
                         const firstDoctorId = res.data[0].employee_ID;
                         await handleViewPatients(firstDoctorId);
@@ -88,7 +88,7 @@ const Director_View = () => {
     const handleViewAppointments = async (directorId) => {
         try {
             const res = await axios.get(`https://group8backend.azurewebsites.net/appointments/${directorId}`);
-            const futureAppointments = res.data.filter(appointment => 
+            const futureAppointments = res.data.filter(appointment =>
                 new Date(appointment.dateTime) > new Date()
             );
 
@@ -146,8 +146,8 @@ const Director_View = () => {
                 <h2>Upcoming Appointments</h2>
                 {appointments.length > 0 ? (
                     appointments.map(appointment => (
-                        <div 
-                            className="di_info-card" 
+                        <div
+                            className="di_info-card"
                             key={appointment.appointment_ID}
                             onClick={() => navigate(`/appointment_info/${appointment.appointment_ID}`)}
                         >
@@ -165,7 +165,7 @@ const Director_View = () => {
             <div className="di_container di_reports">
                 <h2>Total Profit Report</h2>
                 <div className="di_info-card">
-                    <p><strong> ${profit.toFixed(2)} </strong></p> 
+                    <p><strong> ${profit.toFixed(2)} </strong></p>
                     <button className="view-stats" onClick={() => navigate('/director_view/office_statistics')}>View Office Statistics</button>
                 </div>
             </div>
@@ -185,14 +185,14 @@ const Director_View = () => {
                 <button className="add" onClick={() => navigate('/add_staff')}>Add Staff</button>
                 {staff.length > 0 ? (
                     staff.map(member => (
-                        <div 
-                            className="di_info-card" 
+                        <div
+                            className="di_info-card"
                             key={member.employee_ID}
                         >
                             <h3>{member.first_name} {member.last_name}</h3>
                             <p>Role: {member.role.replace(/([A-Z])/g, ' $1').trim()}</p>
                             <button className onClick={() => handleDeleteStaff(member.employee_ID)} className="delete">Delete</button>
-                            <button className = "update" onClick={() => {
+                            <button className="update" onClick={() => {
                                 if (member.role === 'OfficeStaff') {
                                     navigate(`/update_OfficeStaff/${member.employee_ID}`);
                                 } else if (member.role === 'BillingStaff') {
@@ -210,8 +210,8 @@ const Director_View = () => {
                 <h2>Patients Overview</h2>
                 {patients.length > 0 ? (
                     patients.map(patient => (
-                        <div 
-                            className="di_info-card" 
+                        <div
+                            className="di_info-card"
                             key={patient.medical_ID}
                             onClick={() => navigate(`/patient_info/${patient.medical_ID}`)}
                         >
@@ -224,14 +224,14 @@ const Director_View = () => {
                     <p>No patients found for this doctor.</p>
                 )}
             </div>
-            
+
             <div className="di_container di_doctors">
                 <h2>Doctors Overview</h2>
                 <button className="add" onClick={() => navigate('/add_doctor')}>Add Doctor</button>
                 {info.length > 0 ? (
                     info.map(doctor => (
-                        <div 
-                            className="di_info-card" 
+                        <div
+                            className="di_info-card"
                             key={doctor.employee_ID}
                         >
                             <h3>{doctor.first_name} {doctor.last_name}</h3>

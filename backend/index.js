@@ -542,6 +542,18 @@ app.put("/reject_referral/:referral_ID", (req, res) => {
 
 })
 
+// app.get("/patient_check/:patientId", (req, res) => {
+//     const patientId = req.params.patientId
+
+//     const q_check_patient_id =
+//     `
+//     SELECT medical_ID
+//     FROM patient
+//     WHERE medical_ID = ?
+//     `
+//     db.query(q_check_patient, [patientId,])
+// })
+
 /*
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

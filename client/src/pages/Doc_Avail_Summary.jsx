@@ -31,8 +31,8 @@ const Doc_Avail_Summary = () => {
 
     return (
         <div>
-            <div className="di_availability info_container">
-                <div className="info_card">
+            <div className="doc_availability doc_info_container">
+                <div className="doc_info_card">
                     <h2>Availability Information</h2>
                     <p><strong>Monday:</strong> {availability.availabilityMon}</p>
                     <p><strong>Tuesday:</strong> {availability.availabilityTues}</p>
@@ -40,7 +40,7 @@ const Doc_Avail_Summary = () => {
                     <p><strong>Thursday:</strong> {availability.availabilityThurs}</p>
                     <p><strong>Friday:</strong> {availability.availabilityFri}</p>
                 </div>
-                <button>
+                <button className="doc_logout">
                     <Link to={`/Doc_Edit_Availability/${employeeId}`}> Edit Availability</Link>
                 </button>
             </div>

@@ -170,11 +170,11 @@ export default function Nurse_Create_Appointment() {
     };
 
     return (
-        <div className='appointment-form'>
+        <div className='doc_appointment-form'>
             <h2>Create Appointment</h2>
             <form onSubmit={handleSubmit}>
                 {/* Doctor Dropdown */}
-                <div className='form-group'>
+                <div className='doc_form-group'>
                     <label htmlFor="doctor">Provider (Doctor):</label>
                     <select
                         id="doctor"
@@ -191,7 +191,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Facility Dropdown */}
-                <div className='form-group'>
+                <div className='doc_form-group'>
                     <label htmlFor="facility">Facility:</label>
                     <select
                         id="facility"
@@ -207,7 +207,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Appointment Type */}
-                <div className='form-group'>
+                <div className='doc_form-group'>
                     <label htmlFor="appointmentType">Appointment Type:</label>
                     <input
                         type="text"
@@ -219,7 +219,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Reason for Visit */}
-                <div className="form-group">
+                <div className="doc_form-group">
                     <label htmlFor="reason">Reason for Visit:</label>
                     <textarea
                         id="reason"
@@ -230,7 +230,7 @@ export default function Nurse_Create_Appointment() {
                 </div>
 
                 {/* Date Picker (enabled only if doctor and facility are selected) */}
-                <div className="form-group">
+                <div className="doc_form-group">
                     <label htmlFor="date">Date:</label>
                     {/*<input
             type="date"
@@ -270,9 +270,9 @@ export default function Nurse_Create_Appointment() {
                     </select>
                 </div>
 
-                <button type="submit" className='btn' disabled={!isSubmitEnabled}>Create Appointment</button>
+                <button type="submit" className='doc_btn' disabled={!isSubmitEnabled}>Create Appointment</button>
                 {errorMessage && (
-                    <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
+                    <div className="doc_error-message" style={{ color: 'red', marginTop: '10px' }}>
                         {errorMessage}
                     </div>
                 )}

@@ -33,7 +33,7 @@ const Login = () => {
         }
 
         try {
-            const res = await axios.post(`https://group8backend.azurewebsites.net/login`, { ID, password });
+            const res = await axios.post(`http://localhost:3000/login`, { ID, password });
 
             // Check if employee or patient data is found
             if (res.data && !res.data.message) {
@@ -44,11 +44,11 @@ const Login = () => {
                     console.log('Stored employee data:', res.data);
 
                     // Redirect based on employee role
-                    switch(res.data.role) {
-                        case 'Doctor': 
+                    switch (res.data.role) {
+                        case 'Doctor':
                             navigate("/doctor_view");
                             break;
-                        case 'Nurse': 
+                        case 'Nurse':
                             navigate("/nurse_view");
                             break;
                         case 'BillingStaff':
@@ -56,15 +56,15 @@ const Login = () => {
                             break;
                         case 'OfficeStaff':
                             navigate("/office_staff_view");
-                            break; 
+                            break;
                         case 'Director':
                             navigate("/director_view");
-                            break;   
+                            break;
                         default:
                             console.log("Invalid employee role");
                     }
-                    
-                } else if (firstLetter === 'M') {  
+
+                } else if (firstLetter === 'M') {
                     localStorage.setItem('patient', JSON.stringify(res.data));
                     console.log('Stored patient data:', res.data);
                     navigate("/patient_view");
@@ -84,22 +84,22 @@ const Login = () => {
         <div>
             <h1>Login:</h1>
             <div className="form">
-                <input 
-                    type="text" 
-                    placeholder="ID" 
-                    onChange={handleIDChange} 
-                    name="ID" 
-                    className={error ? 'input-error' : ''} 
+                <input
+                    type="text"
+                    placeholder="ID"
+                    onChange={handleIDChange}
+                    name="ID"
+                    className={error ? 'input-error' : ''}
                 />
-                <input 
-                    type={showPassword ? 'text' : 'password'} 
-                    placeholder="Password" 
-                    onChange={handlePasswordChange} 
-                    name="password" 
-                    className={error ? 'input-error' : ''} 
+                <input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password"
+                    onChange={handlePasswordChange}
+                    name="password"
+                    className={error ? 'input-error' : ''}
                 />
                 <label className="show-password">
-    <               input type="checkbox" checked={showPassword} onChange={togglePasswordVisibility} className="checkbox" />
+                    <               input type="checkbox" checked={showPassword} onChange={togglePasswordVisibility} className="checkbox" />
                     Show Password
                 </label>
 

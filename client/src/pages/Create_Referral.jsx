@@ -100,7 +100,7 @@ const Create_Referral = () => {
     }
 
     return (
-        <div className='form'>
+        <div className='doc_form'>
             <h1>Create New Referral</h1>
             <input type="text" placeholder='patient_ID MXXXXXXXX' onChange={handleChange} name='patient_ID' />
             <input type="text" placeholder='patient name' onChange={handleChange} name='patient_contact_info' />
