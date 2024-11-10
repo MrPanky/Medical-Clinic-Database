@@ -772,7 +772,7 @@ app.post('/patient/:id/appointments/nurse_create_appointment', (req, res) => {
             nurseName,          // nurse
             doctorId,           // doctorID
             appointmentType,    // appointment_type
-            'E23456789',            // nurseID
+            nurseId,            // nurseID
             facility,           // officeID
             formattedDateTime, // dateTime
             reason,             // reason for the appointment
