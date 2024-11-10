@@ -222,9 +222,12 @@ const Doctor_View = () => {
                     <h3>See Current Availability</h3> */}
             </div>
             <div className='d_container di_patients'>
-                <h1>Weight Report</h1>
+            <div className="di_info-card">
+                            <h1>Weight Report</h1>
                 <input type="text" placeholder='patient_ID MXXXXXXXX' onChange={handleChange} name='patient_ID' />
                 <button onClick={() => navigate(`/Patient_Weight_Review/${patientWeight.medicalId}`)}> Review Weight History</button>
+                        </div>
+                
             </div>
             {/* {availability.length > 0 ? (
 
