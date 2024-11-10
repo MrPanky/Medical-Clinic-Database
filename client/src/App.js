@@ -7,23 +7,26 @@ import Doctors from "./pages/Doctors";
 import Add_Doctor from "./pages/Add_Doctor";
 import Update_Doctor from "./pages/Update_Doctor";
 import Login from "./pages/Login";
-import Not_Found from "./pages/Not_Found"; 
+import Not_Found from "./pages/Not_Found";
 import Employee_Info from "./pages/Employee_Info";
 import Doctor_View from "./pages/Doctor_View";
+import Doc_Avail_Summary from "./pages/Doc_Avail_Summary";
+import Doc_Edit_Availability from "./pages/Doc_Edit_Availability";
+import Create_Referral from "./pages/Create_Referral";
+import Referral_Info from "./pages/Referral_Info";
 import Nurse_View from "./pages/Nurse_View";
+import Nurse_Create_Appointment from "./pages/Nurse_Create_Appointment";
+import Nurse_Create_New_Patient from "./pages/Nurse_Create_New_Patient";
+import Patient_Weight_Review from "./pages/Patient_Weight_Review";
 import Billing_Staff_View from "./pages/Billing_Staff_View";
 import Office_Staff_View from "./pages/Office_Staff_View";
 import Director_View from "./pages/Director_View";
-import Patient_View from "./pages/Patient_View"; 
-import Add_Staff from "./pages/Add_Staff"; 
+import Patient_View from "./pages/Patient_View";
+import Add_Staff from "./pages/Add_Staff";
 import Update_OfficeStaff from "./pages/Update_OfficeStaff";
 import Update_BillingStaff from "./pages/Update_BillingStaff";
 import Appointment_Info from "./pages/Appointment_Info";
 import Patient_Info from "./pages/Patient_Info";
-import Doc_Avail_Summary from "./pages/Doc_Avail_Summary";
-import Doc_Edit_Availability from "./pages/Doc_Edit_Availability";
-import Create_Referral from "./pages/Create_Referral";
-import View_Edit_Referrals from "./pages/View_Edit_Referrals";
 import Created_invoice from "./pages/Created_invoice";
 import SearchPatient from "./pages/SearchPatient";
 import See_Patient_Balance from "./pages/See_Patient_Balance";
@@ -41,11 +44,18 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/employee_info" element={<Employee_Info />} />
           <Route path="/doctor_view" element={<Doctor_View />} />
+          <Route path="/Doc_Avail_Summary/:employeeId" element={<Doc_Avail_Summary />} />
+          <Route path="/Doc_Edit_Availability/:employeeId" element={<Doc_Edit_Availability />} />
+          <Route path="/Create_Referral/:employeeId" element={<Create_Referral />} />
+          <Route path="/Referral_Info/:referralId" element={<Referral_Info />} />
           <Route path="/nurse_view" element={<Nurse_View />} />
+          <Route path="/Nurse_Create_Appointment/:medicalId" element={<Nurse_Create_Appointment />} />
+          <Route path="/Nurse_Create_New_Patient/:employeeId" element={<Nurse_Create_New_Patient />} />
+          <Route path="/Patient_Weight_Review/:patientId" element={<Patient_Weight_Review />} />
           <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
-          <Route path="/patient_view" element={<Patient_View />} /> 
+          <Route path="/patient_view" element={<Patient_View />} />
           <Route path="/appointment_info/:appointmentId" element={<Appointment_Info />} />
           <Route path="/patient_info/:id" element={<Patient_Info />} />
           <Route path="/doctors" element={<Doctors />} />
@@ -54,20 +64,16 @@ function App() {
           <Route path="/update_doctor/:employee_ID" element={<Update_Doctor />} />
           <Route path="/add_staff" element={<Add_Staff />} />
           <Route path="/update_officestaff/:employee_ID" element={<Update_OfficeStaff />} />
-          <Route path="/update_billingstaff/:employee_ID" element={<Update_BillingStaff />} />  
+          <Route path="/update_billingstaff/:employee_ID" element={<Update_BillingStaff />} />
           <Route path="/billing_staff_view/SearchPatient" element={<SearchPatient />} />
           <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance" element={<See_Patient_Balance />} />
           <Route path="/billing_staff_view/SearchPatient/See_Previous_Invoices" element={<See_Previous_Invoices />} />
           <Route path="/billing_staff_view/SearchPatient/See_Patient_Balance/Created_invoice" element={<Created_invoice />} />
           <Route path="/billing_staff_view/Past_Due_Patients" element={<Past_Due_Patients />} />
-          <Route path="/Doc_Avail_Summary/:employeeId" element={<Doc_Avail_Summary />} />
-          <Route path="/Doc_Edit_Availability/:employeeId" element={<Doc_Edit_Availability />} />
-          <Route path="/Create_Referral/:employeeId" element={<Create_Referral />} />
-          <Route path="/View_Edit_Referrals/:employeeId" element={<View_Edit_Referrals />} />
-          
+
         </Routes>
       </BrowserRouter>
-    </div>  
+    </div>
   );
 }
 

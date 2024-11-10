@@ -10,17 +10,20 @@ const Doctor_View = () => {
     const [appointments, setAppointments] = useState([]);
     const [info, setInfo] = useState([]);
     const [availability, setAvailability] = useState([]);
+    const [referrals, setReferrals] = useState([]);
+    const [patientWeight, setPatientWeight] = useState([{ medicalId: '' }]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const employee_Data = localStorage.getItem('employee'); //retrieve employee info using employee key
+        console.log("HELLO")
         console.log('Retrieved employee data:', employee_Data); // Add this line for debugging
         if (employee_Data) {
             const parsedDoctorInfo = JSON.parse(employee_Data);
             setEmployee(parsedDoctorInfo);
             const fetchAllInfo = async () => {
                 try {
-                    const res = await axios.get(`https://group8backend.azurewebsites.net/doctor_view/${parsedDoctorInfo.employee_ID}`); //use axios to request employee info, passing employeeID as argument
+                    const res = await axios.get(`http://localhost:3000/doctor_view/${parsedDoctorInfo.employee_ID}`); //use axios to request employee info, passing employeeID as argument
                     setInfo(res.data); //use the info we just got to update info state
                     //console.log("Employee state", employee);
                     console.log("Retrieved info", info);
@@ -29,7 +32,7 @@ const Doctor_View = () => {
                     //setOfficeId(fetchedOfficeId); //update officeId state with fetched office ID
 
                     await handleViewAppointments(doctorId); //return array of future appointments, and an array of appintment IDs
-
+                    await handleViewReferrals(doctorId);
                     if (res.data.length > 0) {
                         //const firstDoctorId = res.data[0].employee_ID; //res should correspond to a single employee but whatever
                         await handleViewPatients(doctorId); //get array of patients of doctor
@@ -60,12 +63,18 @@ const Doctor_View = () => {
     useEffect(() => {
         console.log("EMPLOYEE STATE", employee)
     }, [employee]);
+    useEffect(() => {
+        console.log("Current Referrals", referrals)
+    }, [referrals]);
 
     const handleViewAppointments = async (doctorId) => { //argument is directorId
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net//appointments/${doctorId}`);//request appointments that correspond to directorId
-            const futureAppointments = res.data.filter(appointment => //.filter filters data in res using below comparison
-                new Date(appointment.dateTime) > new Date() //create date with appointment datetime, use > to compare to current date
+            const res = await axios.get(`http://localhost:3000/appointments/${doctorId}`);//request appointments that correspond to directorId
+            const futureAppointments = res.data.filter(appointment => { //.filter filters data in res using below comparison
+                const appointmentDate = new Date(appointment.dateTime);
+                const today = new Date();
+                return appointmentDate.getTime() > today.getTime()
+            } //create date with appointment datetime, use > to compare to current date
             ); //=> means lambda function
 
             setAppointments(futureAppointments); //update appointments state with filtered appointment list
@@ -80,16 +89,25 @@ const Doctor_View = () => {
 
     const handleViewPatients = async (doctorId) => { //doctorId passed as argument
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net//doctors_patient/${doctorId}`); //request doctors_patient entries with doctor_ids
+            const res = await axios.get(`http://localhost:3000/doctors_patient/${doctorId}`); //request doctors_patient entries with doctor_ids
             setPatients(res.data); //update patients state with res
         } catch (err) {
             console.log('Error fetching patients:', err);
         }
     };
+    const handleViewReferrals = async (doctorId) => {
+        try {
+            const res = await axios.get(`http://localhost:3000/view_referrals/${doctorId}`);
+            setReferrals(res.data);
+        }
+        catch (err) {
+            console.log('Error fetching referrals', err);
+        }
+    }
 
     // const handleViewAvailability = async (doctorId) => { //doctorId passed as argument
     //     try {
-    //         const res = await axios.get(`https://group8backend.azurewebsites.net//doc_availability/${doctorId}`); //request doctors_patient entries with doctor_ids
+    //         const res = await axios.get(`http://localhost:3000/doc_availability/${doctorId}`); //request doctors_patient entries with doctor_ids
     //         setAvailability(res.data); //update patients state with res
     //     } catch (err) {
     //         console.log('Error fetching availability:', err);
@@ -101,6 +119,10 @@ const Doctor_View = () => {
     //         const res = await axios.get()
     //     }
     // }
+    const handleChange = (e) => {
+        setPatientWeight(prev => ({ ...prev, medicalId: e.target.value }));
+
+    };
 
     const handleLogout = () => {
         localStorage.removeItem('employee'); // Clear employee info
@@ -112,7 +134,7 @@ const Doctor_View = () => {
     }
 
     return ( //for displaying stuff I guess
-        <div className="container">
+        <div className="grid-container">
             <div className="form">
                 <h1>Employee Information</h1>
                 <p>ID: {employee.employee_ID}</p>
@@ -161,6 +183,32 @@ const Doctor_View = () => {
                     <p>No patients found for this doctor.</p>
                 )}
             </div>
+            <div className="di_container di_patients">
+                <h2>Pending Referrals</h2>
+                {referrals.length > 0 ? (
+                    referrals.map(referral => (
+                        <div
+                            className="di_info-card"
+                            key={referral.referral_ID}
+                            onClick={() => navigate(`/Referral_Info/${referral.referral_ID}`)}
+
+                        >
+                            <p>Patient Name: {referral.patient_contact_info}</p>
+                            <p>Referring Doctor: {referral.originating_doctor_contact_info}</p>
+                            <p>Reason: {referral.reason}</p>
+                            <p></p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No pending referrals</p>
+                )}
+            </div>
+            <div className="di_container"
+                onClick={() => navigate(`/Create_Referral/${employee.employee_ID}`)}
+            >
+                <h2> Generate Referral </h2>
+
+            </div>
             <div className="di_container"
                 onClick={() => navigate(`/Doc_Avail_Summary/${employee.employee_ID}`)}
             >
@@ -169,18 +217,17 @@ const Doctor_View = () => {
                     <h3>See Current Availability</h3> */}
             </div>
             <div className="di_container"
-                onClick={() => navigate(`/Create_Referral/${employee.employee_ID}`)}
+                onClick={() => navigate(`/Patient_Weight_Review/${employee.employee_ID}`)}
             >
-                <h2> Generate Referral </h2>
-
+                <h2> Edit available hours</h2>
+                {/* <div onClick={() => navigate(`/Avail_summary/${employee.employee_ID}`)}>
+                    <h3>See Current Availability</h3> */}
             </div>
-            {/* <div className="di_container"
-                //onClick={() => console.log(`/View_Edit_Referrals/${employee.employee_ID}`)}
-                onClick={() => navigate(`/View_Edit_Referrals/${employee.employee_ID}`)}
-            >
-                <h2> View my Referrals </h2>
-
-            </div> */}
+            <div className='d_container di_patients'>
+                <h1>Weight Report</h1>
+                <input type="text" placeholder='patient_ID MXXXXXXXX' onChange={handleChange} name='patient_ID' />
+                <button onClick={() => navigate(`/Patient_Weight_Review/${patientWeight.medicalId}`)}> Review Weight History</button>
+            </div>
             {/* {availability.length > 0 ? (
 
                     
@@ -207,3 +254,4 @@ const Doctor_View = () => {
 };
 
 export default Doctor_View;
+
