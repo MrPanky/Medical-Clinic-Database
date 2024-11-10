@@ -22,6 +22,7 @@ export default function Nurse_Create_Appointment() {
     const [selectedDoctorID, setSelectedDoctorID] = useState(''); // ignore this line
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [patientName, setPatientName] = useState('');
     useEffect(() => {
         if (selectedDoctor && date && selectedFacility && selectedTimeSlot) {
             setIsSubmitEnabled(true);
@@ -128,8 +129,16 @@ export default function Nurse_Create_Appointment() {
         const nurse = defaultNurses[selectedFacility]
         console.log('nurse', nurse)
         try {
+            const res = await axios.get(`http://localhost:3000/nurse_get_patient_name/${medicalId}`)
+            console.log("the patients name returned is...", res.data)
+            console.log("res data is..", res.data);
+            const name = res.data[0].first_name + " " + res.data[0].last_name;
+            console.log("first_name says...", name);
+            setPatientName(name);
+            console.log("patientName is...", patientName);
             const formattedDate = date.toISOString().split('T')[0];
             const appointmentData = {
+                patName: patientName,
                 doctorId: selectedDoctor,
                 nurseId: nurse.NurseId,
                 nurseName: nurse.Name,
@@ -142,7 +151,7 @@ export default function Nurse_Create_Appointment() {
             };
             console.log('appointmentDate', appointmentData)
             // You can post this data to the backend API
-            await axios.post(`http://localhost:3000/patient/${medicalId}/appointments/create_appointment`, appointmentData);
+            await axios.post(`http://localhost:3000/patient/${medicalId}/appointments/nurse_create_appointment`, appointmentData);
             alert('Appointment created successfully');
         } catch (error) {
             if (error.response && error.response.status === 400) {

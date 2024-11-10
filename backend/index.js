@@ -638,6 +638,36 @@ app.post("/nurse_create_patient/:employee_ID", (req, res) => {
 
 })
 
+app.post("/nurse_assign_new_patient/:employee_ID", (req, res) => {
+    //const employeeId = req.params.employee_ID;
+    //console.log("referral contains: ", req);
+    console.log("patient being assigned");
+    // console.log(req.body);
+    // console.log(req.body.medical_ID);
+    // console.log(req.body.last_name);
+    // console.log(req.body.first_name);
+    // console.log(req.body.address);
+    // const now = new Date();
+    // const isoString = now.toISOString();
+    // const mysqlDateTime = isoString.slice(0, 19).replace('T', ' ');
+
+    const q_assign_new_patient =
+        `
+    INSERT INTO doctors_patient (doctor_ID, patient_ID)
+    VALUES (?,?);
+    `
+    const values = [
+        'E12345678',
+        req.body.medical_ID,
+    ]
+    console.log('executing query:', q_assign_new_patient);
+    db.query(q_create_patient, [...values], (err, data) => {
+        if (err) return res.json(err);
+        return res.json("patient assigned", values);
+    })
+
+})
+
 app.get("/nurse_get_app_history/:patientId", (req, res) => {
 
     console.log("MESSAGE", req.params)
@@ -658,6 +688,112 @@ app.get("/nurse_get_app_history/:patientId", (req, res) => {
             return res.status(500).json(err);
         }
         return res.json(appointments);
+    });
+});
+
+app.get("/nurse_get_patient_name/:patientId", (req, res) => {
+
+    const patientId = req.params.patientId
+    console.log("patientId is....:)", patientId)
+
+    const q_patient_name =
+        `SELECT first_name, last_name
+         FROM patient 
+         WHERE medical_ID = ?
+        `;
+
+
+    console.log('executing query:', q_patient_name);
+    db.query(q_patient_name, patientId, (err, patientName) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json(err);
+        }
+        return res.json(patientName);
+    });
+});
+
+app.post('/patient/:id/appointments/nurse_create_appointment', (req, res) => {
+    const medicalId = req.params.id;
+    console.log("patName is...", req.body.patName);
+    const {
+        patName, doctorId, nurseId, nurseName, facility,
+        appointmentType, reason, date, timeSlot
+    } = req.body;
+
+    const randomNumber = Math.floor(1000000 + Math.random() * 9000000); // 7-digit number
+    const appointment_id = `A${randomNumber}`;
+
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
+    const timePattern = /^(\d{1,2}):(\d{2})\s?(am|pm)$/i; // 12-hour format with am/pm
+
+    if (!datePattern.test(date) || !timePattern.test(timeSlot)) {
+        return res.status(400).json({ error: 'Invalid date or time format.' });
+    }
+
+    // Convert timeSlot to 24-hour format
+    const [, hour, minute, period] = timeSlot.match(timePattern);
+    const hour24 = period.toLowerCase() === 'pm' && hour !== '12' ? parseInt(hour) + 12 : period.toLowerCase() === 'am' && hour === '12' ? '00' : hour;
+    const formattedDateTime = `${date} ${hour24}:${minute}:00`;
+    // First query to retrieve the doctor's name
+    console.log('asdf', doctorId)
+    const doctorNameQuery = `
+        SELECT first_name, last_name
+        FROM doctors
+        WHERE employee_ID = ?;
+    `;
+
+    db.query(doctorNameQuery, [doctorId], (err, doctorResult) => {
+        if (err) {
+            console.error('Error retrieving doctor name:', err);
+            return res.status(500).json({ error: 'Failed to retrieve doctor name.' });
+        }
+
+        // Ensure a doctor record was found
+        if (doctorResult.length === 0) {
+            return res.status(404).json({ error: 'Doctor not found.' });
+        }
+
+        const doctorName = `${doctorResult[0].first_name} ${doctorResult[0].last_name}`;
+
+        // Prepare the SQL query to insert the new appointment
+        const query = `
+            INSERT INTO appointment 
+            (patientName, appointment_ID, patientmedicalID, doctor, nurse, doctorID,
+             appointment_type, nurseID, officeID, dateTime, reason, created_by, patientBP, created_at) 
+            VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        `;
+        console.log('asdfasdf', formattedDateTime)
+        const values = [
+            patName,
+            appointment_id,     // appointment_ID
+            medicalId,          // patientmedicalID
+            doctorName,         // doctor (name of doctor)
+            nurseName,          // nurse
+            doctorId,           // doctorID
+            appointmentType,    // appointment_type
+            'E23456789',            // nurseID
+            facility,           // officeID
+            formattedDateTime, // dateTime
+            reason,             // reason for the appointment
+            medicalId,
+            '120/80',
+            formattedDateTime,           // created_by (replace with actual user if applicable)
+        ];
+        console.log('values', values)
+
+        db.query(query, values, (err, result) => {
+            if (err) {
+                // Check if the error is due to the overdue balance trigger
+                if (err.code === 'ER_SIGNAL_EXCEPTION') {
+                    return res.status(400).json({ error: 'Cannot create appointment. Patient has an overdue balance older than 30 days.' });
+                }
+                console.log(err)
+                console.error('Error creating appointment:', err);
+                return res.status(500).json({ error: 'Failed to create appointment.' });
+            }
+            res.status(201).json({ message: 'Appointment created successfully.' });
+        });
     });
 });
 
