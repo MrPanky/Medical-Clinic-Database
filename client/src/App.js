@@ -38,6 +38,10 @@ import Referral_Info from "./pages/Referral_Info";
 import Nurse_Create_Appointment from "./pages/Nurse_Create_Appointment";
 import Nurse_Create_New_Patient from "./pages/Nurse_Create_New_Patient";
 import Patient_Weight_Review from "./pages/Patient_Weight_Review";
+import Add_Patient from "./pages/Add_Patient";
+import Update_Patient from "./pages/Update_Patient";
+import Update_Employee_Password from "./pages/Update_Employee_Password";
+import Update_Patient_Password from "./pages/Update_Patient_Password";
 
 
 
@@ -81,6 +85,10 @@ function App() {
           <Route path="/Nurse_Create_Appointment/:medicalId" element={<Nurse_Create_Appointment />} />
           <Route path="/Nurse_Create_New_Patient/:employeeId" element={<Nurse_Create_New_Patient />} />
           <Route path="/Patient_Weight_Review/:patientId" element={<Patient_Weight_Review />} />
+          <Route path="/add_patient" element={<Add_Patient />} /> 
+          <Route path="/update_patient/:medical_ID" element={<Update_Patient />} />
+          <Route path="/update_employee_password" element={<Update_Employee_Password />} />
+          <Route path="/update_patient_password" element={<Update_Patient_Password />} />
 
         </Routes>
       </BrowserRouter>
