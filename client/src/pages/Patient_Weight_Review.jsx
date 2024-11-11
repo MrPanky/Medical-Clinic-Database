@@ -52,8 +52,8 @@ const Patient_Weight_Review = () => {
                 // Format the appointments for easier date handling
                 const formattedAppointments = formatAppointments(appointmentsArray);
 
-                // Sort appointments by date (newest to oldest)
-                formattedAppointments.sort((a, b) => b.parsedDateTime - a.parsedDateTime);
+                // Sort appointments by date (oldest to newest)
+                formattedAppointments.sort((a, b) => a.parsedDateTime - b.parsedDateTime);
 
                 // Filter previous appointments (appointments before today)
                 filterPreviousAppointments(formattedAppointments);
