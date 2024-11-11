@@ -52,8 +52,8 @@ const Patient_Weight_Review = () => {
                 // Format the appointments for easier date handling
                 const formattedAppointments = formatAppointments(appointmentsArray);
 
-                // Sort appointments by date (newest to oldest)
-                formattedAppointments.sort((a, b) => b.parsedDateTime - a.parsedDateTime);
+                // Sort appointments by date (oldest to newest)
+                formattedAppointments.sort((a, b) => a.parsedDateTime - b.parsedDateTime);
 
                 // Filter previous appointments (appointments before today)
                 filterPreviousAppointments(formattedAppointments);
@@ -96,7 +96,43 @@ const Patient_Weight_Review = () => {
     }
 
     if (appointments.length === 0) {
-        return <div>No appointments found for this patient.</div>;
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="di_container" style={{ flex: 1 }}>
+            <h2>Weight History</h2>
+            <h3>{appointments[0]?.patientName || "No Name Available"}</h3>
+
+            {/* Date Filter Inputs */}
+            <div style={{ marginBottom: '20px' }}>
+                <label>Start Date:</label>
+                <input 
+                    type="date" 
+                    value={startDate} 
+                    onChange={(e) => setStartDate(e.target.value)} 
+                />
+                <label>End Date:</label>
+                <input 
+                    type="date" 
+                    value={endDate} 
+                    onChange={(e) => setEndDate(e.target.value)} 
+                />
+            </div>
+
+            {/* Display Appointment History */}
+            {appointments.map(appointment => (
+                <div className="di_info-card" key={appointment.dateTime}>
+                    <h2>No Appointments found</h2>
+                </div>
+            ))}
+        </div>
+
+        <div className="os_chart-container" style={{ flex: 1, marginLeft: '20px' }}>
+            <h3>Weight Chart</h3>
+            <div style={{ height: '400px' }}>
+                <Line data={chartData} options={chartOptions} />
+            </div>
+        </div>
+    </div>
+);
     }
 
     // Log the appointments to ensure correct data
