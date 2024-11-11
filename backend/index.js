@@ -367,7 +367,7 @@ app.get("/appointments/:employee_ID", (req, res) => {
 });
 
 app.get("/doc_availability/:employee_ID", (req, res) => {
-
+    console.log("req.params.employee_ID for referral is...", req.params.employee_ID);
     const employeeId = req.params.employee_ID;
 
     const q_doctor_availability =
@@ -540,6 +540,49 @@ app.put("/reject_referral/:referral_ID", (req, res) => {
         return res.json('referral rejected');
     })
 
+})
+
+app.get("/doc_get_all_patients/:doctorId", (req, res) => {
+    const doctorId = req.params.doctorId;
+    console.log("doctorId is...", req.params.doctorId);
+
+    const q_all_patients =
+    `
+    SELECT patient_ID
+    FROM doctors_patient
+    WHERE doctor_ID = ?
+    `
+    console.log("executing query", q_all_patients);
+    db.query(q_all_patients, [doctorId], (err, results) => {
+        if (err) {
+            console.error("Error fetching patients", err);
+            return res.status(500).json(err);
+        }
+        return res.json(results);
+    })
+})
+
+
+
+app.get("/doc_get_weight_history/:patients", (req, res) => {
+    console.log("HELLO FROM GET_WEIGHT_HISTORY");
+    //console.log("req.params in doc_get_weight_history is...", req.body.patients)
+    const patientIds = req.params.patients;
+
+    const q_patient_appointments = 
+
+    `
+    SELECT patientWeight, dateTime
+    FROM appointment
+    WHERE patientmedicalID = ?
+    `
+    db.query(q_patient_appointments, [patientIds]), (err, results) => {
+        if (err) {
+            console.error("error fetching appointment history", err);
+            return res.status(500).json(err);
+        }
+        return res.json(results)
+    }
 })
 
 // app.get("/patient_check/:patientId", (req, res) => {

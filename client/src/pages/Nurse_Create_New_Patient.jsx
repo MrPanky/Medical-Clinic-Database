@@ -45,24 +45,24 @@ const Nurse_Create_New_Patient = () => {
     };
 
     function generateRandomPatientId() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const digits = '0123456789';
         let id = 'M';
 
         // Generate 8 random characters
         for (let i = 0; i < 8; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
+            id += digits.charAt(Math.floor(Math.random() * digits.length));
         }
 
         return id;
     }
 
     function generateRandomBillingId() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const digits = '0123456789';
         let id = 'B';
 
         // Generate 8 random characters
         for (let i = 0; i < 8; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
+            id += digits.charAt(Math.floor(Math.random() * digits.length));
         }
 
         return id;

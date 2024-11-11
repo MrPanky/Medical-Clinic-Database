@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './medical_staff_style.css';
 
 
 const Nurse_View = () => {

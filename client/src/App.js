@@ -58,7 +58,7 @@ function App() {
           <Route path="/nurse_view" element={<Nurse_View />} />
           <Route path="/Nurse_Create_Appointment/:medicalId" element={<Nurse_Create_Appointment />} />
           <Route path="/Nurse_Create_New_Patient/:employeeId" element={<Nurse_Create_New_Patient />} />
-          <Route path="/Patient_Weight_Review/:patientId" element={<Patient_Weight_Review />} />
+          <Route path="/Patient_Weight_Review/:doctorId" element={<Patient_Weight_Review />} />
           <Route path="/billing_staff_view" element={<Billing_Staff_View />} />
           <Route path="/office_staff_view" element={<Office_Staff_View />} />
           <Route path="/director_view" element={<Director_View />} />
