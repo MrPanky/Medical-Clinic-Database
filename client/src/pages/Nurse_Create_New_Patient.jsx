@@ -109,7 +109,8 @@ const Nurse_Create_New_Patient = () => {
                 last_edited: currentDateTime,
                 last_editedID: patient.creatorID
 
-            });
+            })
+            const assignPatient = await axios.post(`http://localhost:3000/nurse_assign_new_patient/${patientID}`);
             console.log(res);
             //navigate("/")
         } catch (err) {

@@ -638,10 +638,13 @@ app.post("/nurse_create_patient/:employee_ID", (req, res) => {
 
 })
 
-app.post("/nurse_assign_new_patient/:employee_ID", (req, res) => {
+app.post("/nurse_assign_new_patient/:patientID", (req, res) => {
     //const employeeId = req.params.employee_ID;
     //console.log("referral contains: ", req);
     console.log("patient being assigned");
+    const patientId = req.params.patientID;
+    console.log("the req.params are...", req.params)
+    console.log(patientId);
     // console.log(req.body);
     // console.log(req.body.medical_ID);
     // console.log(req.body.last_name);
@@ -658,12 +661,12 @@ app.post("/nurse_assign_new_patient/:employee_ID", (req, res) => {
     `
     const values = [
         'E12345678',
-        req.body.medical_ID,
+        patientId,
     ]
     console.log('executing query:', q_assign_new_patient);
-    db.query(q_create_patient, [...values], (err, data) => {
+    db.query(q_assign_new_patient, [...values], (err, data) => {
         if (err) return res.json(err);
-        return res.json("patient assigned", values);
+        return res.json("patient assigned");
     })
 
 })
