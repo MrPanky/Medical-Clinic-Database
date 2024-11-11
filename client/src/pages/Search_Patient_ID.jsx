@@ -48,6 +48,7 @@ const Search_Patient_ID = () => {
 
             <h1>Enter Patient Name</h1>
             <br />
+            First name:
             <input 
                     type="text" 
                     placeholder="patient first name" 
@@ -55,7 +56,8 @@ const Search_Patient_ID = () => {
                     name="patientname" 
                     className={error ? 'input-error' : ''} 
                 />
-
+            <br />
+            Last name:
             <input 
                     type="text" 
                     placeholder="patient last name" 
@@ -69,8 +71,9 @@ const Search_Patient_ID = () => {
                 <br />{error && <div style={{ color: 'red' }}>{error}</div>}
 
 
-                
+
                 <button className = 'invoiceoption' onClick={SearchPatient}>Search Patient</button>
+                <br />
                 <br />
                 <button className = "logout" onClick={handleLogout}>Return</button>
 

@@ -47,10 +47,10 @@ const Created_invoice = () => {
         }
     };
 
-    const getDate = () =>{
-        let today = new Date(appointment.created);
+    const getDate = (date) =>{
+        let bdate = new Date(date);
 
-        let formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+        let formattedDate = `${bdate.getMonth() + 1}/${bdate.getDate()}/${bdate.getFullYear()}`;
         return formattedDate;
 
     }
@@ -104,7 +104,7 @@ const Created_invoice = () => {
             
             
             
-            <br />Issue date (MM/DD/YYYY): {getDate()}
+            <br />Issue date (MM/DD/YYYY): {getDate(appointment.created)}
             <h2>Invoice To:</h2>
             {appointment.patientName}
             <br />{appointment.address_line_1} {appointment.address_line_2}
@@ -128,6 +128,7 @@ const Created_invoice = () => {
                             <div className= "invoiceTab">
                             Doctor: {appointment.doctor}
                             <br /> Nurse: {appointment.nurse}
+                            <br /> Date: {getDate(appointment.appointmentDateTime)}
                             </div>
                             
                         </td>

@@ -32,6 +32,17 @@ const Results_Patient_ID = () => {
 
     }
 
+    const getPhone = (index) =>{
+        if(resultpatient[index].home_phone != null){
+            return resultpatient[index].home_phone;
+        }else if(resultpatient[index].cell_phone != null){
+            return resultpatient[index].cell_phone;
+        }else{
+            return resultpatient[index].work_phone;
+        }
+    }
+
+
     try{
         return(
             <div>
@@ -43,20 +54,20 @@ const Results_Patient_ID = () => {
                     <th>Patient ID</th>
                     <th>Name</th>
                     <th>Birthdate</th>
-                    <th>adress</th>
-                    <th>email</th>
-                    <th>phone</th>
+                    <th>Adress</th>
+                    <th>Email</th>
+                    <th>Phone</th>
                  </tr>
                 </thead>
                 <tbody>
-                    {resultpatient.map((row) =>(
+                    {resultpatient.map((row, index) =>(
                             <tr key ={row.medical_ID}>
                             <td>{row.billingID}</td>
                             <td>{row.first_name} {row.last_name}</td>
                             <td>{getDate(row.birthdate)}</td>
                             <td>{row.address_line_1}</td>
                             <td>{row.personal_email}</td>
-                            <td>{row.home_phone}</td>
+                            <td>{getPhone(index)}</td>
                             </tr>
                         ))}
                 </tbody>

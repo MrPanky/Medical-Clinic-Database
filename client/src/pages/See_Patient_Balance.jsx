@@ -85,7 +85,7 @@ try{
     return (
         <div>
             <h1>Unpaid Bills</h1> 
-            <p>ID: {patient[0].patientmedicalID}</p>
+            <p>ID: {patient[0].patientBillingID}</p>
             <p>Name: {patient[0].patientName}</p>
 
             <div className='invoiceList'>
