@@ -127,7 +127,7 @@ const SearchPatient = () => {
             <button className = 'invoiceoption' onClick={searchpatientID}>Search Patient</button>
             <br />
             <br />
-                <button className = "logout" onClick={handleLogout}>Logout</button>
+                <button className = "logout" onClick={handleLogout}>Return</button>
             </div>
             
         

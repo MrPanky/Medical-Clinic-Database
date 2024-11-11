@@ -57,10 +57,10 @@ const Billing_Staff_View = () => {
 
     return (
         <div className = "form">
-            <h1>Billing Staff View</h1>
+            <h1>Employee Information</h1>
             <p>ID: {employee.employee_ID}</p>
             <p>Name: {employee.first_name} {employee.last_name}</p>
-            <p>Role: "Billing Staff"</p>
+            <p>Role: {employee.role}</p>
             <button className = "invoiceoption" onClick={() => handleonClick(false)}>Pay Due Bills of a Patient</button>
             <button className = "invoiceoption"onClick={() => handleonClick(true)}>View Previous Invoices of a Patient</button>
             <button className = "invoiceoption"onClick={getPastDueBills}>View Patients with Past Due Bills</button>

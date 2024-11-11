@@ -27,7 +27,7 @@ const Search_Patient_ID = () => {
 
     const SearchPatient = async (e) => {
         e.preventDefault();
-        let query = `SELECT medical_ID, billingID, first_name, last_name, birthdate, address_line_1, address_line_2, city, state, zip, personal_email, home_phone, work_phone, cell_phone FROM patient WHERE first_name = '`+patientFirstName+`' AND last_name = '`+patientLastName+`';`;
+        let query = `SELECT billingID, billingID, first_name, last_name, birthdate, address_line_1, address_line_2, city, state, zip, personal_email, home_phone, work_phone, cell_phone FROM patient WHERE first_name = '`+patientFirstName+`' AND last_name = '`+patientLastName+`';`;
         let res = await axios.post(`https://group8backend.azurewebsites.net/Search_Patient_ID`, {query});
         console.log("patient results:",res.data);
         if(res.data.length === 0){

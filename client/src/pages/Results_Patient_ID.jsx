@@ -51,7 +51,7 @@ const Results_Patient_ID = () => {
                 <tbody>
                     {resultpatient.map((row) =>(
                             <tr key ={row.medical_ID}>
-                            <td>{row.medical_ID}</td>
+                            <td>{row.billingID}</td>
                             <td>{row.first_name} {row.last_name}</td>
                             <td>{getDate(row.birthdate)}</td>
                             <td>{row.address_line_1}</td>
@@ -80,6 +80,4 @@ const Results_Patient_ID = () => {
 
 
 export default Results_Patient_ID;
-
-
 

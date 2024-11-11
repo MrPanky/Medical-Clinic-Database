@@ -24,8 +24,8 @@ const Created_invoice = () => {
         }
         const off_Data = localStorage.getItem('office_loc');
         if (off_Data) {
-            setOffice(JSON.parse(off_Data));
-            console.log('Retrieved office data:', JSON.parse(off_Data));
+            setOffice(JSON.parse(off_Data)[0]);
+            console.log('Retrieved office data:', JSON.parse(off_Data)[0]);
         }
         
     }, []);
@@ -73,10 +73,10 @@ const Created_invoice = () => {
        
         if(!choice){
             localStorage.removeItem('patient');
-            const patientID = appointment.patientmedicalID;
-            console.log("patient ID: ", patientID);
+            const patientID = appointment.patientBillingID;
             
-            const res = await axios.post(`https://group8backend.azurewebsites.net/SearchPatient`, {patientID}); 
+            const res = await axios.post(`https://group8backend.azurewebsites.net/SearchPatient`, {patientID});
+            console.log("new app data: ", JSON.stringify(res.data)); 
             localStorage.setItem('patient', JSON.stringify(res.data));
             navigate('/Billing_Staff_View/SearchPatient/See_Patient_Balance');
             return;
