@@ -50,8 +50,8 @@ try{
                     </thead>
                     <tbody>
                         {patients.map(patient => (
-                                <tr key ={patient.medical_ID}>
-                                <td>{patient.medical_ID}</td>
+                                <tr key ={patient.billingID}>
+                                <td>{patient.billingID}</td>
                                 <td>{patient.first_name} {patient.last_name}</td>
                                 <td className='table-cell'>{patient.personal_email}</td>
                                 <td>{patient.home_phone} </td>
