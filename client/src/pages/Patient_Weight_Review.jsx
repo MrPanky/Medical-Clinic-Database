@@ -51,6 +51,11 @@ const Patient_Weight_Review = () => {
                 
                 // Format the appointments for easier date handling
                 const formattedAppointments = formatAppointments(appointmentsArray);
+
+                // Sort appointments by date (latest to oldest)
+                formattedAppointments.sort((a, b) => b.parsedDateTime - a.parsedDateTime);
+
+                // Filter previous appointments (appointments before today)
                 filterPreviousAppointments(formattedAppointments);
 
                 setLoading(false);
@@ -94,20 +99,20 @@ const Patient_Weight_Review = () => {
         return <div>No appointments found for this patient.</div>;
     }
 
+    // Log the appointments to ensure correct data
+    console.log("Appointments to display in chart:", appointments);
+
     // Prepare the chart data with treatments included in the labels
     const chartData = {
         labels: appointments.map(appointment => {
-            // Log treatments to verify they're being captured correctly
-            const treatment = appointment.treatments || "No treatment";
-            console.log(`Appointment on ${appointment.parsedDateTime.toLocaleDateString()} with treatment: ${treatment}`);
-
             // Combine date and treatment in the label
+            const treatment = appointment.treatments || "No treatment";
             return `${appointment.parsedDateTime.toLocaleDateString()} - ${treatment}`;
         }),
         datasets: [
             {
                 label: 'Weight (lbs)',
-                data: appointments.map(appointment => appointment.patientWeight  + " " + appointment.treatments),
+                data: appointments.map(appointment => appointment.patientWeight), // Correctly passing weight as data
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 fill: true,
@@ -124,11 +129,18 @@ const Patient_Weight_Review = () => {
                     display: true,
                     text: 'Date and Treatment',
                 },
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 45,
+                },
             },
             y: {
                 title: {
                     display: true,
                     text: 'Weight (lbs)',
+                },
+                ticks: {
+                    beginAtZero: true,
                 },
             },
         },
