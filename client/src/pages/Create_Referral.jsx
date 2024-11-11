@@ -54,12 +54,12 @@ const Create_Referral = () => {
     };
 
     function generateRandomId() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const digits = '0123456789';
         let id = 'R';
 
         // Generate 8 random characters
         for (let i = 0; i < 8; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
+            id += digits.charAt(Math.floor(Math.random() * digits.length));
         }
 
         return id;

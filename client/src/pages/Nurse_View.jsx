@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './style.css';
+import './medical_staff_style.css';
 
 
 const Nurse_View = () => {
@@ -87,20 +87,20 @@ const Nurse_View = () => {
     }
 
     return (
-        <div className="grid-container">
-            <div className="form">
+        <div className="doc_grid_container">
+            <div className="doc_form">
                 <h1>Employee Information</h1>
                 <p>ID: {employee.employee_ID}</p>
                 <p>Name: {employee.first_name} {employee.last_name}</p>
                 <p>Role: {employee.role}</p>
-                <button className="logout" onClick={handleLogout}>Logout</button>
+                <button className="doc_logout" onClick={handleLogout}>Logout</button>
             </div>
-            <div className="di_container di_appointments">
+            <div className="doc_container doc_appointments">
                 <h2>Upcoming Appointments</h2>
                 {appointments.length > 0 ? (
                     appointments.map(appointment => (
                         <div
-                            className="di_info-card"
+                            className="doc_info_card"
                             key={appointment.appointment_ID}
                             onClick={() => navigate(`/appointment_info/${appointment.appointment_ID}`)}
                         >
@@ -114,12 +114,12 @@ const Nurse_View = () => {
                     <p>No appointments currently set.</p>
                 )}
             </div>
-            <div className="di_container di_patients">
+            <div className="doc_container doc_patients">
                 <h2>Patients Overview</h2>
                 {patients.length > 0 ? (
                     patients.map(patient => (
                         <div
-                            className="di_info-card"
+                            className="doc_info_card"
                             key={patient.medical_ID}
                             onClick={() => navigate(`/patient_info/${patient.medical_ID}`)}
                         >
@@ -132,12 +132,12 @@ const Nurse_View = () => {
                     <p>No patients found for this doctor.</p>
                 )}
             </div>
-            <div className='d_container di_patients'>
+            <div className='doc_container doc_patients'>
                 <h1>Create Appointment</h1>
                 <input type="text" placeholder='patient_ID MXXXXXXXX' onChange={handleChange} name='patient_ID' />
                 <button onClick={() => navigate(`/Nurse_Create_Appointment/${patientApp.medicalId}`)}> Create App for Patient</button>
             </div>
-            <div className="di_container di_patients"
+            <div className="doc_container doc_patients"
                 onClick={() => navigate(`/Nurse_Create_New_Patient/${employee.employee_ID}`)}
             >
                 <h2>Create New Patient</h2>

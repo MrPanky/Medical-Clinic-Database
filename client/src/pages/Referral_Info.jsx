@@ -11,7 +11,7 @@ const Referral_Info = () => {
         const fetchReferral = async () => {
             try {
                 //console.log(useParams())
-                const response = await axios.get(`https://group8backend.azurewebsites.net/view_specific_referral/${referralId}`);
+                const response = await axios.get(`http://localhost:3000/view_specific_referral/${referralId}`);
                 setReferral(response.data[0]); // Assuming you get an array
             } catch (error) {
                 console.error('Error fetching referral data:', error);
@@ -34,7 +34,7 @@ const Referral_Info = () => {
     const acceptReferral = async e => {
         e.preventDefault()
         try {
-            const res = await axios.put(`https://group8backend.azurewebsites.net/accept_referral/${referralId}`, {
+            const res = await axios.put(`http://localhost:3000/accept_referral/${referralId}`, {
 
             });
             console.log(res);
@@ -47,7 +47,7 @@ const Referral_Info = () => {
     const rejectReferral = async e => {
         e.preventDefault()
         try {
-            const res = await axios.put(`https://group8backend.azurewebsites.net/reject_referral/${referralId}`, {
+            const res = await axios.put(`http://localhost:3000/reject_referral/${referralId}`, {
 
             });
             console.log(res);
