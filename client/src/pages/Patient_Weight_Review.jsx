@@ -3,45 +3,56 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  PointElement,    // Register PointElement here
-  Title,
-  Tooltip,
-  Legend
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
+    Legend
 } from 'chart.js';
 
-// Register necessary components for Chart.js
+// Registering the necessary components for Chart.js
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  PointElement,    // Register PointElement to avoid "point not registered" error
-  Title,
-  Tooltip,
-  Legend
+    CategoryScale,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
+    Legend
 );
 
 const Patient_Weight_Review = () => {
-    const { patientId } = useParams(); // Get patient ID from URL
+    const { patientId } = useParams();
     const [appointments, setAppointments] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
-    const [error, setError] = useState(null); // Add error state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
-                const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_app_history/${patientId}`);
-                console.log("API response:", res.data);
+                // Adding date filters if provided
+                const queryParams = {};
+                if (startDate) queryParams.startDate = startDate;
+                if (endDate) queryParams.endDate = endDate;
 
+                const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_app_history/${patientId}`, {
+                    params: queryParams
+                });
+
+                console.log("API response:", res.data); // Log the API response to inspect the structure
+
+                // Convert the response data into an array if it's not already
                 const appointmentsArray = Array.isArray(res.data) ? res.data : Object.values(res.data);
-                console.log("Appointments array:", appointmentsArray);
-
+                
+                // Format the appointments for easier date handling
                 const formattedAppointments = formatAppointments(appointmentsArray);
-                console.log("Formatted appointments:", formattedAppointments);
                 filterPreviousAppointments(formattedAppointments);
+
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching appointment data:', error);
@@ -51,25 +62,26 @@ const Patient_Weight_Review = () => {
         };
 
         fetchAppointments();
-    }, [patientId]);
+    }, [patientId, startDate, endDate]);
 
+    // Format the appointments (parse the date)
     const formatAppointments = (appointments) =>
         appointments.map(appointment => ({
             ...appointment,
             parsedDateTime: new Date(appointment.dateTime)
         }));
 
+    // Filter previous appointments (only appointments before today)
     const filterPreviousAppointments = (formattedAppointments) => {
         const today = new Date();
         const previousAppointments = formattedAppointments.filter(appointment => {
             const appointmentDate = appointment.parsedDateTime;
             return appointmentDate < today;
         });
-
-        console.log("Filtered previous appointments:", previousAppointments);
         setAppointments(previousAppointments);
     };
 
+    // Check loading and error state
     if (loading) {
         return <div>Loading history...</div>;
     }
@@ -82,13 +94,20 @@ const Patient_Weight_Review = () => {
         return <div>No appointments found for this patient.</div>;
     }
 
-    // Prepare the chart data
+    // Prepare the chart data with treatments included in the labels
     const chartData = {
-        labels: appointments.map(appointment => appointment.parsedDateTime.toLocaleDateString()),
+        labels: appointments.map(appointment => {
+            // Log treatments to verify they're being captured correctly
+            const treatment = appointment.treatments || "No treatment";
+            console.log(`Appointment on ${appointment.parsedDateTime.toLocaleDateString()} with treatment: ${treatment}`);
+
+            // Combine date and treatment in the label
+            return `${appointment.parsedDateTime.toLocaleDateString()} - ${treatment}`;
+        }),
         datasets: [
             {
                 label: 'Weight (lbs)',
-                data: appointments.map(appointment => appointment.patientWeight),
+                data: appointments.map(appointment => appointment.patientWeight  + " " + appointment.treatments),
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 fill: true,
@@ -96,13 +115,14 @@ const Patient_Weight_Review = () => {
         ],
     };
 
+    // Chart options
     const chartOptions = {
         responsive: true,
         scales: {
             x: {
                 title: {
                     display: true,
-                    text: 'Date',
+                    text: 'Date and Treatment',
                 },
             },
             y: {
@@ -116,25 +136,35 @@ const Patient_Weight_Review = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {/* First di_container for Appointment History */}
             <div className="di_container" style={{ flex: 1 }}>
-                {appointments.length > 0 ? (
-                    <>
-                        <h2>Weight History</h2>
-                        <h3>{appointments[0]?.patientName || "No Name Available"}</h3>
-                        
-                        {appointments.map(appointment => (
-                            <div className="di_info-card" key={appointment.dateTime}>
-                                <p>{appointment.parsedDateTime.toLocaleDateString()} {appointment.patientWeight} lbs</p>
-                            </div>
-                        ))}
-                    </>
-                ) : (
-                    <p>No Appointments Found.</p>
-                )}
+                <h2>Weight History</h2>
+                <h3>{appointments[0]?.patientName || "No Name Available"}</h3>
+
+                {/* Date Filter Inputs */}
+                <div style={{ marginBottom: '20px' }}>
+                    <label>Start Date:</label>
+                    <input 
+                        type="date" 
+                        value={startDate} 
+                        onChange={(e) => setStartDate(e.target.value)} 
+                    />
+                    <label>End Date:</label>
+                    <input 
+                        type="date" 
+                        value={endDate} 
+                        onChange={(e) => setEndDate(e.target.value)} 
+                    />
+                </div>
+
+                {/* Display Appointment History */}
+                {appointments.map(appointment => (
+                    <div className="di_info-card" key={appointment.dateTime}>
+                        <p>{appointment.parsedDateTime.toLocaleDateString()} - {appointment.patientWeight} lbs</p>
+                        <p>Treatment: {appointment.treatments || "No treatment"}</p>
+                    </div>
+                ))}
             </div>
 
-            {/* Second di_container for the Chart */}
             <div className="os_chart-container" style={{ flex: 1, marginLeft: '20px' }}>
                 <h3>Weight Chart</h3>
                 <div style={{ height: '400px' }}>

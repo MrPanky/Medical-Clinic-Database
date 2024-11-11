@@ -35,7 +35,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
       try {
         
         const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/doctors`);
-        
+        console.log('doctorsss', response.data)
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error('Error fetching doctors:', error);
@@ -182,7 +182,20 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
           <select
             id="doctor"
             value={selectedDoctor}
-            onChange={(e) => setSelectedDoctor(e.target.value)}
+            onChange={(e) => {
+              const selectedDoctorId = e.target.value;
+              setSelectedDoctor(selectedDoctorId);
+        
+              // Find the selected doctor in the doctors array
+              const selectedDoctorData = doctors.find(doctor => doctor.employee_ID === selectedDoctorId);
+        
+              // Set the appointment type based on the doctor's specialty
+              if (selectedDoctorData) {
+                setAppointmentType(selectedDoctorData.specialty);
+              } else {
+                setAppointmentType(''); // Reset if no doctor is selected
+              }
+            }}
           >
             <option value="">Select a Doctor</option>
             {doctors.map((doctor, index) => (
@@ -218,6 +231,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
             value={appointmentType}
             onChange={(e) => setAppointmentType(e.target.value)}
             placeholder="e.g., Check-up, Consultation"
+            readOnly
           />
         </div>
 
