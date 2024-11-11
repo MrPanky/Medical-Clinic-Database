@@ -13,7 +13,7 @@ import {
     Legend
 } from 'chart.js';
 
-// Register necessary components for Chart.js
+// Registering the necessary components for Chart.js
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -51,11 +51,6 @@ const Patient_Weight_Review = () => {
                 
                 // Format the appointments for easier date handling
                 const formattedAppointments = formatAppointments(appointmentsArray);
-
-                // Sort appointments by date (latest to oldest)
-                formattedAppointments.sort((a, b) => b.parsedDateTime - a.parsedDateTime);
-
-                // Filter previous appointments (appointments before today)
                 filterPreviousAppointments(formattedAppointments);
 
                 setLoading(false);
@@ -102,14 +97,17 @@ const Patient_Weight_Review = () => {
     // Prepare the chart data with treatments included in the labels
     const chartData = {
         labels: appointments.map(appointment => {
-            // Combine date and treatment in the label
+            // Log treatments to verify they're being captured correctly
             const treatment = appointment.treatments || "No treatment";
+            console.log(`Appointment on ${appointment.parsedDateTime.toLocaleDateString()} with treatment: ${treatment}`);
+
+            // Combine date and treatment in the label
             return `${appointment.parsedDateTime.toLocaleDateString()} - ${treatment}`;
         }),
         datasets: [
             {
                 label: 'Weight (lbs)',
-                data: appointments.map(appointment => appointment.patientWeight + " " + appointment.treatments),
+                data: appointments.map(appointment => appointment.patientWeight  + " " + appointment.treatments),
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 fill: true,
