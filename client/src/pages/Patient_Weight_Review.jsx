@@ -132,7 +132,7 @@ const Patient_Weight_Review = () => {
             </div>
         </div>
     </div>
-);
+
     }
 
     // Log the appointments to ensure correct data
