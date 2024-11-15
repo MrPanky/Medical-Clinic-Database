@@ -110,6 +110,7 @@ const Doc_Edit_Availability = () => {
                 thursAvailability: thursAvailability,
                 friAvailability: friAvailability
             });
+            navigate(`/Doc_Avail_Summary/${employeeId}`);
         }
         catch (err) {
             console.log('could not change availability', err);
@@ -118,49 +119,49 @@ const Doc_Edit_Availability = () => {
     return (
         <div className="doc_avail">
             <h1>Monday</h1>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${monAvailability === 'morning' ? 'selected' : ''}`}
                 onClick={() => setMonAvailability('morning')}> Morning </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${monAvailability === 'afternoon' ? 'selected' : ''}`}
                 onClick={() => setMonAvailability('afternoon')}> Afternoon </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${monAvailability === 'all day' ? 'selected' : ''}`}
                 onClick={() => setMonAvailability('all day')}> All day </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${monAvailability === 'not available' ? 'selected' : ''}`}
                 onClick={() => setMonAvailability('not available')}> Not Available </button>
             <h1>Tuesday</h1>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${tuesAvailability === 'morning' ? 'selected' : ''}`}
                 onClick={() => setTuesAvailability('morning')}> Morning </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${tuesAvailability === 'afternoon' ? 'selected' : ''}`}
                 onClick={() => setTuesAvailability('afternoon')}> Afternoon </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${tuesAvailability === 'all day' ? 'selected' : ''}`}
                 onClick={() => setTuesAvailability('all day')}> All day </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${tuesAvailability === 'not available' ? 'selected' : ''}`}
                 onClick={() => setTuesAvailability('not available')}> Not Available </button>
             <h1>Wednesday</h1>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${wedAvailability === 'morning' ? 'selected' : ''}`}
                 onClick={() => setWedAvailability('morning')}> Morning </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${wedAvailability === 'afternoon' ? 'selected' : ''}`}
                 onClick={() => setWedAvailability('afternoon')}> Afternoon </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${wedAvailability === 'all day' ? 'selected' : ''}`}
                 onClick={() => setWedAvailability('all day')}> All day </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${wedAvailability === 'not available' ? 'selected' : ''}`}
                 onClick={() => setWedAvailability('not available')}> Not Available </button>
             <h1>Thursday</h1>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${thursAvailability === 'morning' ? 'selected' : ''}`}
                 onClick={() => setThursAvailability('morning')}> Morning </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${thursAvailability === 'afternoon' ? 'selected' : ''}`}
                 onClick={() => setThursAvailability('afternoon')}> Afternoon </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${thursAvailability === 'all day' ? 'selected' : ''}`}
                 onClick={() => setThursAvailability('all day')}> All day </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${thursAvailability === 'not available' ? 'selected' : ''}`}
                 onClick={() => setThursAvailability('not available')}> Not Available </button>
             <h1>Friday</h1>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${friAvailability === 'morning' ? 'selected' : ''}`}
                 onClick={() => setFriAvailability('morning')}> Morning </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${friAvailability === 'afternoon' ? 'selected' : ''}`}
                 onClick={() => setFriAvailability('afternoon')}> Afternoon </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${friAvailability === 'all day' ? 'selected' : ''}`}
                 onClick={() => setFriAvailability('all day')}> All day </button>
-            <button className="doc_updateAvail"
+            <button className={`doc_updateAvail ${friAvailability === 'not available' ? 'selected' : ''}`}
                 onClick={() => setFriAvailability('not available')}> Not Available </button>
             <h1>CONFIRM SELECTIONS</h1>
             <button className="doc_updateAvail"

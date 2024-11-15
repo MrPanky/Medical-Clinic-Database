@@ -186,7 +186,7 @@ const Doctor_View = () => {
                             onClick={() => navigate(`/Referral_Info/${referral.referral_ID}`)}
 
                         >
-                            <p>Patient Name: {referral.patient_contact_info}</p>
+                            <p>Patient ID: {referral.patient_ID}</p>
                             <p>Referring Doctor: {referral.originating_doctor_contact_info}</p>
                             <p>Reason: {referral.reason}</p>
                             <p></p>

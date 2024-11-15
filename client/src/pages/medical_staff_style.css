@@ -114,6 +114,32 @@ body {
     background-color: rgb(243, 242, 242);
 }
 
+.doc_referralButton {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(18, 207, 21);
+    /* Red background */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.1s ease, color 0.1s ease;
+    /* , transform 0.2s ease; */
+}
+
+.doc_referralButton.selected {
+    /* Styles for the selected button */
+    background-color: #9f9f9f; /* Example: Blue */
+    color: #fff;
+    cursor: not-allowed;
+}
+
+/*.disabled {
+    background-color: gray;
+    color: gray;
+    cursor: not-allowed;
+  }
+*/
 .doc_appointments {
     background-color: #2ebbf3;
     /* Light red for appointments */
@@ -164,6 +190,8 @@ body {
     margin: 4px 0;
 }
 
+
+
 .doc_updateAvail {
     padding: 12px 20px;
     border: 2px solid black;
@@ -183,6 +211,12 @@ body {
 
 .doc_updateAvail:active {
     background-color: rgb(129, 117, 117);
+}
+
+.doc_updateAvail.selected {
+    /* Styles for the selected button */
+    background-color: #007bff; /* Example: Blue */
+    color: #fff;
 }
 
 .doc_avail {

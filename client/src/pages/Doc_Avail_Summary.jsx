@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -6,6 +7,7 @@ import { Link } from 'react-router-dom';
 const Doc_Avail_Summary = () => {
     const { employeeId } = useParams(); // Get appointment ID from URL
     const [availability, setAvailability] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAvailability = async () => {
@@ -40,8 +42,11 @@ const Doc_Avail_Summary = () => {
                     <p><strong>Thursday:</strong> {availability.availabilityThurs}</p>
                     <p><strong>Friday:</strong> {availability.availabilityFri}</p>
                 </div>
-                <button className="doc_logout">
-                    <Link to={`/Doc_Edit_Availability/${employeeId}`}> Edit Availability</Link>
+                <button className="doc_logout"
+                    onClick={()=>navigate(`/Doc_Edit_Availability/${employeeId}`)}> Edit Availability
+                </button>
+                <button className="doc_logout"
+                    onClick={() => navigate('/Doctor_View')}>Home
                 </button>
             </div>
         </div>

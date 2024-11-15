@@ -412,6 +412,25 @@ app.put("/update_doc_availability/:employee_ID", (req, res) => {
     });
 });
 
+app.get("/get_patient_phone/:patientId", (req, res) => {
+    console.log("ID being received at get_patient_phone is",... req.params.patientId)
+    const patientId = req.params.patientId;
+
+    const q_retrieve_patient_phone = 
+    `
+    SELECT home_phone
+    FROM patient
+    WHERE medical_ID = ?
+    `
+
+    db.query(q_retrieve_patient_phone, patientId, (err, data) => {
+        if (err) {
+            return res.json(err)
+        }
+        return res.json(data)
+    })
+})
+
 app.post("/create_referral/:employee_ID", (req, res) => {
     //const employeeId = req.params.employee_ID;
     //console.log("referral contains: ", req);
@@ -423,6 +442,7 @@ app.post("/create_referral/:employee_ID", (req, res) => {
     console.log("the referral_ID is...", req.body.referral_ID)
     console.log("the originating doctorID is ...", req.body.originating_doctor_ID)
     console.log("the originating doctor contact info is... ", req.body.originating_doctor_contact_info)
+    console.log("THE REASON FOR REFERRAL IS...", req.body.reason)
     const q_create_referral =
         `
     INSERT INTO referral (referral_ID, date_created, creatorID, created, patient_contact_info, originating_doctor_ID, originating_doctor_contact_info, receiving_doctor_ID, receiving_doctor_contact_info, patient_ID, reason, status)
@@ -439,8 +459,8 @@ app.post("/create_referral/:employee_ID", (req, res) => {
     ]
     console.log('executing query:', q_create_referral);
     db.query(q_create_referral, [...values], (err, data) => {
-        if (err) return res.json(err);
-        return res.json("referral created");
+        if (err) return res.json("Referral failed, please check values for each field and try again.");
+        return res.json("Referral created");
     })
 
 })
@@ -675,7 +695,7 @@ app.post("/nurse_create_patient/:employee_ID", (req, res) => {
     ]
     console.log('executing query:', q_create_patient);
     db.query(q_create_patient, [...values], (err, data) => {
-        if (err) return res.json(err);
+        if (err) return res.json("patient failed to create, please check all fields and try again");
         return res.json("patient created");
     })
 
@@ -737,7 +757,7 @@ app.get("/nurse_get_app_history/:patientId", (req, res) => {
     });
 });
 
-app.get("/nurse_get_patient_name/:patientId", (req, res) => {
+app.get("/medical_get_patient_name/:patientId", (req, res) => {
 
     const patientId = req.params.patientId
     console.log("patientId is....:)", patientId)
@@ -756,6 +776,26 @@ app.get("/nurse_get_patient_name/:patientId", (req, res) => {
             return res.status(500).json(err);
         }
         return res.json(patientName);
+    });
+});
+
+//get appointment type
+app.get("/nurse_get_appointment_type/:doctorId", (req, res) => {
+    const doctorId = req.params.doctorId;
+    console.log("hi from index, doctorId is...", doctorId)
+
+    const q_app_type = 
+    `
+    SELECT specialty
+    FROM doctors
+    WHERE employee_ID = ?
+    `
+    db.query(q_app_type, doctorId, (err, appType) => {
+        if (err){
+            console.error(err);
+            return res.status(500).json(err);
+        }
+        return res.json(appType)
     });
 });
 
@@ -842,6 +882,11 @@ app.post('/patient/:id/appointments/nurse_create_appointment', (req, res) => {
         });
     });
 });
+
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 // get Director Office ID
 app.get("/director_office/:directorId", (req, res) => {
