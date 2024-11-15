@@ -32,6 +32,8 @@ const Nurse_Create_New_Patient = () => {
         last_edited: Date(),
         last_editedID: employeeId
     })
+    const [message, setMessage] = useState('');
+    const [patCreated, setPatCreated] = useState(false)
 
     useEffect(() => {
         console.log('current nurse ID:', employeeId);
@@ -111,7 +113,12 @@ const Nurse_Create_New_Patient = () => {
 
             })
             const assignPatient = await axios.post(`https://group8backend.azurewebsites.net/nurse_assign_new_patient/${patientID}`);
-            console.log(res);
+            console.log(res.data);
+            setMessage(res.data);
+            if (res.data === 'patient created')
+            {
+                setPatCreated(true)
+            }
             //navigate("/")
         } catch (err) {
             console.log(err)
@@ -132,7 +139,14 @@ const Nurse_Create_New_Patient = () => {
             <input type="text" placeholder='Primary Email' onChange={handleChange} name='personal_email' />
             <input type="text" placeholder='Primary Phone' onChange={handleChange} name='home_phone' />
             <input type="text" placeholder='Emergency Contact' onChange={handleChange} name='emergency_contact' />
-            <button onClick={handleClick}>Submit</button>
+            <button className={`doc_referralButton ${patCreated ? 'selected' : ''}`} 
+            disabled={patCreated}
+            onClick={handleClick}>
+                Submit</button>
+            <button
+                    onClick={() => navigate('/Nurse_View')}>Home
+            </button>
+            {message && <p>{message}</p>}
         </div>
     )
 }

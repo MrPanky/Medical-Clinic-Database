@@ -67,7 +67,7 @@ const Doctor_View = () => {
 
     const handleViewAppointments = async (doctorId) => { //argument is directorId
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net/doc_appointments/${doctorId}`);//request appointments that correspond to directorId
+            const res = await axios.get(`https://group8backend.azurewebsites.net/appointments/${doctorId}`);//request appointments that correspond to directorId
             const futureAppointments = res.data.filter(appointment => { //.filter filters data in res using below comparison
                 const appointmentDate = new Date(appointment.dateTime);
                 const today = new Date();
@@ -186,7 +186,7 @@ const Doctor_View = () => {
                             onClick={() => navigate(`/Referral_Info/${referral.referral_ID}`)}
 
                         >
-                            <p>Patient Name: {referral.patient_contact_info}</p>
+                            <p>Patient ID: {referral.patient_ID}</p>
                             <p>Referring Doctor: {referral.originating_doctor_contact_info}</p>
                             <p>Reason: {referral.reason}</p>
                             <p></p>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './PatientCreateAppointment.css';
+//DISABLE SUBMIT BUTTON WHEN APPOINTMENT IS CREATED
 
 export default function Nurse_Create_Appointment() {
     const { medicalId } = useParams();
@@ -23,6 +25,9 @@ export default function Nurse_Create_Appointment() {
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [patientName, setPatientName] = useState('');
+    const [appCreated, setAppCreated] = useState(false);
+    const navigate = useNavigate()
+
     useEffect(() => {
         if (selectedDoctor && date && selectedFacility && selectedTimeSlot) {
             setIsSubmitEnabled(true);
@@ -110,10 +115,32 @@ export default function Nurse_Create_Appointment() {
         if (selectedDoctor && selectedFacility) {
 
             fetchAvailability();
+            
         } else {
             setIsPickerEnabled(false);
         }
     }, [selectedDoctor, selectedFacility]);
+
+    useEffect(() => {
+        if (selectedDoctor){
+        const fetchAppType = async () => {
+            try{
+                //WRITE DOCTOR QUERY
+                const doctorId = selectedDoctor
+                console.log("doctorId be saying...", selectedDoctor)
+                const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_appointment_type/${selectedDoctor}`)
+                console.log("res.data for appType is... ", res.data[0].specialty)
+                const appType = res.data[0].specialty;
+                setAppointmentType(appType);
+
+            }
+            catch (err){
+                console.log("QUERY DID NOT WORK")
+            }
+        }
+        fetchAppType();
+    }
+    }, [selectedDoctor]);
 
     // Handle form submission
     const handleSubmit = async (event) => {
@@ -129,7 +156,7 @@ export default function Nurse_Create_Appointment() {
         const nurse = defaultNurses[selectedFacility]
         console.log('nurse', nurse)
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_patient_name/${medicalId}`)
+            const res = await axios.get(`https://group8backend.azurewebsites.net/medical_get_patient_name/${medicalId}`)
             if (res.data && res.data[0]) {
                 console.log("HELLO")
                 console.log("the patients name returned is...", res.data)
@@ -155,7 +182,9 @@ export default function Nurse_Create_Appointment() {
                 console.log("HELLO")
                 // You can post this data to the backend API
                 await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/nurse_create_appointment`, appointmentData);
-                alert('Appointment created successfully');
+                alert('Appointment created successfully'); 
+                //setAppCreated(true);
+                setIsSubmitEnabled(false)
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -181,6 +210,11 @@ export default function Nurse_Create_Appointment() {
         // The date must be a weekday, not fully booked, and not an unavailable day
         return isWeekday && isNotFullyBooked && isNotUnavailableDay;
     };
+    // const handleClick = () => {
+    //     if (appCreated) {
+    //         setIsSubmitEnabled(false);
+    //     }
+    // }
 
     return (
         <div className='doc_appointment-form'>
@@ -219,7 +253,7 @@ export default function Nurse_Create_Appointment() {
                     </select>
                 </div>
 
-                {/* Appointment Type */}
+                {/* Appointment Type
                 <div className='doc_form-group'>
                     <label htmlFor="appointmentType">Appointment Type:</label>
                     <input
@@ -229,7 +263,7 @@ export default function Nurse_Create_Appointment() {
                         onChange={(e) => setAppointmentType(e.target.value)}
                         placeholder="e.g., Check-up, Consultation"
                     />
-                </div>
+                </div> */}
 
                 {/* Reason for Visit */}
                 <div className="doc_form-group">
@@ -283,12 +317,17 @@ export default function Nurse_Create_Appointment() {
                     </select>
                 </div>
 
-                <button type="submit" className='doc_btn' disabled={!isSubmitEnabled}>Create Appointment</button>
+                <button type="submit" className='doc_btn' disabled={!isSubmitEnabled}>
+                    Create Appointment 
+                </button>
                 {errorMessage && (
                     <div className="doc_error-message" style={{ color: 'red', marginTop: '10px' }}>
                         {errorMessage}
                     </div>
                 )}
+                <button
+                    onClick={() => navigate('/Nurse_View')}>Home
+            </button>
             </form>
         </div>
     );
