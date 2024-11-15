@@ -146,6 +146,9 @@
     padding: 5px;
     margin: 10px 0;
     cursor: pointer; /* Pointer cursor to indicate interactivity */
+    max-height: 800px;
+    overflow-y: auto;
+
 }
 
 .os_page-container2 {
@@ -191,4 +194,32 @@
     font-weight: bold;
     text-align: center;
     margin: 0;
+}
+
+.os_table-container {
+    margin-top: 30px;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.os_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.os_table th, .os_table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.os_table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.os_table tr:hover {
+    background-color: #f5f5f5;
 }

@@ -34,7 +34,7 @@ const Office_Statistics = () => {
         }
 
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net/office_statistics`, {
+            const res = await axios.get('https://group8backend.azurewebsites.net/office_statistics', {
                 params: {
                     location: filterLocation,
                     startDate: filterDateRange.start,
@@ -53,19 +53,16 @@ const Office_Statistics = () => {
     };
 
     const colors = [
-        'rgba(75, 192, 192, 0.6)', // teal
-        'rgba(255, 99, 132, 0.6)', // red
-        'rgba(255, 206, 86, 0.6)', // yellow
-        'rgba(54, 162, 235, 0.6)', // blue
-        'rgba(153, 102, 255, 0.6)', // purple
-        'rgba(255, 159, 64, 0.6)', // orange
-        'rgba(255, 99, 71, 0.6)',  // tomato
-        'rgba(0, 255, 255, 0.6)',  // cyan
-        'rgba(144, 238, 144, 0.6)',// lightgreen
+        'rgba(75, 192, 192, 0.6)', 
+        'rgba(255, 99, 132, 0.6)', 
+        'rgba(255, 206, 86, 0.6)', 
+        'rgba(54, 162, 235, 0.6)', 
+        'rgba(153, 102, 255, 0.6)', 
+        'rgba(255, 159, 64, 0.6)', 
     ];
 
     const prepareBarChartData = (data) => {
-        const labels = data.map((item) => `${item.appointment_type}`); // Updated label with appointment count
+        const labels = data.map((item) => item.appointment_type); 
         const profits = data.map((item) => item.totalProfit);
 
         setBarChartData({
@@ -74,8 +71,8 @@ const Office_Statistics = () => {
                 {
                     label: 'Total Profits',
                     data: profits,
-                    backgroundColor: colors.slice(0, data.length), // Dynamically assign colors based on the number of items
-                    borderColor: colors.slice(0, data.length).map(color => color.replace('0.6', '1')), // Same color, but more opaque for border
+                    backgroundColor: colors.slice(0, data.length),
+                    borderColor: colors.slice(0, data.length).map(color => color.replace('0.6', '1')),
                     borderWidth: 2,
                 },
             ],
@@ -83,7 +80,7 @@ const Office_Statistics = () => {
     };
 
     const preparePieChartData = (data) => {
-        const labels = data.map((item) => `${item.appointment_type} (${item.appointmentCount} appointments)`); // Updated label with appointment count
+        const labels = data.map((item) => `${item.appointment_type} (${item.appointmentCount} appointments)`);
         const profits = data.map((item) => item.totalProfit);
 
         setPieChartData({
@@ -92,7 +89,7 @@ const Office_Statistics = () => {
                 {
                     label: 'Profit Distribution',
                     data: profits,
-                    backgroundColor: colors.slice(0, data.length), // Dynamically assign colors based on the number of items
+                    backgroundColor: colors.slice(0, data.length),
                     borderColor: 'rgba(255, 255, 255, 1)',
                     borderWidth: 2,
                 },
@@ -103,7 +100,6 @@ const Office_Statistics = () => {
     return (
         <div className="os_page-container">
             <div className="os_dashboard">
-                {/* Wrapped Office Statistics header in a container */}
                 <div className="os_header-container">
                     <div className="os_header-text">Office Statistics</div>
                 </div>
@@ -163,6 +159,41 @@ const Office_Statistics = () => {
                         ))}
                     </div>
                 </div>
+                
+                {/* Table Section */}
+                <div className="os_table-container">
+                    <h3 className="os_h3">Appointment Details</h3>
+                    <table className="os_table">
+                        <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Patient Name</th>
+                                <th>Doctor</th>
+                                <th>Nurse</th>
+                                <th>Doctor Specialty</th>
+                                <th>Date</th>
+                                <th>Profit</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {officeData.map((item) => (
+                                <tr key={item.appointment_ID}>
+                                    <td>{item.appointment_ID}</td>
+                                    <td>{item.patientName}</td>
+                                    <td>{item.doctor}</td>
+                                    <td>{item.nurse}</td>
+                                    <td>{item.appointment_type}</td>
+                                    <td>{new Date(item.dateTime)}</td>
+                                    <td>${item.totalProfit.toFixed(2)}</td>
+                                    
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+
             </div>
         </div>
     );
