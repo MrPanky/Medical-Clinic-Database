@@ -35,7 +35,7 @@ const PatientNavbar = ({ activeTab, setActiveTab ,handleLogout, first_name}) => 
     <nav className="patient-navbar">
       {/* Dashboard tab without submenu */}
       <div className="patient-name">
-        <span>Welcome,{first_name}</span>
+        <span>Welcome, {first_name}</span>
       </div>
        {/* dashboard tab */}
       <button

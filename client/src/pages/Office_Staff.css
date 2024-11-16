@@ -1,227 +1,221 @@
-/* Main dashboard layout */
-.os_dashboard {
+/* General Styling for Office Staff Page */
+.ofs-form {
+  margin: 20px;
+}
+
+.ofs-header {
   display: flex;
-  flex-direction: column;
-  padding: 40px; /* Increase padding to give more space around the content */
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif; /* Better font for readability */
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
 }
 
-.os_header {
-  text-align: center;
-  font-size: 32px;
-  color: #007bff;
-  font-weight: 600; /* Make the header bold */
-  margin-bottom: 30px;
+.ofs-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
 }
 
-/* Filter section (Card) */
-.os_filter-card {
-  background-color: #ffffff; /* White background */
-  border: 1px solid #ccc; /* Light border */
-  border-radius: 8px; /* Rounded corners */
-  padding: 20px; /* Padding inside card */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
-  margin-bottom: 30px; /* Space below the card */
-  transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
+.ofs-logout {
+  padding: 10px 15px;
+  border: none;
+  background-color: #ff4d4d;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-.os_filter-card:hover {
-  transform: translateY(-3px); /* Slight lift effect */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+.ofs-logout:hover {
+  background-color: #ff1a1a;
 }
 
-/* Filter inputs */
-.os_filter {
+.ofs-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-between;
-}
-
-.os_label {
-  margin-bottom: 15px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.os_select, .os_input-date {
-  padding: 12px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 250px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-.os_button {
-  padding: 20px 20px;
-  font-size: 18px;
-  background-color: rgb(86, 149, 237);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.os_button:hover {
-  background-color: rgb(46, 115, 211);
-  transform: translateY(-2px); /* Slight lift on hover */
-}
-
-/* Charts section */
-.os_charts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
   justify-content: center;
-  margin-left: 70px;
-  margin-right: 0px;
 }
 
-.os_chart-container {
-  flex: 1 1 45%;
-  min-width: 450px;
-  margin: 15px;
-  height: 325px;
+.ofs-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 20px;
+  max-height: 500px; /* Set a maximum height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
-/* Aggregate information section */
-.os_card-container {
+.ofs-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ofs-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.ofs-card p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+  text-align: left;
+}
+
+.ofs-inner-card {
+  background-color: #f5f5f5;
+  padding: 15px;
   margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  justify-content: center;
-}
-
-/* Info card styles with hover effect */
-.os_card {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 16px;
-  margin: 10px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
-  flex: 1 1 200px;
-  max-width: 300px;
-  box-sizing: border-box;
-  cursor: pointer; /* Pointer cursor to indicate interactivity */
 }
 
-.os_card:hover {
-  transform: translateY(-3px); /* Slight lift effect on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+.ofs-inner-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
-.os_card h4 {
-  margin: 0 0 8px; /* Space between title and paragraph */
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
+.ofs-inner-card p {
+  font-size: 0.95rem;
+  color: #555;
+  text-align: left;
 }
 
-.os_card p {
-  margin: 4px 0;
-  font-size: 14px;
-  line-height: 1.6;
+button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.patient-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.update, .delete {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.update:hover {
+  background-color: #45a049;
+}
+
+.delete {
+  background-color: #ff4d4d;
+}
+
+.delete:hover {
+  background-color: #ff1a1a;
+}
+
+/* Patient Card Hover Effect */
+.ofs-patient-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ofs-patient-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ofs-patient-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.ofs-patient-card p {
+  font-size: 1rem;
   color: #555;
 }
 
-/* Wrapper container for the entire page */
-.os_page-container {
-  width: 100%;
-  max-width: 1200px; /* Optional: Control the max width for responsiveness */
-  margin: 0 auto; /* Center the content horizontally */
-  padding: 20px;
-  box-sizing: border-box;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
-
-  background-color: #e6eaec;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 5px;
-  margin: 10px 0;
-  cursor: pointer; /* Pointer cursor to indicate interactivity */
-  max-height: 800px;
-  overflow-y: auto;
-
-}
-
-.os_page-container2 {
-  width: 100%;
-  max-width: 1200px; /* Optional: Control the max width for responsiveness */
-  margin: 0 auto; /* Center the content horizontally */
-  padding: 20px;
-  box-sizing: border-box;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s; /* Transition for hover effect */
-
-  background-color: #e3e9ec;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 5px;
-  margin: 10px 0;
-  cursor: pointer; /* Pointer cursor to indicate interactivity */
-}
-.os_page-container:hover {
-  transform: translateY(-3px); /* Slight lift effect on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
-
-
-/* Header Container with hover effect */
-.os_header-container {
-  display: inline-block;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: rgb(86, 149, 237);
-  transition: background-color 0.3s, transform 0.3s ease-in-out;
-  margin-bottom: 5px; /* Creates a gap between the header and filter sections */
-}
-
-.os_header-container:hover {
-  transform: translateY(-3px); /* Slight lift effect on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
-
-.os_header-text {
-  color: white;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  margin: 0;
-}
-
-.os_table-container {
-  margin-top: 30px;
-  overflow-x: auto;
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-.os_table {
+.patient-buttons {
   margin-top: 10px;
-  width: 100%;
-  border-collapse: collapse;
+  display: flex;
+  gap: 10px;
 }
 
-.os_table th, .os_table td {
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #ddd;
+.update, .delete {
+  padding: 8px 12px;
+  font-size: 0.9rem;
 }
 
-.os_table th {
-  background-color: #f2f2f2;
-  color: #333;
+  /* General Styling for Medical ID Input */
+  .ofs-input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background-color: #fff;
+      color: #333;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+    
+    .ofs-input:focus {
+      outline: none;
+      border-color: #4caf50; /* Green border on focus */
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+    }
+
+    /* Create Appointment Button */
+    .ofs-input,
+.ofs-btn {
+width: 100%; /* Makes both the input and button full width */
+padding: 10px 15px;
+border-radius: 5px;
+font-size: 1rem;
+box-sizing: border-box; /* Ensures padding is included in width calculation */
+}
+.ofs-btn {
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 2px;
 }
 
-.os_table tr:hover {
-  background-color: #f5f5f5;
+.ofs-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
 }

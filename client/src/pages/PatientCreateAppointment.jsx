@@ -224,7 +224,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
 
         {/* Appointment Type */}
         <div className='form-group'>
-          <label htmlFor="appointmentType">Appointment Type:</label>
+          <label htmlFor="appointmentType">Doctor Specialty:</label>
           <input
             type="text"
             id="appointmentType"
