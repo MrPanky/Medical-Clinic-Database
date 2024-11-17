@@ -106,6 +106,21 @@ const Doctor_View = () => {
         }
     }
 
+    const formatDate = (dateString) => {
+        if (!dateString) return '';  
+
+        const [datePart, timePart] = dateString.split('T');
+        const [year, month, day] = datePart.split('-');
+        const [hours, minutes] = timePart.split(':');
+
+        let hour = parseInt(hours, 10);
+        const formattedHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);  
+        const period = hour >= 12 ? 'PM' : 'AM';
+        const formattedMinutes = minutes.padStart(2, '0');
+
+        return `${month}/${day}/${year.slice(-2)} ${formattedHour}:${formattedMinutes} ${period}`;
+    };
+
     // const handleReviewClick = (medId) => {
     //     if (medId) {
     //         try {
@@ -150,7 +165,7 @@ const Doctor_View = () => {
                         >
                             <h3>{appointment.patientName}</h3>
                             <p>Doctor: {appointment.doctor}</p>
-                            <p>Date: {new Date(appointment.dateTime).toLocaleString('en-US', options)}</p>
+                            <p>Date: {formatDate(appointment.dateTime)}</p>
                             <p>Reason: {appointment.reason}</p>
                         </div>
                     ))

@@ -45,6 +45,21 @@ const PatientUpcomingAppointments = ({ medicalId }) => {
     setSelectedAppointmentId(null);
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return '';  
+
+    const [datePart, timePart] = dateString.split('T');
+    const [year, month, day] = datePart.split('-');
+    const [hours, minutes] = timePart.split(':');
+
+    let hour = parseInt(hours, 10);
+    const formattedHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);  
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const formattedMinutes = minutes.padStart(2, '0');
+
+    return `${month}/${day}/${year.slice(-2)} ${formattedHour}:${formattedMinutes} ${period}`;
+};
+
   const handleCancelAppointment = async (appointmentId) => {
     try {
         const response = await axios.put(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/${appointmentId}/attempt-cancel`);
@@ -121,7 +136,7 @@ const PatientUpcomingAppointments = ({ medicalId }) => {
           appointments.map((appointment, index) => (
             <div className="card" key={index}>
               <h3>Appointment {index + 1}</h3>
-              <p><strong>Date & Time:</strong> {appointment.dateTime}</p>
+              <p><strong>Date & Time:</strong> {formatDate(appointment.dateTime)}</p>
               <p><strong>Doctor:</strong> {appointment.doctor}</p>
               <p><strong>Reason:</strong> {appointment.reason}</p>
               <p><strong>Office:</strong> {appointment.name}</p>
