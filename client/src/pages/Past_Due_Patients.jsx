@@ -93,6 +93,26 @@ const Past_Due_Patients = () => {
         navigate('/Billing_Staff_View'); // Navigate to the main page
     };
 
+    const formatDate = (dateString) => {
+        if (!dateString) return '';  
+
+        const localDateString = dateString.replace('Z', '');
+        const dateObj = new Date(localDateString);
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const hours = dateObj.getHours();
+        const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+
+        let formattedHour = hours % 12;
+        formattedHour = formattedHour === 0 ? 12 : formattedHour;  
+        const period = hours >= 12 ? 'PM' : 'AM';
+
+        return `${month}/${day}/${year.toString().slice(-2)} ${formattedHour}:${minutes} ${period}`;
+    };
+
+    const today = new Date().toISOString().split('T')[0];
+
     const chartOptions = {
         responsive: true,
         scales: { 
@@ -159,7 +179,7 @@ const Past_Due_Patients = () => {
                             <td>{patient.patient_name}</td>
                             <td>{patient.personal_email}</td>
                             <td>{patient.home_phone}</td>
-                            <td>{patient.appointmentDateTime}</td>
+                            <td>{formatDate(patient.appointmentDateTime)}</td>
                             <td>$ {patient.amountDue}</td>
                         </tr>
                     ))}
