@@ -138,11 +138,11 @@ const Past_Due_Patients = () => {
                     <div className="Report-left">
                         <label className="os_label">
                             <h3 className="os_h3">Start Date</h3>
-                            <input className="os_input-date" type="date" onChange={(e) => setFilterDateRange({ ...filterDateRange, start: e.target.value })} />
+                            <input className="os_input-date" type="date" onChange={(e) => setFilterDateRange({ ...filterDateRange, start: e.target.value })} max={today} />
                         </label>
                         <label className="os_label">
                             <h3 className="os_h3">End Date</h3>
-                            <input className="os_input-date" type="date" onChange={(e) => setFilterDateRange({ ...filterDateRange, end: e.target.value })} />
+                            <input className="os_input-date" type="date" onChange={(e) => setFilterDateRange({ ...filterDateRange, end: e.target.value })} max={today} />
                         </label>
                         <button className="add" onClick={fetchPatientStatistics}>Filter</button>
                     </div>
