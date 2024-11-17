@@ -11,8 +11,15 @@ const Nurse_View = () => {
     const [info, setInfo] = useState([]);
     const [patientApp, setPatientApp] = useState([{ medicalId: '' }]);
     const options = {
-        timeZone : 'America/Monterrey'
-    }
+        timeZone: 'America/Monterrey',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true, // Use `false` for 24-hour format
+    };
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -109,7 +116,7 @@ const Nurse_View = () => {
                         >
                             <h3>{appointment.patientName}</h3>
                             <p>Doctor: {appointment.doctor}</p>
-                            <p>Date: {new Date(appointment.dateTime).toLocaleString('en-US', options)}</p>
+                            <p>Date: {new Intl.DateTimeFormat('en-US', options).format(new Date(appointment.dateTime))}</p>
                             <p>Reason: {appointment.reason}</p>
                         </div>
                     ))
