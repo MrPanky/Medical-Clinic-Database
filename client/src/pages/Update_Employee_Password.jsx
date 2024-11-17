@@ -19,7 +19,7 @@ const Update_Employee_Password = () => {
 
     try {
       const response = await axios.put(
-        `https://group8backend.azurewebsites.net/employee/password/${employeeID}`,
+        `http://localhost:3000/employee/password/${employeeID}`,
         { newPassword }
       );
       setMessage(response.data.message);

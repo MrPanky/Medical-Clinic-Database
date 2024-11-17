@@ -31,7 +31,7 @@ const Add_Staff = () => {
         console.log("Staff Data Being Sent:", staff); // Log the staff data
     
         try {
-            await axios.post(`https://group8backend.azurewebsites.net/staff/${staff.role.toLowerCase()}`, staff);
+            await axios.post(`http://localhost:3000/staff/${staff.role.toLowerCase()}`, staff);
             navigate("/director_view");
         } catch (err) {
             console.log("Error Response:", err.response.data); // Log any response errors

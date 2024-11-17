@@ -23,7 +23,7 @@ const Update_Staff = () => {
         const fetchStaff = async () => {
             try {
                 // Adjust the endpoint to fetch the correct staff type
-                const res = await axios.get(`https://group8backend.azurewebsites.net/${staff.role.toLowerCase()}/${employee_ID}`);
+                const res = await axios.get(`http://localhost:3000/${staff.role.toLowerCase()}/${employee_ID}`);
                 setStaff(res.data);
             } catch (err) {
                 console.error("Error fetching staff data:", err);
@@ -44,9 +44,9 @@ const Update_Staff = () => {
             let endpoint;
             // Determine the correct endpoint based on the selected role
             if (staff.role === "OfficeStaff") {
-                endpoint = `https://group8backend.azurewebsites.net/officestaff/${employee_ID}`;
+                endpoint = `http://localhost:3000/officestaff/${employee_ID}`;
             } else if (staff.role === "BillingStaff") {
-                endpoint = `https://group8backend.azurewebsites.net/billingstaff/${employee_ID}`;
+                endpoint = `http://localhost:3000/billingstaff/${employee_ID}`;
             }
 
             if (endpoint) {

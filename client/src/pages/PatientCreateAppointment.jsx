@@ -34,7 +34,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
     const fetchDoctors = async () => {
       try {
         
-        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/doctors`);
+        const response = await axios.get(`http://localhost:3000/patient/${medicalId}/appointments/doctors`);
         console.log('doctorsss', response.data)
         setDoctors(response.data.doctors);
       } catch (error) {
@@ -53,7 +53,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
         
         const formattedDate = date.toISOString().split('T')[0]; // Format date to 'YYYY-MM-DD'
         console.log('selectedDoctor!!!!',formattedDate)
-        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/appointments/time_slots`, {
+        const response = await axios.get(`http://localhost:3000/patient/appointments/time_slots`, {
           params: {
             date: formattedDate,
             doctorID: selectedDoctor,
@@ -88,7 +88,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
     const fetchAvailability = async () => {
       console.log('this is the line:', selectedDoctor)
       try {
-        const response = await axios.get('https://group8backend.azurewebsites.net/patient/appointment/availability', {
+        const response = await axios.get('http://localhost:3000/patient/appointment/availability', {
           params: {
             doctorID: selectedDoctor,
             officeID: selectedFacility
@@ -145,7 +145,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
       };
       console.log('appointmentDate',appointmentData)
       // You can post this data to the backend API
-      await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/create_appointment`, appointmentData);
+      await axios.post(`http://localhost:3000/patient/${medicalId}/appointments/create_appointment`, appointmentData);
       alert('Appointment created successfully');
     } catch (error) {
       if (error.response && error.response.status === 400) {

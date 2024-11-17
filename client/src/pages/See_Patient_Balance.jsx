@@ -64,11 +64,11 @@ const See_Patient_Balance = () => {
         try{
 
             
-            await axios.post(`https://group8backend.azurewebsites.net/See_Patient_Balance`, {ID});
+            await axios.post(`http://localhost:3000/See_Patient_Balance`, {ID});
             console.log("office ID: ",patient[index].officeID);
 
             const offID = patient[index].officeID;
-            const res = await axios.post(`https://group8backend.azurewebsites.net/Created_invoice`, {offID});
+            const res = await axios.post(`http://localhost:3000/Created_invoice`, {offID});
             localStorage.setItem('office_loc', JSON.stringify(res.data));
             console.log("office retrieved: ",res.data);
         }catch(e){

@@ -42,7 +42,7 @@ const Patient_Weight_Review = () => {
                 if (startDate) queryParams.startDate = startDate;
                 if (endDate) queryParams.endDate = endDate;
 
-                const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_app_history/${patientId}`, {
+                const res = await axios.get(`http://localhost:3000/nurse_get_app_history/${patientId}`, {
                     params: queryParams
                 });
 
