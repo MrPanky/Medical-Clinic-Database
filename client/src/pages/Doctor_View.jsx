@@ -11,6 +11,9 @@ const Doctor_View = () => {
     const [availability, setAvailability] = useState([]);
     const [referrals, setReferrals] = useState([]);
     const [patientWeight, setPatientWeight] = useState([{ medicalId: '' }]);
+    const options = {
+        timeZone : 'America/Monterrey'
+    }
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -67,7 +70,7 @@ const Doctor_View = () => {
 
     const handleViewAppointments = async (doctorId) => { //argument is directorId
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net/doc_appointments/${doctorId}`);//request appointments that correspond to directorId
+            const res = await axios.get(`https://group8backend.azurewebsites.net/appointments/${doctorId}`);//request appointments that correspond to directorId
             const futureAppointments = res.data.filter(appointment => { //.filter filters data in res using below comparison
                 const appointmentDate = new Date(appointment.dateTime);
                 const today = new Date();
@@ -147,7 +150,7 @@ const Doctor_View = () => {
                         >
                             <h3>{appointment.patientName}</h3>
                             <p>Doctor: {appointment.doctor}</p>
-                            <p>Date: {new Date(appointment.dateTime).toLocaleString()}</p>
+                            <p>Date: {new Date(appointment.dateTime).toLocaleString('en-US', options)}</p>
                             <p>Reason: {appointment.reason}</p>
                         </div>
                     ))

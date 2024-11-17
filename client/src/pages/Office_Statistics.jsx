@@ -23,6 +23,9 @@ const Office_Statistics = () => {
     const [barChartData, setBarChartData] = useState({});
     const [pieChartData, setPieChartData] = useState({});
 
+    
+    const today = new Date().toISOString().split('T')[0];
+
     useEffect(() => {
         fetchOfficeStatistics();
     }, [filterLocation, filterDateRange]);
@@ -118,11 +121,21 @@ const Office_Statistics = () => {
                         </label>
                         <label className="os_label">
                             <h3 className="os_h3">Start Date</h3>
-                            <input className="os_input-date" type="date" onChange={(e) => setFilterDateRange({ ...filterDateRange, start: e.target.value })} />
+                            <input 
+                                className="os_input-date" 
+                                type="date" 
+                                onChange={(e) => setFilterDateRange({ ...filterDateRange, start: e.target.value })} 
+                                max={today} // Restrict to today's date
+                            />
                         </label>
                         <label className="os_label">
                             <h3 className="os_h3">End Date</h3>
-                            <input className="os_input-date" type="date" onChange={(e) => setFilterDateRange({ ...filterDateRange, end: e.target.value })} />
+                            <input 
+                                className="os_input-date" 
+                                type="date" 
+                                onChange={(e) => setFilterDateRange({ ...filterDateRange, end: e.target.value })} 
+                                max={today} // Restrict to today's date
+                            />
                         </label>
                         <button className="add" onClick={fetchOfficeStatistics}>Filter</button>
                     </div>
@@ -173,7 +186,6 @@ const Office_Statistics = () => {
                                 <th>Doctor Specialty</th>
                                 <th>Date</th>
                                 <th>Profit</th>
-                                
                             </tr>
                         </thead>
                         <tbody>
@@ -184,16 +196,13 @@ const Office_Statistics = () => {
                                     <td>{item.doctor}</td>
                                     <td>{item.nurse}</td>
                                     <td>{item.appointment_type}</td>
-                                    <td>{new Date(item.dateTime)}</td>
+                                    <td>{new Date(item.dateTime).toLocaleDateString()}</td>
                                     <td>${item.totalProfit.toFixed(2)}</td>
-                                    
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
         </div>
     );

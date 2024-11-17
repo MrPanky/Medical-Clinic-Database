@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './PatientCreateAppointment.css';
+import './medical_staff_style.css';
 //DISABLE SUBMIT BUTTON WHEN APPOINTMENT IS CREATED
 
 export default function Nurse_Create_Appointment() {
