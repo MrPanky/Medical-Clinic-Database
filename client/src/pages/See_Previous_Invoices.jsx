@@ -38,7 +38,7 @@ const See_Previous_Invoices = () => {
         try{
             console.log(patient[index].officeID);
             const offID = patient[index].officeID;
-            const res = await axios.post(`https://group8backend.azurewebsites.net/Created_invoice`, {offID, choice});
+            const res = await axios.post(`http://localhost:3000/Created_invoice`, {offID, choice});
             localStorage.setItem('office_loc', JSON.stringify(res.data));
             console.log("office retrieved: ",res.data);
 

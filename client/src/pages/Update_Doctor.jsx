@@ -25,7 +25,7 @@ const Update_Doctor = () => {
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const response = await axios.get(`https://group8backend.azurewebsites.net/doctors/${employee_ID}`);
+        const response = await axios.get(`http://localhost:3000/doctors/${employee_ID}`);
         setDoctor(response.data); // Update state with doctor data
       } catch (err) {
         console.error(err);
@@ -45,7 +45,7 @@ const Update_Doctor = () => {
     e.preventDefault(); // Prevent page refresh
 
     try {
-      await axios.put(`https://group8backend.azurewebsites.net/doctors/${employee_ID}`, doctor); // Update doctor data
+      await axios.put(`http://localhost:3000/doctors/${employee_ID}`, doctor); // Update doctor data
       navigate("/"); // Redirect to the Doctors page
     } catch (err) {
       console.error(err); // Log any errors

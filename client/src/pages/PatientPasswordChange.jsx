@@ -16,7 +16,7 @@ export default function PatientPasswordChange({ medicalId }) {
         }
 
         try {
-            const response = await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/my_account/password_change`, {
+            const response = await axios.post(`http://localhost:3000/patient/${medicalId}/my_account/password_change`, {
                 password,
             });
 

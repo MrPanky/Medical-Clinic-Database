@@ -52,7 +52,7 @@ const SearchPatient = () => {
             console.log(option);
             
 
-            let res = await axios.post(`https://group8backend.azurewebsites.net/SearchPatient`, {patientID, option, choice}); 
+            let res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID, option, choice}); 
 
 
             console.log(res.data);
@@ -72,7 +72,7 @@ const SearchPatient = () => {
             }else{
                 option = true;
                 console.log("here", option);
-                res = await axios.post(`https://group8backend.azurewebsites.net/SearchPatient`, {patientID, option});
+                res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID, option});
                 console.log(res.data);
                 if(res.data.length  > 0){
                     if(!choice){

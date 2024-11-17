@@ -37,7 +37,7 @@ const Office_Statistics = () => {
         }
 
         try {
-            const res = await axios.get('https://group8backend.azurewebsites.net/office_statistics', {
+            const res = await axios.get('http://localhost:3000/office_statistics', {
                 params: {
                     location: filterLocation,
                     startDate: filterDateRange.start,

@@ -4,38 +4,35 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './PatientCreateAppointment.css';
 
-export default function PatientCreateAppointment( {medicalId, first_name, last_name, patientBillingId} ) {
-  const [doctors, setDoctors] = useState([]); //stores a list of patient's associated doctors
-  const [selectedDoctor, setSelectedDoctor] = useState(''); // stores doctorsId
-  const [selectedFacility, setSelectedFacility] = useState(''); //stores the current office selected
-  const [appointmentType, setAppointmentType] = useState(''); //stores the appointment type
-  const [reason, setReason] = useState(''); //stores the reason for appointment
-  const [date, setDate] = useState(''); //stores the date chosen on the calender
-  const [day, setDay] = useState(''); //ignore this
+export default function PatientCreateAppointment({ medicalId, first_name, last_name, patientBillingId }) {
+  const [doctors, setDoctors] = useState([]); // Stores a list of patient's associated doctors
+  const [selectedDoctor, setSelectedDoctor] = useState(''); // Stores doctorsId
+  const [selectedFacility, setSelectedFacility] = useState(''); // Stores the current office selected
+  const [appointmentType, setAppointmentType] = useState(''); // Stores the appointment type
+  const [reason, setReason] = useState(''); // Stores the reason for appointment
+  const [date, setDate] = useState(''); // Stores the date chosen on the calendar
   const [isPickerEnabled, setIsPickerEnabled] = useState(false);
-  const [timeSlots, setTimeSlots] = useState([]) //stores all available timeslots
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(''); //stores the selected timeslot
-  const [unavailableDates, setUnavailableDates] = useState([]); //stores fully booked days
-  const [unavailableDays, setUnavailableDays] = useState([]); //stores the days where the doctor doesnt work at that office
-  const [selectedDoctorID, setSelectedDoctorID] = useState(''); // ignore this line
+  const [timeSlots, setTimeSlots] = useState([]); // Stores all available timeslots
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(''); // Stores the selected timeslot
+  const [unavailableDates, setUnavailableDates] = useState([]); // Stores fully booked days
+  const [unavailableDays, setUnavailableDays] = useState([]); // Stores the days where the doctor doesn't work at that office
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  useEffect(()=>{
-    if(selectedDoctor && date && selectedFacility && selectedTimeSlot){
+  const [isLoading, setIsLoading] = useState(false); // NEW: Tracks if the form is being submitted
+
+  useEffect(() => {
+    if (selectedDoctor && date && selectedFacility && selectedTimeSlot) {
       setIsSubmitEnabled(true);
-    }
-    else{
+    } else {
       setIsSubmitEnabled(false);
     }
+  }, [selectedDoctor, date, selectedFacility, selectedTimeSlot]);
 
-  }, [selectedDoctor,date,selectedFacility,selectedTimeSlot])
   // Fetch all doctors for the patient
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        
-        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/doctors`);
-        console.log('doctorsss', response.data)
+        const response = await axios.get(`http://localhost:3000/patient/${medicalId}/appointments/doctors`);
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error('Error fetching doctors:', error);
@@ -44,57 +41,46 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
     fetchDoctors();
   }, [medicalId]);
 
-
-
-  
   useEffect(() => {
     const fetchAvailableTimeSlots = async () => {
       try {
-        
         const formattedDate = date.toISOString().split('T')[0]; // Format date to 'YYYY-MM-DD'
-        console.log('selectedDoctor!!!!',formattedDate)
-        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/appointments/time_slots`, {
+        const response = await axios.get(`http://localhost:3000/patient/appointments/time_slots`, {
           params: {
             date: formattedDate,
             doctorID: selectedDoctor,
             facility: selectedFacility,
           },
-          
         });
         const allTimeSlots = [
           '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-          '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
+          '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM',
         ];
         const availableTimeSlots = allTimeSlots.filter(
           (slot) => !response.data.timeSlots.includes(slot)
         );
-        console.log('timeslots:',availableTimeSlots)
         setTimeSlots(availableTimeSlots); // Update time slots based on response
       } catch (error) {
         console.error('Error fetching available time slots:', error);
       }
     };
-  
+
     // Only run if all values are selected
     if (date && selectedDoctor && selectedFacility) {
       fetchAvailableTimeSlots();
     }
-  }, [date, selectedDoctor, selectedFacility, medicalId]);
-
-
+  }, [date, selectedDoctor, selectedFacility]);
 
   // Enable date only if doctor and facility are selected
   useEffect(() => {
     const fetchAvailability = async () => {
-      console.log('this is the line:', selectedDoctor)
       try {
-        const response = await axios.get('https://group8backend.azurewebsites.net/patient/appointment/availability', {
+        const response = await axios.get('http://localhost:3000/patient/appointment/availability', {
           params: {
             doctorID: selectedDoctor,
-            officeID: selectedFacility
-          }
+            officeID: selectedFacility,
+          },
         });
-        
         // Set the state with the unavailable dates and days
         setUnavailableDates(response.data.fullyBookedDates);
         setUnavailableDays(response.data.unavailableDays);
@@ -105,7 +91,6 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
       }
     };
     if (selectedDoctor && selectedFacility) {
-      
       fetchAvailability();
     } else {
       setIsPickerEnabled(false);
@@ -116,22 +101,19 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage('');
+    setIsLoading(true); // Start loading to prevent spamming
     const defaultNurses = {
-      "North": {NurseId:'E2345671', Name:'John Doe' },
-      "South": {NurseId:'E2345672', Name:'Alice Johnson' },
-      "East": {NurseId:'E2345673', Name:'Michael Brown' },
-      "West": {NurseId:'E2345674', Name:'Emily Smith' }
-      
-    }
-    const nurse = defaultNurses[selectedFacility]
-    console.log('nurse',nurse)
+      North: { NurseId: 'E2345671', Name: 'John Doe' },
+      South: { NurseId: 'E2345672', Name: 'Alice Johnson' },
+      East: { NurseId: 'E2345673', Name: 'Michael Brown' },
+      West: { NurseId: 'E2345674', Name: 'Emily Smith' },
+    };
+    const nurse = defaultNurses[selectedFacility];
     try {
       const formattedDate = date.toISOString().split('T')[0];
-      
       const fullName = `${first_name} ${last_name}`;
-      console.log('fullname',fullName)
       const appointmentData = {
-        patientName : fullName,
+        patientName: fullName,
         doctorId: selectedDoctor,
         nurseId: nurse.NurseId,
         nurseName: nurse.Name,
@@ -141,25 +123,30 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
         reason,
         date: formattedDate,
         timeSlot: selectedTimeSlot,
-        patientBillingId: patientBillingId
+        patientBillingId: patientBillingId,
       };
-      console.log('appointmentDate',appointmentData)
-      // You can post this data to the backend API
-      await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/create_appointment`, appointmentData);
+
+      await axios.post(`http://localhost:3000/patient/${medicalId}/appointments/create_appointment`, appointmentData);
       alert('Appointment created successfully');
+      setSelectedDoctor('');
+      setSelectedFacility('');
+      setAppointmentType('');
+      setReason('');
+      setDate('');
+      setTimeSlots([]);
+      setSelectedTimeSlot('');
+      setIsPickerEnabled(false);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.error); // Set custom error from backend
       } else {
         setErrorMessage('Failed to create appointment. Please try again.');
       }
-      console.log('there was an erorr when creaing an appointment')
+    } finally {
+      setIsLoading(false); // Stop loading after request completes
     }
   };
-  const isWeekday = (date) => {
-    const day = date.getDay();
-    return day !== 0 && day !== 6; // 0 = Sunday, 6 = Saturday
-  };
+
   const isDateSelectable = (date) => {
     const day = date.getDay();
     const isWeekday = day !== 0 && day !== 6; // 0 = Sunday, 6 = Saturday
@@ -167,7 +154,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
     const isNotFullyBooked = !unavailableDates.includes(formattedDate);
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const isNotUnavailableDay = !unavailableDays.includes(dayNames[day]);
-  
+
     // The date must be a weekday, not fully booked, and not an unavailable day
     return isWeekday && isNotFullyBooked && isNotUnavailableDay;
   };
@@ -185,10 +172,10 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
             onChange={(e) => {
               const selectedDoctorId = e.target.value;
               setSelectedDoctor(selectedDoctorId);
-        
+
               // Find the selected doctor in the doctors array
               const selectedDoctorData = doctors.find(doctor => doctor.employee_ID === selectedDoctorId);
-        
+
               // Set the appointment type based on the doctor's specialty
               if (selectedDoctorData) {
                 setAppointmentType(selectedDoctorData.specialty);
@@ -229,8 +216,7 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
             type="text"
             id="appointmentType"
             value={appointmentType}
-            onChange={(e) => setAppointmentType(e.target.value)}
-            placeholder="e.g., Check-up, Consultation"
+            placeholder="e.g., general practitioner"
             readOnly
           />
         </div>
@@ -246,20 +232,12 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
           />
         </div>
 
-        {/* Date Picker (enabled only if doctor and facility are selected) */}
+        {/* Date Picker */}
         <div className="form-group">
           <label htmlFor="date">Date:</label>
-          {/*<input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            disabled={!isPickerEnabled}
-          />*/}
           <DatePicker
             selected={date}
             onChange={(date) => setDate(date)}
-             // Disable unavailable dates
             minDate={new Date()}
             filterDate={isDateSelectable}
             placeholderText="Select a date"
@@ -267,16 +245,14 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
           />
         </div>
 
-        {/* time Picker (enabled only if doctor and facility are selected) */}
+        {/* Time Slot Picker */}
         <div>
           <label htmlFor="timeSlot">Time Slot:</label>
           <select
             id="timeSlot"
             value={selectedTimeSlot}
             onChange={(e) => setSelectedTimeSlot(e.target.value)}
-            disabled={
-              !timeSlots.length || !date || !selectedDoctor || !selectedFacility
-             }
+            disabled={!timeSlots.length || !date || !selectedDoctor || !selectedFacility}
           >
             <option value="">Select a Time Slot</option>
             {timeSlots.map((slot, index) => (
@@ -287,12 +263,21 @@ export default function PatientCreateAppointment( {medicalId, first_name, last_n
           </select>
         </div>
 
-        <button type="submit" className='btn'disabled={!isSubmitEnabled}>Create Appointment</button>
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className='btn'
+          disabled={isLoading || !isSubmitEnabled}
+        >
+          {isLoading ? 'Submitting...' : 'Create Appointment'}
+        </button>
+
+        {/* Error Message */}
         {errorMessage && (
-        <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
-          {errorMessage}
-        </div>
-      )}
+          <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
+            {errorMessage}
+          </div>
+        )}
       </form>
     </div>
   );

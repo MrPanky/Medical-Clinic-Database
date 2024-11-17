@@ -40,13 +40,14 @@ CREATE TABLE `appointment` (
   `diagnoses` varchar(100) DEFAULT NULL,
   `allergies` varchar(100) DEFAULT NULL,
   `patientWeight` decimal(5,2) DEFAULT NULL,
-  `patientBP` varchar(10) NOT NULL,
+  `patientBP` varchar(10) DEFAULT NULL,
   `patientHR` int DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` varchar(9) DEFAULT NULL,
   `last_edited` datetime DEFAULT NULL,
   `last_edited_ID` varchar(9) DEFAULT NULL,
   `isPaid` tinyint(1) NOT NULL DEFAULT '0',
+  `isCanceled` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`appointment_ID`),
   KEY `patientmedicalID` (`patientmedicalID`),
   KEY `doctorID` (`doctorID`),
@@ -68,40 +69,9 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES ('A1234567','M12345678','Emily Johnson','John Doe','Jane Smith','E12345678','General Practitioner','E23456789','North','2023-10-15 10:00:00','Regular check-up',NULL,NULL,NULL,75.00,'120/80',72,'2023-10-01 12:00:00','admin',NULL,NULL,1),('A2345678','M12345678','Emily Johnson','Jimo Jones','Jane Smith','E5399533','Cardiologist','E23456789','South','2023-11-05 14:30:00','Review lab results',NULL,NULL,NULL,68.50,'115/75',68,'2023-10-01 12:00:00','admin',NULL,NULL,1),('A3456789','M12345678','Emily Johnson','John Smith','Jane Smith','E6552644','Radiologist','E23456789','East','2023-09-20 09:00:00','Flu symptoms',NULL,'Flu','None',82.00,'130/85',78,'2023-09-01 12:00:00','admin',NULL,NULL,1),('A4567890','M12345678','Emily Johnson','Mike Smith','Jane Smith','E88791285','Gastroenterologist','E23456789','West','2023-12-01 11:00:00','Routine vaccination',NULL,NULL,NULL,55.00,'110/70',65,'2023-10-01 12:00:00','admin',NULL,NULL,1),('A9876543','M12345678','Emily Johnson','Mike Smith','Jane Smith','E88791285','Gastroenterologist','E23456789','West','2025-12-15 10:00:00','Annual check-up','General health assessment',NULL,'Peanuts',68.50,'120/80',72,'2024-10-20 17:46:15','E12345678',NULL,NULL,1);
+INSERT INTO `appointment` VALUES ('A1234567','M12345678','Emily Johnson','John Doe','Jane Smith','E12345678','General Practitioner','E23456789','North','2023-10-15 10:00:00','Regular check-up','Digoxin',NULL,NULL,75.00,'120/80',72,'2023-10-01 12:00:00','admin',NULL,NULL,1,0),('A2345678','M12345678','Emily Johnson','Jimo Jones','Jane Smith','E5399533','Cardiologist','E23456789','South','2023-11-05 14:30:00','Review lab results','Digoxin',NULL,NULL,68.50,'115/75',68,'2023-10-01 12:00:00','admin',NULL,NULL,1,0),('A2387791','M12345678','Emily Johnson','John Doe','Alice Johnson','E12345678','General Practitioner','E2345672','South','2024-11-12 10:00:00','dsf',NULL,NULL,NULL,NULL,NULL,NULL,'2024-11-11 22:14:04','M12345678',NULL,NULL,0,1),('A2727863','M29527227','Sarah Carolina','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-15 14:00:00','Headaches',NULL,NULL,NULL,NULL,'120/80',NULL,'2024-11-15 14:00:00','M29527227',NULL,NULL,0,0),('A3456789','M12345678','Emily Johnson','John Smith','Jane Smith','E6552644','Radiologist','E23456789','East','2023-09-20 09:00:00','Flu symptoms',NULL,'Flu','None',82.00,'130/85',78,'2023-09-01 12:00:00','admin',NULL,NULL,1,0),('A3509243','M12345678','Emily Johnson','John Doe','Alice Johnson','E12345678','General Practitioner','E2345672','South','2024-12-10 11:00:00','Appointment health help',NULL,NULL,NULL,NULL,'120/80',NULL,'2024-12-10 11:00:00','M12345678',NULL,NULL,0,0),('A4567890','M12345678','Emily Johnson','Mike Smith','Jane Smith','E88791285','Gastroenterologist','E23456789','West','2023-12-01 11:00:00','Routine vaccination','Risperidone',NULL,NULL,55.00,'110/70',65,'2023-10-01 12:00:00','admin',NULL,NULL,1,0),('A5246759','M12345678','Emily Johnson','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-18 14:00:00','follow-up',NULL,NULL,NULL,NULL,NULL,NULL,'2024-11-12 00:34:39','M12345678',NULL,NULL,0,0),('A6162959','M12345678','Emily Johnson','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-11 10:00:00','sdfasdf','General health assessment',NULL,NULL,60.00,NULL,NULL,'2024-11-11 05:03:35','M12345678',NULL,NULL,0,0),('A6248819','M68053477','Waylon Jennings','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-25 11:00:00','First appointment',NULL,NULL,NULL,NULL,'120/80',NULL,'2024-11-25 11:00:00','M68053477',NULL,NULL,0,0),('A8489873','M12345678','Emily Johnson','John Doe','Alice Johnson','E12345678','General Practitioner','E2345672','South','2024-11-19 10:00:00','',NULL,NULL,NULL,NULL,NULL,NULL,'2024-11-11 22:17:43','M12345678',NULL,NULL,0,0),('A8887846','M23487359','Hank Williams','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-22 09:00:00','TEST APPOINTMENT 5.0511.16',NULL,NULL,NULL,NULL,'120/80',NULL,'2024-11-22 09:00:00','M23487359',NULL,NULL,0,0),('A8941503','M12345678','Emily Johnson','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-22 12:00:00','',NULL,NULL,NULL,NULL,NULL,NULL,'2024-11-11 22:35:26','M12345678',NULL,NULL,0,0),('A8954343','M12345678','Emily Johnson','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-11 16:00:00','dfg','General health assessment',NULL,NULL,55.00,NULL,NULL,'2024-11-11 22:08:01','M12345678',NULL,NULL,0,0),('A9518157','M12345678','Emily Johnson','John Doe','John Doe','E12345678','General Practitioner','E2345671','North','2024-11-11 11:00:00','follow-up',NULL,NULL,NULL,60.00,NULL,NULL,'2024-11-11 04:50:19','M12345678',NULL,NULL,0,1),('A9876523','M29527227','Sarah Carolina','Mike Smith','Jane Smith','E88791285','Gastroenterologist','E23456789','West','2025-12-15 10:00:00','Annual check-up','General health assessment',NULL,'Peanuts',68.50,'120/80',72,'2024-10-20 17:46:15','E12345678',NULL,NULL,0,0),('A9876533','M29527227','Sarah Carolina','Mike Smith','Jane Smith','E88791285','Radiologist','E23456789','West','2024-10-01 10:00:00','Annual check-up',NULL,NULL,'Peanuts',68.50,'120/80',NULL,'2024-11-05 21:47:17',NULL,NULL,NULL,0,0),('A9876541','M29527227','Sarah Carolina','Mike Smith','Jane Smith','E88791285','Gastroenterologist','E23456789','West','2024-10-05 10:00:00','Annual check-up',NULL,NULL,'Peanuts',68.50,'120/80',NULL,'2024-11-05 21:47:17',NULL,NULL,NULL,0,0),('A9876542','M29527227','Sarah Carolina','Mike Smith','Jane Smith','E88791285','Cardiologist','E23456789','West','2024-10-10 10:00:00','Annual check-up',NULL,NULL,'Peanuts',68.50,'120/80',NULL,'2024-11-05 21:47:17',NULL,NULL,NULL,0,0),('A9876543','M12345678','Emily Johnson','Mike Smith','Jane Smith','E88791285','Gastroenterologist','E23456789','West','2024-10-15 10:00:00','Annual check-up','General health assessment',NULL,'Peanuts',68.50,'120/80',72,'2024-10-20 17:46:15','E12345678',NULL,NULL,1,0),('A9876544','M29527227','Sarah Carolina','Mike Smith','Jane Smith','E88791285','Pediatrician','E23456789','West','2024-10-20 10:00:00','Annual check-up',NULL,NULL,'Peanuts',68.50,'120/80',NULL,'2024-11-05 21:47:17',NULL,NULL,NULL,0,0),('A9876545','M29527227','Sarah Carolina','Mike Smith','Jane Smith','E88791285','Obstetrician','E23456789','West','2024-10-25 10:00:00','Annual check-up',NULL,NULL,'Peanuts',68.50,'120/80',NULL,'2024-11-05 21:47:17',NULL,NULL,NULL,0,0);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`group8`@`%`*/ /*!50003 TRIGGER `prevent_appointment_if_overdue` BEFORE INSERT ON `appointment` FOR EACH ROW BEGIN
-DECLARE overdue_count INT;
-
--- Check if there are any unpaid invoices for the patient that are more than 30 days overdue
-SELECT COUNT(*) INTO overdue_count
-FROM invoice
-JOIN patient ON patient.billingID = invoice.patientBillingID
-WHERE patient.medical_ID = NEW.patientmedicalID
-AND invoice.amountDue > 0
-AND DATEDIFF(NOW(), invoice.created) > 30;
-
--- If there are any overdue invoices, prevent the creation of a new appointment
-IF overdue_count > 0 THEN
-SIGNAL SQLSTATE '45000'
-SET MESSAGE_TEXT = 'Cannot create appointment. Patient has an overdue balance older than 30 days.';
-END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `billing_cost_table`
@@ -239,7 +209,7 @@ CREATE TABLE `doctors` (
 
 LOCK TABLES `doctors` WRITE;
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
-INSERT INTO `doctors` VALUES ('E1095965','General Practioner','Jane','Doe','1234567889',NULL,'123 Street',NULL,NULL,NULL,NULL,NULL,'2024-11-04 20:09:41',NULL,'2024-11-04 20:09:41',NULL),('E12345678','General Medicine','John','Doe','555-1234','john.doe@example.com','123 Main St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E12345678',NULL,NULL),('E4485864','General Practioner','Jane','Doe','1234567889',NULL,'123 Street',NULL,NULL,NULL,NULL,NULL,'2024-11-04 20:09:41',NULL,'2024-11-04 20:09:41',NULL),('E5399533','Cardiologist','Jimo','Jones','3333333333',NULL,'123 sesame street','all day','all day','all day','all day','all day','2024-10-06 02:33:51',NULL,'2024-10-06 02:33:51',NULL),('E6552644','Radiologist','John','Smith','5555555555',NULL,'333 lucky ave','all day','all day','all day','all day','all day','2024-10-05 18:25:24',NULL,'2024-10-05 18:25:24',NULL),('E88791285','Gastroenterologist','Mike','Smith','5555555555',NULL,'122 milquetoast ln','all day','all day','all day','all day','all day','2024-10-19 17:21:06',NULL,'2024-10-19 17:21:06',NULL);
+INSERT INTO `doctors` VALUES ('E1095965','General Practioner','Jane','Doe','1234567889',NULL,'123 Street',NULL,NULL,NULL,NULL,NULL,'2024-11-04 20:09:41',NULL,'2024-11-04 20:09:41',NULL),('E12345678','General Practitioner','John','Doe','555-1234','john.doe@example.com','123 Main St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E12345678',NULL,NULL),('E4485864','General Practioner','Jane','Doe','1234567889',NULL,'123 Street',NULL,NULL,NULL,NULL,NULL,'2024-11-04 20:09:41',NULL,'2024-11-04 20:09:41',NULL),('E50809066','Pediatrician','Tim','Lass','2212192178',NULL,'33 world ln',NULL,NULL,NULL,NULL,NULL,'2024-11-15 23:20:48',NULL,'2024-11-15 23:20:48',NULL),('E5399533','Cardiologist','Jimo','Jones','3333333333',NULL,'123 sesame street','all day','all day','all day','all day','all day','2024-10-06 02:33:51',NULL,'2024-10-06 02:33:51',NULL),('E6552644','Radiologist','John','Smith','5555555555',NULL,'333 lucky ave','all day','all day','all day','all day','all day','2024-10-05 18:25:24',NULL,'2024-10-05 18:25:24',NULL),('E88791285','Gastroenterologist','Mike','Smith','5555555555',NULL,'122 milquetoast ln','all day','all day','all day','all day','all day','2024-10-19 17:21:06',NULL,'2024-10-19 17:21:06',NULL);
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +238,7 @@ CREATE TABLE `doctors_patient` (
 
 LOCK TABLES `doctors_patient` WRITE;
 /*!40000 ALTER TABLE `doctors_patient` DISABLE KEYS */;
-INSERT INTO `doctors_patient` VALUES ('E12345678','M12345678');
+INSERT INTO `doctors_patient` VALUES ('E12345678','M12345678'),('E5399533','M12345678'),('E88791285','M12345678'),('E12345678','M23487359'),('E12345678','M29527227'),('E88791285','M29527227'),('E12345678','M35676543'),('E88791285','M35676543'),('E12345678','M68053477'),('E88791285','M68053477');
 /*!40000 ALTER TABLE `doctors_patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +265,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES ('E1095965','Jane','Doe','Doctor'),('E12345678','John','Doe','Doctor'),('E23456789','Jane','Smith','Nurse'),('E23483404','John','candy','OfficeStaff'),('E32646150','tim','jacks','OfficeStaff'),('E34567890','Bill','Jones','BillingStaff'),('E4485864','Jane','Doe','Doctor'),('E45678901','Alice','Brown','OfficeStaff'),('E5399533','Jimo','Jones','Doctor'),('E56789012','Mike','Davis','Director'),('E6552644','John','Smith','Doctor'),('E73483041','Quang','T','OfficeStaff'),('E76543210','Olivia','Newton','Director'),('E80779948','John','Smith','Doctor'),('E87654321','James','Tiberius','Director'),('E88791285','Mike','Smith','Doctor'),('E98765432','Samantha','Carter','Director');
+INSERT INTO `employee` VALUES ('E1095965','Jane','Doe','Doctor'),('E12345678','John','Doe','Doctor'),('E2345671','John','Doe','Nurse'),('E2345672','Alice','Johnson','Nurse'),('E2345673','Michael','Brown','Nurse'),('E2345674','Emily','Smith','Nurse'),('E23456789','Jane','Smith','Nurse'),('E23483404','John','candy','OfficeStaff'),('E32646150','tim','jacks','OfficeStaff'),('E34567890','Bill','Jones','BillingStaff'),('E4485864','Jane','Doe','Doctor'),('E45678901','Alice','Brown','OfficeStaff'),('E50809066','Tim','Lass','Doctor'),('E5399533','Jimo','Jones','Doctor'),('E56083036','Sam ','Big','OfficeStaff'),('E56789012','Mike','Davis','Director'),('E6552644','John','Smith','Doctor'),('E76543210','Olivia','Newton','Director'),('E80779948','John','Smith','Doctor'),('E87654321','James','Tiberius','Director'),('E88791285','Mike','Smith','Doctor'),('E98765432','Samantha','Carter','Director');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +292,7 @@ CREATE TABLE `employee_password` (
 
 LOCK TABLES `employee_password` WRITE;
 /*!40000 ALTER TABLE `employee_password` DISABLE KEYS */;
-INSERT INTO `employee_password` VALUES ('E12345678','Doctor','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E23456789','Nurse','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E34567890','BillingStaff','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E45678901','OfficeStaff','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E5399533','Abcd1234','2024-10-09 12:25:13','2024-10-09 12:25:13'),('E56789012','Director','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E76543210','Director','2024-10-18 12:22:32','2024-10-18 12:22:32'),('E87654321','Director','2024-10-18 12:22:32','2024-10-18 12:22:32'),('E98765432','Director','2024-10-18 12:22:32','2024-10-18 12:22:32');
+INSERT INTO `employee_password` VALUES ('E12345678','Doctor','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E23456789','Nurse','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E34567890','BillingStaff','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E45678901','OfficeStaff','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E5399533','Abcd1234','2024-10-09 12:25:13','2024-10-09 12:25:13'),('E56789012','Director','2024-10-14 19:33:47','2024-10-14 19:33:47'),('E76543210','Director','2024-10-18 12:22:32','2024-10-18 12:22:32'),('E87654321','Director','2024-10-18 12:22:32','2024-10-18 12:22:32'),('E88791285','Doctor','2024-11-11 01:00:11','2024-11-11 01:00:11'),('E98765432','Director','2024-10-18 12:22:32','2024-10-18 12:22:32');
 /*!40000 ALTER TABLE `employee_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,7 +337,7 @@ CREATE TABLE `employee_schedule_location` (
 
 LOCK TABLES `employee_schedule_location` WRITE;
 /*!40000 ALTER TABLE `employee_schedule_location` DISABLE KEYS */;
-INSERT INTO `employee_schedule_location` VALUES ('','North','South','East','West','North','9 AM - 5 PM','2024-10-19 12:25:48',NULL,'2024-10-19 12:25:48',NULL),('E12345678','North','South','East','West','North','9 AM - 5 PM','2024-10-19 12:25:48',NULL,'2024-10-19 12:25:48',NULL),('E88791285','North','South','East','West','North','9 AM - 5 PM','2024-10-19 12:29:00','E88791285','2024-10-19 12:29:00','E88791285');
+INSERT INTO `employee_schedule_location` VALUES ('','North','South','East','West','North','9 AM - 5 PM','2024-10-19 12:25:48',NULL,'2024-10-19 12:25:48',NULL),('E12345678','North','South','East','West','North','9 AM - 5 PM','2024-10-19 12:25:48',NULL,'2024-10-19 12:25:48',NULL),('E2345671','North','North','North','North','North','9 AM - 5 PM','2024-11-07 04:10:46',NULL,NULL,NULL),('E2345672','South','South','South','South','South','9 AM - 5 PM','2024-11-07 04:10:46',NULL,NULL,NULL),('E2345673','East','East','East','East','East','9 AM - 5 PM','2024-11-07 04:10:46',NULL,NULL,NULL),('E2345674','West','West','West','West','West','9 AM - 5 PM','2024-11-07 04:10:46',NULL,NULL,NULL),('E50809066','West','West','West','West','West','9 AM - 5 PM','2024-11-15 23:20:48','E50809066','2024-11-15 23:23:00','E50809066'),('E88791285','North','South','East','West','North','9 AM - 5 PM','2024-10-19 12:29:00','E88791285','2024-10-19 12:29:00','E88791285');
 /*!40000 ALTER TABLE `employee_schedule_location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,9 +382,9 @@ CREATE TABLE `invoice` (
   `patientBillingID` varchar(9) NOT NULL,
   `InvoiceID` varchar(9) DEFAULT NULL,
   `patient_name` varchar(64) NOT NULL,
-  `patient_address` varchar(100) NOT NULL,
-  `patient_phone` varchar(15) NOT NULL,
-  `patient_email` varchar(100) NOT NULL,
+  `patient_address` varchar(100) DEFAULT NULL,
+  `patient_phone` varchar(15) DEFAULT NULL,
+  `patient_email` varchar(100) DEFAULT NULL,
   `patient_insurance` varchar(100) NOT NULL,
   `services` varchar(150) NOT NULL,
   `amountCharged` decimal(10,2) NOT NULL,
@@ -441,7 +411,7 @@ CREATE TABLE `invoice` (
 
 LOCK TABLES `invoice` WRITE;
 /*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
-INSERT INTO `invoice` VALUES ('A1234567','2023-10-15 10:00:00','B12345678','I1234567','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','General Practitioner',100.00,100.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A2345678','2023-11-05 14:30:00','B12345678','I2345678','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Cardiologist',250.00,250.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A3456789','2023-09-20 09:00:00','B12345678','I3456789','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Radiologist',150.00,150.00,'2023-09-01 12:00:00','E34567890',NULL,NULL),('A4567890','2023-12-01 11:00:00','B12345678','I4567890','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Gastroenterologist',175.00,0.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A9876543','2025-12-15 10:00:00','B12345678',NULL,'Emily Johnson','123 Maple Ave','3332224552','johndoe@example.com','Insurance Company ABC','Gastroenterologist',175.00,0.00,'2024-10-29 04:58:34',NULL,NULL,NULL);
+INSERT INTO `invoice` VALUES ('A1234567','2023-10-15 10:00:00','B12345678','I1234567','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','General Practitioner',100.00,0.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A2345678','2023-11-05 14:30:00','B12345678','I2345678','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Cardiologist',250.00,0.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A2387791','2024-11-12 10:00:00','B12345678','I5897887','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','Canceled',50.00,0.00,'2024-11-11 22:14:04',NULL,NULL,NULL),('A3456789','2023-09-20 09:00:00','B12345678','I3456789','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Radiologist',150.00,0.00,'2023-09-01 12:00:00','E34567890',NULL,NULL),('A4567890','2023-12-01 11:00:00','B12345678','I4567890','Emily Johnson','123 Maple Ave, Apt 2, Springfield, IL, 62701','555-1234','emily.johnson@example.com','Insurance Co.','Gastroenterologist',175.00,0.00,'2023-10-01 12:00:00','E34567890',NULL,NULL),('A5246759','2024-11-18 14:00:00','B12345678','I7312409','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','General Practitioner',100.00,100.00,'2024-11-12 00:34:39',NULL,NULL,NULL),('A6162959','2024-11-11 10:00:00','B12345678','I2591115','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','General Practitioner',100.00,0.00,'2024-11-11 05:03:35',NULL,NULL,NULL),('A8489873','2024-11-19 10:00:00','B12345678','I8793243','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','General Practitioner',100.00,100.00,'2024-11-11 22:17:43',NULL,NULL,NULL),('A8941503','2024-11-22 12:00:00','B12345678','I1484949','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','General Practitioner',100.00,100.00,'2024-11-11 22:35:26',NULL,NULL,NULL),('A8954343','2024-11-11 16:00:00','B12345678','I7877879','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','General Practitioner',100.00,100.00,'2024-11-11 22:08:01',NULL,NULL,NULL),('A9518157','2024-11-11 11:00:00','B12345678','I5692132','Emily Johnson',NULL,NULL,NULL,'Insurnace Co.','Canceled',0.00,0.00,'2024-11-11 04:50:19',NULL,NULL,NULL),('A9876543','2025-12-15 10:00:00','B12345678',NULL,'Emily Johnson','123 Maple Ave','3332224552','johndoe@example.com','Insurance Company ABC','Gastroenterologist',175.00,0.00,'2024-10-29 04:58:34',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -552,7 +522,7 @@ CREATE TABLE `nurses` (
 
 LOCK TABLES `nurses` WRITE;
 /*!40000 ALTER TABLE `nurses` DISABLE KEYS */;
-INSERT INTO `nurses` VALUES ('E23456789','Jane','Smith','555-5678','jane.smith@example.com','456 Elm St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E23456789',NULL,NULL);
+INSERT INTO `nurses` VALUES ('E2345671','John','Doe','555-1111','john.doe@nurse.com','789 Oak St','all day','all day','all day','all day','all day','2024-11-07 04:10:33',NULL,NULL,NULL),('E2345672','Alice','Johnson','555-2222','alice.johnson@nurse.com','101 Pine St','all day','all day','all day','all day','all day','2024-11-07 04:10:33',NULL,NULL,NULL),('E2345673','Michael','Brown','555-3333','michael.brown@nurse.com','202 Cedar St','all day','all day','all day','all day','all day','2024-11-07 04:10:33',NULL,NULL,NULL),('E2345674','Emily','Smith','555-4444','emily.smith@nurse.com','303 Birch St','all day','all day','all day','all day','all day','2024-11-07 04:10:33',NULL,NULL,NULL),('E23456789','Jane','Smith','555-5678','jane.smith@example.com','456 Elm St','all day','all day','all day','all day','all day','2024-10-14 19:32:34','E23456789',NULL,NULL);
 /*!40000 ALTER TABLE `nurses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -630,7 +600,7 @@ CREATE TABLE `officestaff` (
 
 LOCK TABLES `officestaff` WRITE;
 /*!40000 ALTER TABLE `officestaff` DISABLE KEYS */;
-INSERT INTO `officestaff` VALUES ('E23483404','John','Candy','5555555555','john.candy@gmail.com','22 candy world',NULL,'all day','all day','all day','all day','all day','2024-10-20 21:43:26',NULL,'2024-10-20 21:43:26',NULL),('E32646150','tim','jacks','3333333333','timjacks@gmail.com','work world',NULL,'all day','all day','all day','all day','all day','2024-10-20 21:50:17',NULL,'2024-10-20 21:50:17',NULL),('E45678901','Alice','Brown','555-4321','alice.brown@example.com','321 Oak St',0,'all day','all day','all day','all day','all day','2024-10-14 19:32:34','E45678901',NULL,NULL),('E73483041','Quang','T','1234567890','123@gmail.com','123 Street',NULL,'all day','all day','all day','all day','all day','2024-11-04 20:09:41',NULL,'2024-11-04 20:09:41',NULL);
+INSERT INTO `officestaff` VALUES ('E23483404','John','Candy','5555555555','john.candy@gmail.com','22 candy world',NULL,'all day','all day','all day','all day','all day','2024-10-20 21:43:26',NULL,'2024-10-20 21:43:26',NULL),('E32646150','tim','jacks','3333333333','timjacks@gmail.com','work world',NULL,'all day','all day','all day','all day','all day','2024-10-20 21:50:17',NULL,'2024-10-20 21:50:17',NULL),('E45678901','Alice','Brown','555-4321','alice.brown@example.com','321 Oak St',0,'all day','all day','all day','all day','all day','2024-10-14 19:32:34','E45678901',NULL,NULL),('E56083036','Sam ','Big','8888888888','sasas','sjdjd',NULL,'all day','all day','all day','all day','all day','2024-11-11 01:16:25',NULL,'2024-11-11 01:16:25',NULL);
 /*!40000 ALTER TABLE `officestaff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -682,7 +652,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES ('M12345678','B12345678','Emily','Johnson',30,'1994-06-15','123 Maple Ave','Apt 2','Springfield','IL','62701','emily.johnson@example.com',NULL,'555-1234',NULL,'555-5678','John Johnson, 555-9876',0,0.00,'2024-10-14 19:39:31','E12345678',NULL,NULL);
+INSERT INTO `patient` VALUES ('M12345678','B12345678','Emily','Johnson',30,'1994-06-15','12 short st','Apt 2','Springfield','IL','62701','emily.johnson@example.com',NULL,'555-1234',NULL,'555-5678','John Johnson, 555-9876',0,0.00,'2024-10-14 19:39:31','E12345678','2024-11-12 00:31:38',NULL),('M23487359','B98804491','Hank','Williams',NULL,'2024-11-16','1 Moab Avenue',NULL,'Houston','Texas','77051','HankDubbs@email.com',NULL,'88844455555',NULL,NULL,'Hank Williams JR 1112223333',NULL,NULL,'2024-11-16 22:52:59',NULL,'2024-11-16 22:52:59','E23456789'),('M29527227','B29527227','Sarah','Carolina',NULL,'2000-01-01','Good Garden Ave','','Houston','Texas','88181','Sarah.Carolina@gmail.com',NULL,'3456323456',NULL,NULL,'John Carolina - 22328792872',NULL,NULL,'2024-11-10 22:15:58',NULL,NULL,NULL),('M35676543','B45642123','Larry','Stanford',33,'1991-01-01','1 Blue Avenue','Apartment 123','Houston','Texas','77051','Larry123@email.com','Larryworkemail@work.com','3458886789','3334445555','6667778888','Taylor Jane 9405556543',0,0.00,'2024-11-11 22:58:17','E12345678','2024-11-11 22:58:17','E12345678'),('M68053477','B16716853','Waylon','Jennings',NULL,'2024-11-16','1 Balconnes Avenue',NULL,'Houston','Texas','77051','WJennings@email.com',NULL,'1112223333',NULL,NULL,'Willie Nelson 9998887777',NULL,NULL,'2024-11-16 02:52:33',NULL,'2024-11-16 02:52:33','E23456789');
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -702,7 +672,7 @@ CREATE TABLE `patient_password` (
   PRIMARY KEY (`my_row_id`),
   KEY `medical_ID` (`medical_ID`),
   CONSTRAINT `patient_password_ibfk_1` FOREIGN KEY (`medical_ID`) REFERENCES `patient` (`medical_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -711,7 +681,7 @@ CREATE TABLE `patient_password` (
 
 LOCK TABLES `patient_password` WRITE;
 /*!40000 ALTER TABLE `patient_password` DISABLE KEYS */;
-INSERT INTO `patient_password` (`my_row_id`, `medical_ID`, `password`, `created`, `last_edited`) VALUES (1,'M12345678','Patient','2024-10-14 19:39:31','2024-10-14 19:39:31');
+INSERT INTO `patient_password` (`my_row_id`, `medical_ID`, `password`, `created`, `last_edited`) VALUES (1,'M12345678','Patient','2024-10-14 19:39:31','2024-11-16 23:29:09'),(2,'M29527227','Patient','2024-11-10 22:15:58','2024-11-10 22:15:58');
 /*!40000 ALTER TABLE `patient_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -757,6 +727,7 @@ CREATE TABLE `referral` (
 
 LOCK TABLES `referral` WRITE;
 /*!40000 ALTER TABLE `referral` DISABLE KEYS */;
+INSERT INTO `referral` VALUES ('R11111111','E12345678','J Doe','E5399533','J Jones','M12345678','J Smith','accepted','2024-11-07 17:25:03','2024-11-07 17:25:03','back pain','2024-11-07 17:25:03','E12345678','2024-11-07 17:25:03','E12345678'),('R11975191','E12345678','Doe','E88791285','','M68053477','1112223333','rejected','2024-11-16 18:44:08',NULL,'Gastro stuff','2024-11-16 18:44:08','E12345678',NULL,NULL),('R1SGPHI16','E12345678','Doe','E88791285','','M29527227','S Carolina','rejected','2024-11-11 00:54:35',NULL,'Screening','2024-11-11 00:54:34','E12345678',NULL,NULL),('R20C1JF3G','E12345678','Doe','E88791285','','M12345678','J Smith','accepted','2024-11-11 01:39:25',NULL,'Screening','2024-11-11 01:39:24','E12345678',NULL,NULL),('R33536101','E12345678','Doe','E88791285','','M68053477','1112223333','accepted','2024-11-16 22:28:48',NULL,'Polyps','2024-11-16 22:28:49','E12345678',NULL,NULL),('R49116022','E12345678','Doe','E88791285','','M68053477','1112223333','rejected','2024-11-16 22:28:45',NULL,'Polyps','2024-11-16 22:28:46','E12345678',NULL,NULL),('R61358140','E12345678','Doe','E88791285','','M68053477','1112223333','rejected','2024-11-16 22:28:50',NULL,'Polyps','2024-11-16 22:28:51','E12345678',NULL,NULL),('RKEKL04KS','E12345678','Doe','E88791285','','M35676543','L Stanford','accepted','2024-11-12 00:38:33',NULL,'Screening','2024-11-12 00:38:33','E12345678',NULL,NULL),('RR90YCZTK','E12345678','Doe','E88791285','','M29527227','S Carolina','accepted','2024-11-11 02:10:24',NULL,'Screening','2024-11-11 02:10:23','E12345678',NULL,NULL);
 /*!40000 ALTER TABLE `referral` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -811,7 +782,7 @@ CREATE TABLE `test_history` (
   PRIMARY KEY (`test_ID`),
   KEY `medical_ID` (`medical_ID`),
   CONSTRAINT `test_history_ibfk_1` FOREIGN KEY (`medical_ID`) REFERENCES `medical_record` (`medical_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -820,16 +791,9 @@ CREATE TABLE `test_history` (
 
 LOCK TABLES `test_history` WRITE;
 /*!40000 ALTER TABLE `test_history` DISABLE KEYS */;
+INSERT INTO `test_history` VALUES (1,'M12345678','Blood Test','2024-10-01','Normal'),(2,'M12345678','X-Ray','2024-10-15','No abnormalities'),(3,'M12345678','MRI Scan','2024-09-20','Clear'),(4,'M12345678','Urine Analysis','2024-08-10','Normal'),(5,'M12345678','ECG','2024-07-05','Minor irregularities');
 /*!40000 ALTER TABLE `test_history` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'medical_clinic_database'
---
-
---
--- Dumping routines for database 'medical_clinic_database'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -840,4 +804,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-04 21:35:33
+-- Dump completed on 2024-11-17 16:04:43

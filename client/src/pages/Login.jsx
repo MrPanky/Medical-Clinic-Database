@@ -33,7 +33,7 @@ const Login = () => {
         }
 
         try {
-            const res = await axios.post(`https://group8backend.azurewebsites.net/login`, { ID, password });
+            const res = await axios.post(`http://localhost:3000/login`, { ID, password });
 
             // Check if employee or patient data is found
             if (res.data && !res.data.message) {

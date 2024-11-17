@@ -75,7 +75,7 @@ const Created_invoice = () => {
             localStorage.removeItem('patient');
             const patientID = appointment.patientBillingID;
             
-            const res = await axios.post(`https://group8backend.azurewebsites.net/SearchPatient`, {patientID});
+            const res = await axios.post(`http://localhost:3000/SearchPatient`, {patientID});
             console.log("new app data: ", JSON.stringify(res.data)); 
             localStorage.setItem('patient', JSON.stringify(res.data));
             navigate('/Billing_Staff_View/SearchPatient/See_Patient_Balance');
