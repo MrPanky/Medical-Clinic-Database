@@ -14,7 +14,7 @@ const Referral_Info = () => {
         const fetchReferral = async () => {
             try {
                 //console.log(useParams())
-                const response = await axios.get(`https://group8backend.azurewebsites.net/view_specific_referral/${referralId}`);
+                const response = await axios.get(`http://localhost:3000/view_specific_referral/${referralId}`);
                 setReferral(response.data[0]); // Assuming you get an array
             } catch (error) {
                 console.error('Error fetching referral data:', error);
@@ -28,7 +28,7 @@ const Referral_Info = () => {
         const fetchPatientName = async() => {
             try {
                 console.log("behold! referral.patient_ID is currently", referral.patient_ID)
-                const response = await axios.get(`https://group8backend.azurewebsites.net/medical_get_patient_name/${referral.patient_ID}`);
+                const response = await axios.get(`http://localhost:3000/medical_get_patient_name/${referral.patient_ID}`);
                 console.log("the patient name we have retrieved is...", response.data[0])
                 const patName = response.data[0].first_name + " " + response.data[0].last_name;
                 console.log("the patientName const is...", patName);
@@ -55,7 +55,7 @@ const Referral_Info = () => {
     const acceptReferral = async e => {
         e.preventDefault()
         try {
-            const res = await axios.put(`https://group8backend.azurewebsites.net/accept_referral/${referralId}`, {
+            const res = await axios.put(`http://localhost:3000/accept_referral/${referralId}`, {
 
             });
             console.log("hi from referral_info", res.data);
@@ -74,7 +74,7 @@ const Referral_Info = () => {
     const rejectReferral = async e => {
         e.preventDefault()
         try {
-            const res = await axios.put(`https://group8backend.azurewebsites.net/reject_referral/${referralId}`, {
+            const res = await axios.put(`http://localhost:3000/reject_referral/${referralId}`, {
 
             });
             console.log(res.data);

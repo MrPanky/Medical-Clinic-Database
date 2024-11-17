@@ -9,7 +9,7 @@ const Doctors = () => {
   useEffect(() => {
     const fetchAllDoctors = async () => {
       try {
-        const res = await axios.get("https://group8backend.azurewebsites.net/doctors");
+        const res = await axios.get("http://localhost:3000/doctors");
         setDoctors(res.data);
       } catch (err) {
         console.log(err);
@@ -20,7 +20,7 @@ const Doctors = () => {
 
   const handleDelete = async (id) => {
     try {
-        await axios.delete(`https://group8backend.azurewebsites.net/doctors/${id}`);
+        await axios.delete(`http://localhost:3000/doctors/${id}`);
         window.location.reload();
     } catch (error) { // Change 'err' to 'error' or use 'err' here.
         console.log(error); // Make sure to log the error variable

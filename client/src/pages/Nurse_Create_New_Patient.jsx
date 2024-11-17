@@ -93,7 +93,7 @@ const Nurse_Create_New_Patient = () => {
             const patientID = generateRandomPatientId();
             const billingId = generateRandomBillingId();
             //console.log("ON LINE 67 THE ORIGINATING DOCTORS ID IS", );
-            const res = await axios.post(`https://group8backend.azurewebsites.net/nurse_create_patient/${employeeId}`, {
+            const res = await axios.post(`http://localhost:3000/nurse_create_patient/${employeeId}`, {
                 medical_ID: patientID,
                 billingID: billingId,
                 first_name: patient.first_name,
@@ -112,7 +112,7 @@ const Nurse_Create_New_Patient = () => {
                 last_editedID: patient.creatorID
 
             })
-            const assignPatient = await axios.post(`https://group8backend.azurewebsites.net/nurse_assign_new_patient/${patientID}`);
+            const assignPatient = await axios.post(`http://localhost:3000/nurse_assign_new_patient/${patientID}`);
             console.log(res.data);
             setMessage(res.data);
             if (res.data === 'patient created')

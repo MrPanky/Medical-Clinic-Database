@@ -12,7 +12,7 @@ export default function PatientPersonalInfo({ medicalId }) {
         const fetchPatientInfo = async () => {
             try {
                 console.log('loooook',medicalId)
-                const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/my_account/personal_information`);
+                const response = await axios.get(`http://localhost:3000/patient/${medicalId}/my_account/personal_information`);
                 setPatientInfo(response.data);
                 setUpdatedInfo(response.data);
             } catch (err) {
@@ -52,7 +52,7 @@ export default function PatientPersonalInfo({ medicalId }) {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put(`https://group8backend.azurewebsites.net/patient/${medicalId}/my_account/personal_information`, updatedInfo);
+            const response = await axios.put(`http://localhost:3000/patient/${medicalId}/my_account/personal_information`, updatedInfo);
             console.log('Update response:', response);
             setPatientInfo(updatedInfo);
             setIsEditing(false);

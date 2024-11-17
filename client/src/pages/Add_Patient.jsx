@@ -41,7 +41,7 @@ const Add_Patient = () => {
 
         try {
             // Send the patient data to the backend
-            await axios.post("https://group8backend.azurewebsites.net/patients", patient);
+            await axios.post("http://localhost:3000/patients", patient);
 
             // Redirect to a different page after successful submission
             navigate("/office_staff_view"); // You can change the path accordingly

@@ -12,7 +12,7 @@ const Doc_Avail_Summary = () => {
     useEffect(() => {
         const fetchAvailability = async () => {
             try {
-                const res = await axios.get(`https://group8backend.azurewebsites.net/doc_availability/${employeeId}`);
+                const res = await axios.get(`http://localhost:3000/doc_availability/${employeeId}`);
                 setAvailability(res.data[0]); // Assuming you get an array
             } catch (error) {
                 console.error('Error fetching availability data:', error);

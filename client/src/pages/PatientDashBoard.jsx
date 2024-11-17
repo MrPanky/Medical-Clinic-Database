@@ -18,7 +18,7 @@ const Dashboard = ({ medicalId }) => {
     const fetchPatientData = async () => {
       try {
         console.log('api/patient', typeof medicalId, medicalId);
-        const response = await axios.get(`https://group8backend.azurewebsites.net/api/patient/${medicalId}`);
+        const response = await axios.get(`http://localhost:3000/api/patient/${medicalId}`);
         const { upcomingAppointment, recentTests, recentReferrals } = response.data;
 
         setUpcomingAppointment(upcomingAppointment);
@@ -53,7 +53,7 @@ const Dashboard = ({ medicalId }) => {
 
   const handleCancelAppointment = async (appointmentId) => {
     try {
-      const response = await axios.put(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/${appointmentId}/attempt-cancel`);
+      const response = await axios.put(`http://localhost:3000/patient/${medicalId}/appointments/${appointmentId}/attempt-cancel`);
       console.log('Cancel response:', response);
 
       if (response.status === 200) {
@@ -77,7 +77,7 @@ const Dashboard = ({ medicalId }) => {
 
   const handleCancelWithPenalty = async (appointmentId) => {
     try {
-      const response = await axios.put(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/${appointmentId}/finalize-cancel`);
+      const response = await axios.put(`http://localhost:3000/patient/${medicalId}/appointments/${appointmentId}/finalize-cancel`);
       console.log('Finalize Cancel response:', response);
 
       if (response.status === 200) {
@@ -93,7 +93,7 @@ const Dashboard = ({ medicalId }) => {
 
   const handleRevertCancel = async (appointmentId) => {
     try {
-      const response = await axios.put(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/${appointmentId}/revert-cancel`);
+      const response = await axios.put(`http://localhost:3000/patient/${medicalId}/appointments/${appointmentId}/revert-cancel`);
       console.log('Revert Cancel response:', response);
 
       if (response.status === 200) {
