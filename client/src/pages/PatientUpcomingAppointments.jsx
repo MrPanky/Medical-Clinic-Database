@@ -121,7 +121,7 @@ const PatientUpcomingAppointments = ({ medicalId }) => {
           appointments.map((appointment, index) => (
             <div className="card" key={index}>
               <h3>Appointment {index + 1}</h3>
-              <p><strong>Date & Time:</strong> {new Date(appointment.dateTime)}</p>
+              <p><strong>Date & Time:</strong> {appointment.dateTime}</p>
               <p><strong>Doctor:</strong> {appointment.doctor}</p>
               <p><strong>Reason:</strong> {appointment.reason}</p>
               <p><strong>Office:</strong> {appointment.name}</p>

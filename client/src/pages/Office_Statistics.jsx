@@ -196,7 +196,7 @@ const Office_Statistics = () => {
                                     <td>{item.doctor}</td>
                                     <td>{item.nurse}</td>
                                     <td>{item.appointment_type}</td>
-                                    <td>{new Date(item.dateTime).toLocaleDateString()}</td>
+                                    <td>{item.dateTime}</td>
                                     <td>${item.totalProfit.toFixed(2)}</td>
                                 </tr>
                             ))}

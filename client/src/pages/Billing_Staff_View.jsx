@@ -57,7 +57,7 @@ const Billing_Staff_View = () => {
             <h1>Employee Information</h1>
             <p>ID: {employee.employee_ID}</p>
             <p>Name: {employee.first_name} {employee.last_name}</p>
-            <p>Role: {employee.role}</p>
+            <p>Role: Billing Staff</p>
             <button className = "invoiceoption" onClick={() => handleonClick(false)}>Pay Due Bills of a Patient</button>
             <button className = "invoiceoption"onClick={() => handleonClick(true)}>View Previous Invoices of a Patient</button>
             <button className = "invoiceoption"onClick={getPastDueBills}>View Patients with Past Due Bills</button>
