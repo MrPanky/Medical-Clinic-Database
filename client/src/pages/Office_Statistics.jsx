@@ -23,7 +23,7 @@ const Office_Statistics = () => {
     const [barChartData, setBarChartData] = useState({});
     const [pieChartData, setPieChartData] = useState({});
 
-    
+
     const today = new Date().toISOString().split('T')[0];
 
     useEffect(() => {
@@ -98,6 +98,21 @@ const Office_Statistics = () => {
                 },
             ],
         });
+    };
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '';  
+
+        const [datePart, timePart] = dateString.split('T');
+        const [year, month, day] = datePart.split('-');
+        const [hours, minutes] = timePart.split(':');
+
+        let hour = parseInt(hours, 10);
+        const formattedHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);  
+        const period = hour >= 12 ? 'PM' : 'AM';
+        const formattedMinutes = minutes.padStart(2, '0');
+
+        return `${month}/${day}/${year.slice(-2)} ${formattedHour}:${formattedMinutes} ${period}`;
     };
 
     return (
@@ -196,7 +211,7 @@ const Office_Statistics = () => {
                                     <td>{item.doctor}</td>
                                     <td>{item.nurse}</td>
                                     <td>{item.appointment_type}</td>
-                                    <td>{item.dateTime}</td>
+                                    <td>{formatDate(item.dateTime)}</td>
                                     <td>${item.totalProfit.toFixed(2)}</td>
                                 </tr>
                             ))}

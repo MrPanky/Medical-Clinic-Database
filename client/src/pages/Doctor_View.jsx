@@ -70,7 +70,7 @@ const Doctor_View = () => {
 
     const handleViewAppointments = async (doctorId) => { //argument is directorId
         try {
-            const res = await axios.get(`https://group8backend.azurewebsites.net/appointments/${doctorId}`);//request appointments that correspond to directorId
+            const res = await axios.get(`https://group8backend.azurewebsites.net/doc_appointments/${doctorId}`);//request appointments that correspond to directorId
             const futureAppointments = res.data.filter(appointment => { //.filter filters data in res using below comparison
                 const appointmentDate = new Date(appointment.dateTime);
                 const today = new Date();
