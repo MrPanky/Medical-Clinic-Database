@@ -19,7 +19,7 @@ const Update_Patient_Password = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/patient/password/${medicalID}`,
+        `https://group8backend.azurewebsites.net/patient/password/${medicalID}`,
         { newPassword }
       );
       setMessage(response.data.message);

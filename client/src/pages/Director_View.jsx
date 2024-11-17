@@ -22,7 +22,7 @@ const Director_View = () => {
 
             const fetchAllInfo = async () => {
                 try {
-                    const res = await axios.get(`http://localhost:3000/director_view/${parsedEmployeeData.employee_ID}`);
+                    const res = await axios.get(`https://group8backend.azurewebsites.net/director_view/${parsedEmployeeData.employee_ID}`);
                     setInfo(res.data);
                     const fetchedOfficeId = await fetchDirectorOfficeId(parsedEmployeeData.employee_ID);
                     setOfficeId(fetchedOfficeId); 
@@ -48,7 +48,7 @@ const Director_View = () => {
 
     const fetchDirectorOfficeId = async (directorId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/director_office/${directorId}`);
+            const response = await axios.get(`https://group8backend.azurewebsites.net/director_office/${directorId}`);
             return response.data.officeId;
         } catch (error) {
             console.error('Error fetching director office ID:', error);
@@ -58,7 +58,7 @@ const Director_View = () => {
 
     const handleViewPatients = async (doctorId) => {
         try {
-            const res = await axios.get(`http://localhost:3000/doctors_patient/${doctorId}`);
+            const res = await axios.get(`https://group8backend.azurewebsites.net/doctors_patient/${doctorId}`);
             setPatients(res.data);
         } catch (err) {
             console.log('Error fetching patients:', err);
@@ -67,7 +67,7 @@ const Director_View = () => {
 
     const fetchStaff = async () => {
         try {
-            const res = await axios.get(`http://localhost:3000/staff_management`);
+            const res = await axios.get(`https://group8backend.azurewebsites.net/staff_management`);
             setStaff(res.data);
         } catch (err) {
             console.log(err);
@@ -76,7 +76,7 @@ const Director_View = () => {
 
     const fetchProfit = async (appointmentIds) => {
         try {
-            const res = await axios.get(`http://localhost:3000/profit`, {
+            const res = await axios.get(`https://group8backend.azurewebsites.net/profit`, {
                 params: { appointmentIds }
             });
             setProfit(res.data.profit);
@@ -87,7 +87,7 @@ const Director_View = () => {
 
     const handleViewAppointments = async (directorId) => {
         try {
-            const res = await axios.get(`http://localhost:3000/appointments/${directorId}`);
+            const res = await axios.get(`https://group8backend.azurewebsites.net/appointments/${directorId}`);
             const futureAppointments = res.data.filter(appointment => 
                 new Date(appointment.dateTime) > new Date()
             );
@@ -108,7 +108,7 @@ const Director_View = () => {
 
     const handleDeleteDoctor = async (employeeId) => {
         try {
-            await axios.delete(`http://localhost:3000/doctors/${employeeId}`);
+            await axios.delete(`https://group8backend.azurewebsites.net/doctors/${employeeId}`);
             setInfo(info.filter(doctor => doctor.employee_ID !== employeeId));
         } catch (err) {
             console.error('Error deleting doctor:', err);
@@ -120,9 +120,9 @@ const Director_View = () => {
             const member = staff.find(member => member.employee_ID === employeeId);
             if (member) {
                 if (member.role === 'OfficeStaff') {
-                    await axios.delete(`http://localhost:3000/staff/officestaff/${employeeId}`);
+                    await axios.delete(`https://group8backend.azurewebsites.net/staff/officestaff/${employeeId}`);
                 } else if (member.role === 'BillingStaff') {
-                    await axios.delete(`http://localhost:3000/staff/billingstaff/${employeeId}`);
+                    await axios.delete(`https://group8backend.azurewebsites.net/staff/billingstaff/${employeeId}`);
                 }
                 setStaff(staff.filter(member => member.employee_ID !== employeeId));
             }

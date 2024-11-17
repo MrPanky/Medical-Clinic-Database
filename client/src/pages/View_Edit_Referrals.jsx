@@ -19,7 +19,7 @@ const View_Edit_Referrals = () => {
         handleViewReferrals();
         const handleViewReferrals = async () => { //argument is directorId
             try {
-                const res = await axios.get(`http://localhost:3000/view_referrals/${parsedDoctorInfo.employee_ID}`);//request appointments that correspond to directorId
+                const res = await axios.get(`https://group8backend.azurewebsites.net/view_referrals/${parsedDoctorInfo.employee_ID}`);//request appointments that correspond to directorId
                 
                 console.log("REFERRAL QUERY: ", res.body);
                 setReferrals(res.data); //update appointments state with filtered appointment list

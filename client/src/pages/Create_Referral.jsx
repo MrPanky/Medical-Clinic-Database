@@ -34,7 +34,7 @@ const Create_Referral = () => {
             console.log("refCreated is...", refCreated)
             try {
                 console.log("fetch last name is being called");
-                const res = await axios.get(`http://localhost:3000/doctor_Lname/${employeeId}`);
+                const res = await axios.get(`https://group8backend.azurewebsites.net/doctor_Lname/${employeeId}`);
                 console.log("res.last name is...: ", res.data[0].last_name)
                 setReferral(prevReferral => ({
                     ...prevReferral, // Spread in previous values
@@ -75,7 +75,7 @@ const Create_Referral = () => {
         if(referral.reason.length > 1){
         try {
             console.log('as we prepare to query, patientID is...',referral.patient_ID)
-            const patientContactNumber = await axios.get(`http://localhost:3000/get_patient_phone/${referral.patient_ID}`)
+            const patientContactNumber = await axios.get(`https://group8backend.azurewebsites.net/get_patient_phone/${referral.patient_ID}`)
             console.log("patient phone is...", patientContactNumber.data[0].home_phone)
             //setReferral.patient_contact_info(patientContactNumber)
             console.log("patient contact number is...", referral.patient_contact_info)
@@ -85,7 +85,7 @@ const Create_Referral = () => {
             const mysqlDateTime = isoString.slice(0, 19).replace('T', ' ');
             const ID = generateRandomId();
             console.log("ON LINE 67 THE ORIGINATING DOCTORS ID IS", referral.originating_doctor_ID);
-            const res = await axios.post(`http://localhost:3000/create_referral/${employeeId}`, {
+            const res = await axios.post(`https://group8backend.azurewebsites.net/create_referral/${employeeId}`, {
                 created: mysqlDateTime,
                 creatorID: referral.creatorID,
                 date_created: mysqlDateTime,

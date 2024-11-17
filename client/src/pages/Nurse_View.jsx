@@ -41,7 +41,7 @@ const Nurse_View = () => {
 
     const handleViewAppointments = async (nurseId) => { //argument is directorId
         try {
-            const res = await axios.get(`http://localhost:3000/nurse_appointments/${nurseId}`);//request appointments that correspond to directorId
+            const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_appointments/${nurseId}`);//request appointments that correspond to directorId
             const futureAppointments = res.data.filter(appointment => { //.filter filters data in res using below comparisons
                 console.log("RES DATA IS...", typeof (res.data))
                 console.log("RES DATA SAYS...", res.data)
@@ -66,7 +66,7 @@ const Nurse_View = () => {
 
     const handleViewPatients = async () => { //doctorId passed as argument
         try {
-            const res = await axios.get(`http://localhost:3000/view_all_patients/`); //request doctors_patient entries with doctor_ids
+            const res = await axios.get(`https://group8backend.azurewebsites.net/view_all_patients/`); //request doctors_patient entries with doctor_ids
             setPatients(res.data); //update patients state with res
             console.log("patients returned: ", patients)
         } catch (err) {

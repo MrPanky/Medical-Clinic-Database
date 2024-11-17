@@ -25,7 +25,7 @@ const Doctor_View = () => {
             setEmployee(parsedDoctorInfo);
             const fetchAllInfo = async () => {
                 try {
-                    const res = await axios.get(`http://localhost:3000/doctor_view/${parsedDoctorInfo.employee_ID}`); //use axios to request employee info, passing employeeID as argument
+                    const res = await axios.get(`https://group8backend.azurewebsites.net/doctor_view/${parsedDoctorInfo.employee_ID}`); //use axios to request employee info, passing employeeID as argument
                     setInfo(res.data); //use the info we just got to update info state
                     //console.log("Employee state", employee);
                     console.log("Retrieved info", info);
@@ -70,7 +70,7 @@ const Doctor_View = () => {
 
     const handleViewAppointments = async (doctorId) => { //argument is directorId
         try {
-            const res = await axios.get(`http://localhost:3000/doc_appointments/${doctorId}`);//request appointments that correspond to directorId
+            const res = await axios.get(`https://group8backend.azurewebsites.net/doc_appointments/${doctorId}`);//request appointments that correspond to directorId
             const futureAppointments = res.data.filter(appointment => { //.filter filters data in res using below comparison
                 const appointmentDate = new Date(appointment.dateTime);
                 const today = new Date();
@@ -90,7 +90,7 @@ const Doctor_View = () => {
 
     const handleViewPatients = async (doctorId) => { //doctorId passed as argument
         try {
-            const res = await axios.get(`http://localhost:3000/doctors_patient/${doctorId}`); //request doctors_patient entries with doctor_ids
+            const res = await axios.get(`https://group8backend.azurewebsites.net/doctors_patient/${doctorId}`); //request doctors_patient entries with doctor_ids
             setPatients(res.data); //update patients state with res
         } catch (err) {
             console.log('Error fetching patients:', err);
@@ -98,7 +98,7 @@ const Doctor_View = () => {
     };
     const handleViewReferrals = async (doctorId) => {
         try {
-            const res = await axios.get(`http://localhost:3000/view_referrals/${doctorId}`);
+            const res = await axios.get(`https://group8backend.azurewebsites.net/view_referrals/${doctorId}`);
             setReferrals(res.data);
         }
         catch (err) {
@@ -124,7 +124,7 @@ const Doctor_View = () => {
     // const handleReviewClick = (medId) => {
     //     if (medId) {
     //         try {
-    //             const res = await axios.get(`http://localhost:3000/patient_check/${doctorId}`);
+    //             const res = await axios.get(`https://group8backend.azurewebsites.net/patient_check/${doctorId}`);
     //         }
 
     //     }
