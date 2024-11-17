@@ -67,5 +67,31 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 
   }
+
+.Report-container {
+    display: flex;
+    flex-direction: row; /* This ensures the elements are in a row */
+    justify-content: space-between; /* Distributes space between items */
+    align-items: center; /* Aligns items vertically in the center */
+}
+
+.Report-left {
+    background-color: #f0f0f0; /* Example styling for elements */
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.Report-right {
+  background-color: #f0f0f0; /* Example styling for elements */
+  width: 100%;
+  height: 400px;
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
   
 /*end invoice style*/
