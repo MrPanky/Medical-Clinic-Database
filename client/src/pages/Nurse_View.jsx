@@ -10,6 +10,9 @@ const Nurse_View = () => {
     const [appointments, setAppointments] = useState([]);
     const [info, setInfo] = useState([]);
     const [patientApp, setPatientApp] = useState([{ medicalId: '' }]);
+    const options = {
+        timeZone : 'America/Monterrey'
+    }
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -106,7 +109,7 @@ const Nurse_View = () => {
                         >
                             <h3>{appointment.patientName}</h3>
                             <p>Doctor: {appointment.doctor}</p>
-                            <p>Date: {new Date(appointment.dateTime).toLocaleString()}</p>
+                            <p>Date: {new Date(appointment.dateTime).toLocaleString('en-US', options)}</p>
                             <p>Reason: {appointment.reason}</p>
                         </div>
                     ))

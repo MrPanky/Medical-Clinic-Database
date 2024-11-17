@@ -11,6 +11,9 @@ const Doctor_View = () => {
     const [availability, setAvailability] = useState([]);
     const [referrals, setReferrals] = useState([]);
     const [patientWeight, setPatientWeight] = useState([{ medicalId: '' }]);
+    const options = {
+        timeZone : 'America/Monterrey'
+    }
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -147,7 +150,7 @@ const Doctor_View = () => {
                         >
                             <h3>{appointment.patientName}</h3>
                             <p>Doctor: {appointment.doctor}</p>
-                            <p>Date: {new Date(appointment.dateTime).toLocaleString()}</p>
+                            <p>Date: {new Date(appointment.dateTime).toLocaleString('en-US', options)}</p>
                             <p>Reason: {appointment.reason}</p>
                         </div>
                     ))
