@@ -41,7 +41,7 @@ const Past_Due_Patients = () => {
         }
 
         try {
-            const res = await axios.post(`http://localhost:3000/Past_Due_Patients`, {
+            const res = await axios.post(`https://group8backend.azurewebsites.net/Past_Due_Patients`, {
                 params: {
                     startDate: filterDateRange.start,
                     endDate: filterDateRange.end,

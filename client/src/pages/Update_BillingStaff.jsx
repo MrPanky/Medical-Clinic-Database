@@ -18,7 +18,7 @@ const Update_BillingStaff = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/staff/billingstaff/${employee_ID}`);
+                const res = await axios.get(`https://group8backend.azurewebsites.net/staff/billingstaff/${employee_ID}`);
                 setStaff(res.data);
             } catch (err) {
                 console.log(err);
@@ -36,7 +36,7 @@ const Update_BillingStaff = () => {
         e.preventDefault();
 
         try {
-            await axios.put(`http://localhost:3000/staff/billingstaff/${employee_ID}`, staff);
+            await axios.put(`https://group8backend.azurewebsites.net/staff/billingstaff/${employee_ID}`, staff);
             navigate("/director_view");
         } catch (err) {
             console.log(err);

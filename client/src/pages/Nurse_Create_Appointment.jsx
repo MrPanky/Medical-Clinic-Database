@@ -42,7 +42,7 @@ export default function Nurse_Create_Appointment() {
         const fetchDoctors = async () => {
             try {
                 console.log('first_medical_Id', medicalId)
-                const response = await axios.get(`http://localhost:3000/patient/${medicalId}/appointments/doctors`);
+                const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/doctors`);
                 console.log('reponse.data.doctors', response.data.doctors)
                 setDoctors(response.data.doctors);
             } catch (error) {
@@ -61,7 +61,7 @@ export default function Nurse_Create_Appointment() {
 
                 const formattedDate = date.toISOString().split('T')[0]; // Format date to 'YYYY-MM-DD'
                 console.log('selectedDoctor!!!!', formattedDate)
-                const response = await axios.get(`http://localhost:3000/patient/appointments/time_slots`, {
+                const response = await axios.get(`https://group8backend.azurewebsites.net/patient/appointments/time_slots`, {
                     params: {
                         date: formattedDate,
                         doctorID: selectedDoctor,
@@ -96,7 +96,7 @@ export default function Nurse_Create_Appointment() {
         const fetchAvailability = async () => {
             console.log('this is the line:', selectedDoctor)
             try {
-                const response = await axios.get('http://localhost:3000/patient/appointment/availability', {
+                const response = await axios.get('https://group8backend.azurewebsites.net/patient/appointment/availability', {
                     params: {
                         doctorID: selectedDoctor,
                         officeID: selectedFacility
@@ -128,7 +128,7 @@ export default function Nurse_Create_Appointment() {
                 //WRITE DOCTOR QUERY
                 const doctorId = selectedDoctor
                 console.log("doctorId be saying...", selectedDoctor)
-                const res = await axios.get(`http://localhost:3000/nurse_get_appointment_type/${selectedDoctor}`)
+                const res = await axios.get(`https://group8backend.azurewebsites.net/nurse_get_appointment_type/${selectedDoctor}`)
                 console.log("res.data for appType is... ", res.data[0].specialty)
                 const appType = res.data[0].specialty;
                 setAppointmentType(appType);
@@ -156,7 +156,7 @@ export default function Nurse_Create_Appointment() {
         const nurse = defaultNurses[selectedFacility]
         console.log('nurse', nurse)
         try {
-            const res = await axios.get(`http://localhost:3000/medical_get_patient_name/${medicalId}`)
+            const res = await axios.get(`https://group8backend.azurewebsites.net/medical_get_patient_name/${medicalId}`)
             if (res.data && res.data[0]) {
                 console.log("HELLO")
                 console.log("the patients name returned is...", res.data)
@@ -181,7 +181,7 @@ export default function Nurse_Create_Appointment() {
                 console.log('appointmentDate', appointmentData)
                 console.log("HELLO")
                 // You can post this data to the backend API
-                await axios.post(`http://localhost:3000/patient/${medicalId}/appointments/nurse_create_appointment`, appointmentData);
+                await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/nurse_create_appointment`, appointmentData);
                 alert('Appointment created successfully'); 
                 //setAppCreated(true);
                 setIsSubmitEnabled(false)

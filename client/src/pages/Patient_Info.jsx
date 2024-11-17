@@ -10,7 +10,7 @@ const Patient_Info = () => {
     useEffect(() => {
         const fetchPatient = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/patient/${id}`);
+                const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${id}`);
                 setPatient(response.data[0]); // Assuming you get an array
             } catch (error) {
                 console.error('Error fetching patient data:', error);

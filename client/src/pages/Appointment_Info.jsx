@@ -9,7 +9,7 @@ const Appointment_Info = () => {
     useEffect(() => {
         const fetchAppointment = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/appointment/${appointmentId}`);
+                const response = await axios.get(`https://group8backend.azurewebsites.net/appointment/${appointmentId}`);
                 setAppointment(response.data[0]); // Assuming you get an array
             } catch (error) {
                 console.error('Error fetching appointment data:', error);
