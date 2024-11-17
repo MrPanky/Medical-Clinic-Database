@@ -51,7 +51,24 @@ const See_Previous_Invoices = () => {
 
         
     }
+    const formatDate = (dateString) => {
+        if (!dateString) return '';  
 
+        const localDateString = dateString.replace('Z', '');
+        const dateObj = new Date(localDateString);
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const hours = dateObj.getHours();
+        const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+
+        let formattedHour = hours % 12;
+        formattedHour = formattedHour === 0 ? 12 : formattedHour;  
+        const period = hours >= 12 ? 'PM' : 'AM';
+
+        return `${month}/${day}/${year.toString().slice(-2)} ${formattedHour}:${minutes} ${period}`;
+    };
+    
 try{
     return (
         <div>
@@ -74,7 +91,7 @@ try{
                         {patient.map((patient, index) => (
                                 <tr key ={patient.appointment_ID}>
                                 <td>{patient.appointment_ID}</td>
-                                <td>{patient.appointmentDateTime}</td>
+                                <td>{formatDate(patient.appointmentDateTime)}</td>
                                 <td>{patient.doctor}</td>
                                 <td>{patient.created}</td>
                                 <td>

@@ -48,17 +48,22 @@ const PatientUpcomingAppointments = ({ medicalId }) => {
   const formatDate = (dateString) => {
     if (!dateString) return '';  
 
-    const [datePart, timePart] = dateString.split('T');
-    const [year, month, day] = datePart.split('-');
-    const [hours, minutes] = timePart.split(':');
+    const localDateString = dateString.replace('Z', '');
+    const dateObj = new Date(localDateString);
 
-    let hour = parseInt(hours, 10);
-    const formattedHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);  
-    const period = hour >= 12 ? 'PM' : 'AM';
-    const formattedMinutes = minutes.padStart(2, '0');
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const hours = dateObj.getHours();
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
 
-    return `${month}/${day}/${year.slice(-2)} ${formattedHour}:${formattedMinutes} ${period}`;
+    let formattedHour = hours % 12;
+    formattedHour = formattedHour === 0 ? 12 : formattedHour;
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+    return `${month}/${day}/${year.toString().slice(-2)} ${formattedHour}:${minutes} ${period}`;
 };
+
 
   const handleCancelAppointment = async (appointmentId) => {
     try {

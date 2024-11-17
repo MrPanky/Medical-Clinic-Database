@@ -24,6 +24,8 @@ ChartJS.register(
     Legend
 );
 
+const today = new Date().toISOString().split('T')[0];
+
 const Patient_Weight_Review = () => {
     const { patientId } = useParams();
     const [appointments, setAppointments] = useState([]);
@@ -108,12 +110,14 @@ const Patient_Weight_Review = () => {
                     type="date" 
                     value={startDate} 
                     onChange={(e) => setStartDate(e.target.value)} 
+                    max={today}
                 />
                 <label>End Date:</label>
                 <input 
                     type="date" 
                     value={endDate} 
                     onChange={(e) => setEndDate(e.target.value)} 
+                    max={today}
                 />
             </div>
 
