@@ -21,7 +21,7 @@ const OfficeStaffView = () => {
   // Fetch all patients
   const fetchPatients = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/patients'); // GET request to fetch patients
+      const response = await axios.get('https://group8backend.azurewebsites.net/patients'); // GET request to fetch patients
       setPatients(response.data); // Set patients in state
     } catch (error) {
       console.error('Error fetching patients:', error);
@@ -39,7 +39,7 @@ const OfficeStaffView = () => {
 
   const handleDeletePatient = async (medicalId) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/patients/${medicalId}`);
+      const response = await axios.delete(`https://group8backend.azurewebsites.net/patients/${medicalId}`);
       if (response.data.message) {
         // Filter out the deleted patient from the list
         setPatients(patients.filter(patient => patient.medical_ID !== medicalId));

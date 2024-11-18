@@ -14,7 +14,7 @@ export default function PatientPayBill({ medicalId }) {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/patient/${medicalId}/pay_bill`);
+        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/pay_bill`);
         console.log('invoices', response.data)
         setInvoices(response.data);
         setLoading(false);
@@ -41,7 +41,7 @@ export default function PatientPayBill({ medicalId }) {
     try {
       const amountPayed = parseFloat(paymentInfo.amountPayed)
       const amountDue = selectedInvoice.amountDue
-      const response = await axios.post(`http://localhost:3000/patient/pay_invoice`, {
+      const response = await axios.post(`https://group8backend.azurewebsites.net/patient/pay_invoice`, {
         invoiceId: selectedInvoice.InvoiceID,
         amountPayed: paymentInfo.amountPayed, // Include payment details
         amountDue: selectedInvoice.amountDue

@@ -32,7 +32,7 @@ export default function PatientCreateAppointment({ medicalId, first_name, last_n
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/patient/${medicalId}/appointments/doctors`);
+        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/doctors`);
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error('Error fetching doctors:', error);
@@ -45,7 +45,7 @@ export default function PatientCreateAppointment({ medicalId, first_name, last_n
     const fetchAvailableTimeSlots = async () => {
       try {
         const formattedDate = date.toISOString().split('T')[0]; // Format date to 'YYYY-MM-DD'
-        const response = await axios.get(`http://localhost:3000/patient/appointments/time_slots`, {
+        const response = await axios.get(`https://group8backend.azurewebsites.net/patient/appointments/time_slots`, {
           params: {
             date: formattedDate,
             doctorID: selectedDoctor,
@@ -75,7 +75,7 @@ export default function PatientCreateAppointment({ medicalId, first_name, last_n
   useEffect(() => {
     const fetchAvailability = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/patient/appointment/availability', {
+        const response = await axios.get('https://group8backend.azurewebsites.net/patient/appointment/availability', {
           params: {
             doctorID: selectedDoctor,
             officeID: selectedFacility,
@@ -126,7 +126,7 @@ export default function PatientCreateAppointment({ medicalId, first_name, last_n
         patientBillingId: patientBillingId,
       };
 
-      await axios.post(`http://localhost:3000/patient/${medicalId}/appointments/create_appointment`, appointmentData);
+      await axios.post(`https://group8backend.azurewebsites.net/patient/${medicalId}/appointments/create_appointment`, appointmentData);
       alert('Appointment created successfully');
       setSelectedDoctor('');
       setSelectedFacility('');
